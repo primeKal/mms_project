@@ -1,0 +1,1 @@
+export const CREATE_SUCCESS_CODE = 201
