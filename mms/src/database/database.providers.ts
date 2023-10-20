@@ -1,5 +1,8 @@
 import { Sequelize } from 'sequelize-typescript';
 import { Company } from 'src/company/company.entity';
+import { Menu } from 'src/menu/menu.entity';
+import { ProductCategory } from 'src/product-category/product.category.entity';
+import { Product, ProductCategoryProduct } from 'src/product/product.entity';
 
 
 
@@ -9,18 +12,18 @@ export const databaseProviders = [
     useFactory: async () => {
       const sequelize = new Sequelize({
         dialect: 'postgres',
-        host: 'ep-mute-violet-76705724.us-east-1.postgres.vercel-storage.com',
+        host: process.env.DATABASE_HOST,
         port: 5432,
-        username: 'default',
-        password: 'pTv75EHAJIws',
-        database: 'trendy_merches',
-        ssl: true,
-        dialectOptions: {
-          ssl: true
-        }
+        username: process.env.DATABASE_USER,
+        password: process.env.DATABASE_PASSWORD,
+        database: 'mms',
+        // ssl: true,
+        // dialectOptions: {
+        //   ssl: true
+        // }
       });
-      sequelize.addModels([Company]);
-      await sequelize.sync();
+      sequelize.addModels([Company, Product, Menu, ProductCategory, ProductCategoryProduct]);
+      await sequelize.sync({alter:true});
       return sequelize;
     },
   },

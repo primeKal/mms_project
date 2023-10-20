@@ -1,9 +1,11 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
 import { CompanyService } from './company.service';
 import { Company } from './company.entity';
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiTags } from '@nestjs/swagger';
 import { CompanyDto } from './dtos/company.dto';
+import { JwtAuthGuard } from 'src/auth/guards/jwtAuthGuard';
 
+@ApiTags('Company')
 @Controller('Company')
 export class CompanyController {
     constructor(private readonly companyService: CompanyService){
@@ -13,6 +15,7 @@ export class CompanyController {
       return this.companyService.getAllCompanys();
     }
 
+    @UseGuards(JwtAuthGuard)
     @Get(':id')
     public async getACompany(@Param('id') id: number): Promise<Company>{
       return this.companyService.getOneCompanyById(id);

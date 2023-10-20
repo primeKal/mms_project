@@ -48,5 +48,12 @@ export class CompanyService {
       async deleteCompany(id: string): Promise<void>{
         var toDeleteCompany = await this.companyRepository.findByPk(id);
         return await toDeleteCompany.destroy();
-      }    
+      }  
+      
+      async findUserByEmail(email: any): Promise<Company>{
+        return this.companyRepository.findOne({
+          where: { email: email},
+        })
+      }
+
 }

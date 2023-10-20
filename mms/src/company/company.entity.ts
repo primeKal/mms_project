@@ -8,6 +8,8 @@ import {
     DeletedAt,
     HasMany,
   } from 'sequelize-typescript';
+import { Menu } from 'src/menu/menu.entity';
+import { Product } from 'src/product/product.entity';
   
   const tableOptions = {
     tableName: 'company',
@@ -86,6 +88,9 @@ import {
     @DeletedAt public deletedAt: Date;
   
     // forign keys
-    // @HasMany(() => Socialmedia)
-    // socialmedias: Socialmedia[]
+    @HasMany(() => Product)
+    products: Product[]
+
+    @HasMany(() => Menu)
+    menus: Menu[]
   }
