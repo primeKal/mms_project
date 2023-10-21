@@ -11,7 +11,7 @@
             <router-link 
                 v-for="nav in navItems"
                 :key="nav.name"
-                :to="nav.link"
+                :to="{ name: nav.link}"
                 class="pl-4 py-3 w-full flex items-center border-l-4 hover:bg-blue-200"
                 :class="[nav.link === $route.name ?'border-l-blue-700 bg-blue-200' : 'border-l-white']"
             >
@@ -36,8 +36,8 @@ export default {
                 {'name': 'Menu Management', 'link': 'menu_management', 'icon': 'ic:twotone-restaurant-menu'},
                 {'name': 'Table Management', 'link': 'table_management', 'icon': 'ic:baseline-table-restaurant'},
                 {'name': 'Order Processing', 'link': 'order_processing', 'icon': 'ic:baseline-fastfood'},
-                {'name': 'Payment', 'link': 'payment', 'icon': 'ic:baseline-payments'},
-                {'name': 'Analytics', 'link': 'analytics', 'icon': 'uim:analytics'},
+                // {'name': 'Payment', 'link': 'payment', 'icon': 'ic:baseline-payments'},
+                // {'name': 'Analytics', 'link': 'analytics', 'icon': 'uim:analytics'},
 
             ]
         }
