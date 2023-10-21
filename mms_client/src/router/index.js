@@ -49,6 +49,21 @@ const routes = [
             component: () => import('../views/ProfileView/ImageGalleryView.vue')
           }
         ]
+      },
+      {
+        path: 'menu-management',
+        name: 'menu_management',
+        component: () => import('../views/MenuMangementView/MenuManagementIndex.vue'),
+      },
+      {
+        path: 'table-management',
+        name: 'table_management',
+        component: () => import('../views/TableManagementView/TableManagementView.vue')
+      },
+      {
+        path: 'order-processing',
+        name: 'order_processing',
+        component: () => import('../views/OrderProcessingView/OrderProcessingIndex.vue')
       }
     ]
   }
