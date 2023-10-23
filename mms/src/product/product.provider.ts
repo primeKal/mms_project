@@ -1,4 +1,4 @@
-import { COMPANY_REPOSITORY, PRODUCT_REPOSITORY } from "src/utils/constants";
+import { PRODUCT_REPOSITORY } from "src/utils/constants";
 import { Product } from "./product.entity";
 
 

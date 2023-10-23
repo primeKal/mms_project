@@ -31,7 +31,7 @@ export class ProductCategory extends Model<ProductCategory> {
   public id: number;
 
   @Column({
-    allowNull: true,
+    allowNull: false,
   })
   name: string;
 

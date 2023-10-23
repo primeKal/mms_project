@@ -1,6 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Product } from './product.entity';
 import { PRODUCT_REPOSITORY } from 'src/utils/constants';
+import { Op } from 'sequelize';
 
 @Injectable()
 export class ProductService {
@@ -43,5 +44,8 @@ export class ProductService {
         return this.productRepository.findOne({
             where: { companyId: companyId },
         })
+    }
+    async getProductsByIds(ids:Array<number>) {
+        return await this.productRepository.findAll({ where: { id: { [Op.in]: ids } }});
     }
 }

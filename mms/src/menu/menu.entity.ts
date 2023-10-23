@@ -29,7 +29,7 @@ import { ProductCategory } from 'src/product-category/product.category.entity';
     public id: number;
   
     @Column({
-      allowNull: false,
+      allowNull: true,
     })
     link: string;
 

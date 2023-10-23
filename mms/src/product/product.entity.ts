@@ -31,12 +31,12 @@ export class Product extends Model<Product> {
     public id: number;
 
     @Column({
-        allowNull: false,
+        allowNull: true,
     })
     link: string;
 
     @Column({
-        allowNull: true,
+        allowNull: false,
     })
     name: string;
     @Column({
@@ -60,7 +60,7 @@ export class Product extends Model<Product> {
     price: number;
 
     @Column({
-        defaultValue: false
+        defaultValue: false,
     })
     isActive: boolean;
 

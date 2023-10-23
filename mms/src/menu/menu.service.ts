@@ -1,6 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Menu } from './menu.entity';
 import { MENU_REPOSITORY } from 'src/utils/constants';
+import { ProductCategory } from 'src/product-category/product.category.entity';
 
 @Injectable()
 export class MenuService {
@@ -11,7 +12,7 @@ export class MenuService {
     }
     async getAllMenus(): Promise<Menu[]> {
         return await this.menuRepository.findAll<Menu>({
-            //   include: { model: Socialmedia, as: 'socialmedias' }
+            //   include: [ProductCategory]
         });
     }
     async createMenu(createMenuDto): Promise<any> {
@@ -22,7 +23,8 @@ export class MenuService {
         return await this.menuRepository.findOne({
             where: {
                 id: id
-            }
+            },
+            include: [ProductCategory]
         })
     }
     async editMenu(editMenu: any): Promise<Menu> {
