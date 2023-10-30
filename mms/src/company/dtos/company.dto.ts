@@ -5,4 +5,7 @@ export class CompanyDto {
     readonly password: string;
     readonly moto: string;
     readonly id?: string;
+    readonly primaryColor: string;
+    readonly secondaryColor: string;
+    readonly specialFeatures: string;
   }

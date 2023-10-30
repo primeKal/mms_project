@@ -6,4 +6,5 @@ export class ProductDto {
     readonly id?: number;
     readonly companyId: number;
     readonly link: string;
+    readonly productCategoryId?: number
   }

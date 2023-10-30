@@ -8,11 +8,12 @@ import { ConfigModule } from '@nestjs/config';
 import { ProductModule } from './product/product.module';
 import { MenuModule } from './menu/menu.module';
 import { ProductCategoryModule } from './product-category/product-category.module';
+import { TableModule } from './table/table.module';
 
 @Module({
   imports: [DatabaseModule, CompanyModule, AuthModule, ConfigModule.forRoot({
     isGlobal: true,
-  }), ProductModule, MenuModule, ProductCategoryModule],
+  }), ProductModule, MenuModule, ProductCategoryModule, TableModule],
   controllers: [AppController],
   providers: [AppService],
 })

@@ -23,8 +23,8 @@ export class ProductCategoryController {
       return this.productCategoryService.getOneProductCategoryById(id);
     }
 
-    @Get('ByCompany/:id')
-    public async getProductCategoryByCompany(@Param('id') id: number): Promise<ProductCategory>{
+    @Get('ByMenu/:id')
+    public async getProductCategoryByCompany(@Param('id') id: number): Promise<ProductCategory[]>{
       return this.productCategoryService.getProductCategorysByMenu(id);
     }
 

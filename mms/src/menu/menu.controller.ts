@@ -24,7 +24,7 @@ export class MenuController {
     }
 
     @Get('ByCompany/:id')
-    public async getMenuByCompany(@Param('id') id: number): Promise<Menu>{
+    public async getMenuByCompany(@Param('id') id: number): Promise<Menu[]>{
       return this.menuService.getMenusByCompany(id);
     }
 

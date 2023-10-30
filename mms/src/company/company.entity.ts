@@ -10,6 +10,7 @@ import {
   } from 'sequelize-typescript';
 import { Menu } from 'src/menu/menu.entity';
 import { Product } from 'src/product/product.entity';
+import { TableModel } from 'src/table/table.entity';
   
   const tableOptions = {
     tableName: 'company',
@@ -75,10 +76,25 @@ import { Product } from 'src/product/product.entity';
     isActive: boolean;
 
     @Column({
-        allowNull: false,
+        allowNull: true,
         defaultValue: false
       })
       moto: string;
+    
+      @Column({
+        allowNull: true,
+      })
+      primaryColor: string;
+
+      @Column({
+        allowNull: true,
+      })
+      secondaryColor: string;
+
+      @Column({
+        allowNull: true,
+      })
+      specialFeatures: string;
   
   
     @CreatedAt public createdAt: Date;
@@ -93,4 +109,7 @@ import { Product } from 'src/product/product.entity';
 
     @HasMany(() => Menu)
     menus: Menu[]
+
+    @HasMany(() => TableModel)
+    tables: TableModel[]
   }

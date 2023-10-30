@@ -12,7 +12,7 @@ export class MenuService {
     }
     async getAllMenus(): Promise<Menu[]> {
         return await this.menuRepository.findAll<Menu>({
-            //   include: [ProductCategory]
+              include: [ProductCategory]
         });
     }
     async createMenu(createMenuDto): Promise<any> {
@@ -41,8 +41,8 @@ export class MenuService {
         var toDeleteMenu = await this.menuRepository.findByPk(id);
         return await toDeleteMenu.destroy();
     }
-    async getMenusByCompany(companyId: any): Promise<Menu> {
-        return this.menuRepository.findOne({
+    async getMenusByCompany(companyId: any): Promise<Menu[]> {
+        return this.menuRepository.findAll({
             where: { companyId: companyId },
         })
     }

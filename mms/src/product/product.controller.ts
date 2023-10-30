@@ -22,8 +22,12 @@ export class ProductController {
     }
 
     @Get('ByCompany/:id')
-    public async getProductByCompany(@Param('id') id: number): Promise<Product>{
+    public async getProductByCompany(@Param('id') id: number): Promise<Product[]>{
       return this.productService.getProductsByCompany(id);
+    }
+    @Get('ByCategory/:id')
+    public async getProductsByCategory(@Param('id') id: number): Promise<Product[]>{
+      return this.productService.getProductsByCategory(id);
     }
 
     @Post()

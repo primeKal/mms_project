@@ -40,8 +40,13 @@ export class ProductService {
         var toDeleteProduct = await this.productRepository.findByPk(id);
         return await toDeleteProduct.destroy();
     }
-    async getProductsByCompany(companyId: any): Promise<Product> {
-        return this.productRepository.findOne({
+    async getProductsByCompany(companyId: any): Promise<Product[]> {
+        return this.productRepository.findAll({
+            where: { companyId: companyId },
+        })
+    }
+    async getProductsByCategory(companyId: any): Promise<Product[]> {
+        return this.productRepository.findAll({
             where: { companyId: companyId },
         })
     }
