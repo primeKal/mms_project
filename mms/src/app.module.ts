@@ -9,11 +9,12 @@ import { ProductModule } from './product/product.module';
 import { MenuModule } from './menu/menu.module';
 import { ProductCategoryModule } from './product-category/product-category.module';
 import { TableModule } from './table/table.module';
+import { OrderModule } from './order/order.module';
 
 @Module({
   imports: [DatabaseModule, CompanyModule, AuthModule, ConfigModule.forRoot({
     isGlobal: true,
-  }), ProductModule, MenuModule, ProductCategoryModule, TableModule],
+  }), ProductModule, MenuModule, ProductCategoryModule, TableModule, OrderModule],
   controllers: [AppController],
   providers: [AppService],
 })
