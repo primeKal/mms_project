@@ -5,7 +5,7 @@
         </div>
         <div class="-mt-8 pl-10 pb-7 flex items-end">
             <img class="z-20 h-36 w-36 overflow-hidden  rounded-full object-cover shadow-lg" :src="`/images/${logo}`" />
-            <h1 class="ml-5 mb-4 text-primary font-medium text-3xl">Sheraton Addis</h1>
+            <h1 class="ml-5 mb-4 text-primary font-medium text-3xl">{{ basicInfo.name }}</h1>
         </div>
         <div class="flex">
             <button
@@ -32,6 +32,7 @@
     </div>
 </template>
 <script>
+import {mapGetters} from 'vuex'
 import { Icon } from '@iconify/vue'
 export default {
     components: {
@@ -52,6 +53,11 @@ export default {
             ]
         }
     },
+    computed: {
+        ...mapGetters({
+            basicInfo: 'Company/getCompanyInfo'
+        })
+    },
     methods: {
         fetchTab(tab) {
             var currentIndex = this.profileTabs.findIndex((nowTab)=>{
@@ -68,6 +74,9 @@ export default {
             })
             console.log(this.transitionDirection)
         }
+    },
+    mounted () {
+        this.$emit('selectedNav', 2)
     }
     // beforeRouteLeave (to, from) {
     //     var toIndex = this.profileTabs.findIndex((tab)=>{

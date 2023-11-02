@@ -10,7 +10,9 @@
             <h3 class="text-primary font-medium text-xl">Special features</h3>
             <EditButtonVue />
        </div>
-       <p class="mt-5">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum varius mauris id sem pretium, id pellentesque risus facilisis. Sed mattis mattis commodo.</p>
+       <!-- <p class="mt-5">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum varius mauris id sem pretium, id pellentesque risus facilisis. Sed mattis mattis commodo.</p> -->
+       <p v-if="basicInfo.specialFeatures" class="mt-5">{{ basicInfo.specialFeatures }}</p>
+       <p v-else class="mt-5">No Special Features mentioned</p>
        <hr class="my-7 border w-full"/>
        <div class="mt-7 flex justify-between">
             <h3 class="text-primary font-medium text-xl">Contact</h3>
@@ -38,10 +40,16 @@
     </div>
 </template>
 <script>
+import {mapGetters} from 'vuex'
 import EditButtonVue from '@/components/Buttons/EditButton.vue'
 export default {
     components: {
         EditButtonVue,
+    },
+    computed: {
+        ...mapGetters({
+            basicInfo: 'Company/getCompanyInfo'
+        })
     }
 }
 </script>

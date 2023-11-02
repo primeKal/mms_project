@@ -1,6 +1,7 @@
 <template>
     <div class="p-6 pr-12 w-full">
         <h3 class="text-primary font-medium text-xl">Visual Branding</h3>
+        <p class="mt-5 text-black/50">Please select your brand colors as primary and secondary color</p>
         <div class="w-full mt-5 flex">
             <div class="w-1/3 flex flex-col">
                 <label class="text-sm text-gray-700">Primary Color</label>
@@ -39,6 +40,7 @@
 </template>
 <script>
 import { ref } from 'vue'
+import { mapGetters } from 'vuex'
 import { ColorPicker } from "vue3-colorpicker";
 import "vue3-colorpicker/style.css";
 export default {
@@ -57,6 +59,15 @@ export default {
         return {
             openColorSelector: 0,
         }
+    },
+    computed: {
+        ...mapGetters({
+            basicInfo: 'Company/getCompanyInfo',
+        })
+    },
+    mounted () {
+        this.primaryColor = this.basicInfo.primaryColor
+        this.secondaryColor = this.basicInfo.secondaryColor
     }
 }
 </script>

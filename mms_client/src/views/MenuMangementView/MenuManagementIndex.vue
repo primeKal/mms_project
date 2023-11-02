@@ -58,6 +58,9 @@ export default {
         searchMenuItem (searchString) {
             console.log(searchString)
         }
+    },
+    mounted () {
+        this.$emit('selectedNav', 3)
     }
 }
 </script>

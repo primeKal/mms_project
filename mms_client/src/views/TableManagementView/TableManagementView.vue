@@ -1,5 +1,7 @@
 <template>
     <div class="p-6 pr-12 w-full">
+        <AddTableViewVue class="z-10" v-if="addTable" @closeModal="()=>addTable=false" />
+
         <h3 class="text-primary font-medium text-xl">Table</h3>
         <div class="mt-8 w-full flex justify-between">
             <div class="flex justify-between w-3/5">
@@ -18,7 +20,7 @@
                 </fieldset>
 
             </div>
-           <button class="w-1/5 bg-transparent hover:bg-primary text-primary hover:text-white border-primary  rounded border active:scale-95 transition-all">
+           <button @click="addTable=true" class="w-1/5 bg-transparent hover:bg-primary text-primary hover:text-white border-primary  rounded border active:scale-95 transition-all">
                 + NEW TABLE
             </button>
         </div>
@@ -29,24 +31,39 @@
     </div>
 </template>
 <script>
+import { mapGetters } from 'vuex'
+
+import AddTableViewVue from './AddTableView.vue'
 import SearchBarVue from '@/components/fields/SearchBar.vue';
 import TableListVue from './TablesList.vue'
 export default {
     components: {
+        AddTableViewVue,
         SearchBarVue,
         TableListVue,
     },
     data () {
         return {
-            tables: [
-                {'id': '001', 'size': 4, 'status': 'Occupied'}
-            ]
+            // tables: [
+            //     {'id': '001', 'size': 4, 'status': 'Occupied'}
+            // ],
+            addTable: false,
         }
+    },
+    computed: {
+        ...mapGetters({
+            tables: 'Table/getTables'
+        })
     },
     methods: {
         searchTables(searchString) {
             console.log(searchString)
         }
+    },
+    async mounted () {
+        this.$emit('selectedNav', 4)
+        const status = await this.$store.dispatch('Table/fetchTables')
+        console.log(status)
     }
 }
 </script>

@@ -13,7 +13,7 @@
                 :key="nav.name"
                 :to="{ name: nav.link}"
                 class="pl-4 py-3 w-full flex items-center border-l-4 hover:bg-blue-200"
-                :class="[nav.link === $route.name ?'border-l-blue-700 bg-blue-200' : 'border-l-white']"
+                :class="[nav.id === navValue ?'border-l-blue-700 bg-blue-200' : 'border-l-white']"
             >
                 <Icon :icon="nav.icon" />
                 <label class="ml-2">{{ nav.name }}</label>
@@ -24,6 +24,9 @@
 <script>
 import { Icon } from '@iconify/vue'
 export default {
+    props: {
+        navValue: Number,
+    },
     components: {
         Icon
     },
@@ -31,13 +34,13 @@ export default {
         return {
             collapse: false,
             navItems: [
-                {'name': 'Dashboard', 'link': 'dashboard', 'icon': 'ic:round-space-dashboard'},
-                {'name': 'Profile', 'link': 'profile', 'icon': 'ic:round-space-dashboard'},
-                {'name': 'Menu Management', 'link': 'menu_management', 'icon': 'ic:twotone-restaurant-menu'},
-                {'name': 'Table Management', 'link': 'table_management', 'icon': 'ic:baseline-table-restaurant'},
-                {'name': 'Order Processing', 'link': 'order_processing', 'icon': 'ic:baseline-fastfood'},
-                // {'name': 'Payment', 'link': 'payment', 'icon': 'ic:baseline-payments'},
-                // {'name': 'Analytics', 'link': 'analytics', 'icon': 'uim:analytics'},
+                {'id': 1, 'name': 'Dashboard', 'link': 'dashboard', 'icon': 'ic:round-space-dashboard'},
+                {'id': 2,'name': 'Profile', 'link': 'profile', 'icon': 'ic:round-space-dashboard'},
+                {'id': 3,'name': 'Menu Management', 'link': 'menu_management', 'icon': 'ic:twotone-restaurant-menu'},
+                {'id': 4,'name': 'Table Management', 'link': 'table_management', 'icon': 'ic:baseline-table-restaurant'},
+                {'id': 5,'name': 'Order Processing', 'link': 'order_processing', 'icon': 'ic:baseline-fastfood'},
+                // {'id': 6,'name': 'Payment', 'link': 'payment', 'icon': 'ic:baseline-payments'},
+                // {'id': 7,'name': 'Analytics', 'link': 'analytics', 'icon': 'uim:analytics'},
 
             ]
         }

@@ -48,6 +48,9 @@ export default {
         searchOrders (searchString) {
             console.log(searchString)
         }
+    },
+    mounted () {
+        this.$emit('selectedNav', 5)
     }
 }
 </script>
