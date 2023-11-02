@@ -56,6 +56,11 @@ const routes = [
         component: () => import('../views/MenuMangementView/MenuManagementIndex.vue'),
       },
       {
+        path: 'edit-menu/:name',
+        name: 'edit_menu',
+        component: () => import('../views/MenuMangementView/EditMenuView.vue'),
+      },
+      {
         path: 'table-management',
         name: 'table_management',
         component: () => import('../views/TableManagementView/TableManagementView.vue')
