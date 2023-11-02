@@ -4,7 +4,7 @@ import { OrderService } from './order.service';
 import { Order } from './order.entity';
 import { OrderDto } from './dtos/order.dto';
 
-@ApiTags('Menu')
+@ApiTags('Order')
 @Controller('order')
 export class OrderController {
 
