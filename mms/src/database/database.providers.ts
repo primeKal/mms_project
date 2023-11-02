@@ -26,7 +26,7 @@ export const databaseProviders = [
         }
       });
       sequelize.addModels([ Company, Product, Menu, ProductCategory, TableModel, Order, OrderLine]);
-      await sequelize.sync({alter:true});
+      await sequelize.sync();
       return sequelize;
     },
   },
