@@ -10,6 +10,7 @@ import { JwtAuthGuard } from 'src/auth/guards/jwtAuthGuard';
 export class CompanyController {
     constructor(private readonly companyService: CompanyService){
     }
+    @UseGuards(JwtAuthGuard)
     @Get()
     public async getCompany(): Promise<Company[]> {
       return this.companyService.getAllCompanys();
@@ -26,17 +27,15 @@ export class CompanyController {
       return this.companyService.createCompany(body);
     }
 
+    @UseGuards(JwtAuthGuard)
     @Put()
     public async editCompany(@Body() body: CompanyDto): Promise<Company> {
-
       return this.companyService.editCompany(body);
     }
 
+    @UseGuards(JwtAuthGuard)
     @Delete()
     public async deleteCompany(@Body() id): Promise<void>{
       return this.companyService.deleteCompany(id);
     }
-
-
-
 }

@@ -14,8 +14,8 @@ export class OrderService {
           include: [OrderLine]
         });
       }
-      async createOrder(createOrderDto: any): Promise<Order> {
-
+      async createOrder(companyId,createOrderDto: any): Promise<Order> {
+        createOrderDto.companyId = companyId
         return await this.orderRepository.create<Order>(createOrderDto, {
           include: [OrderLine]
         });

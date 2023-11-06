@@ -1,9 +1,11 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Req, UseGuards } from '@nestjs/common';
 import { TableService } from './table.service';
 import { TableModel } from './table.entity';
 import { TableDto } from './dtos/table.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { JwtAuthGuard } from 'src/auth/guards/jwtAuthGuard';
 
+@UseGuards(JwtAuthGuard)
 @ApiTags('Table')
 @Controller('table')
 export class TableController {
@@ -27,8 +29,8 @@ export class TableController {
     }
 
     @Post()
-    public async createTable(@Body() body: TableDto): Promise<any> {
-      return this.tableService.createTable(body);
+    public async createTable(@Req() req: any, @Body() body: TableDto): Promise<any> {
+      return this.tableService.createTable(req.user.id,body);
     }
 
     @Put()

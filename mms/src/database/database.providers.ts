@@ -16,17 +16,17 @@ export const databaseProviders = [
       const sequelize = new Sequelize({
         dialect: 'postgres',
         host: process.env.DATABASE_HOST,
-        port: 5432,
+        port: parseInt(process.env.DATABASE_PORT),
         username: process.env.DATABASE_USER,
         password: process.env.DATABASE_PASSWORD,
         database: 'mms',
-        // ssl: true,
-        // dialectOptions: {
-        //   ssl: true
-        // }
+        ssl: true,
+        dialectOptions: {
+          ssl: true
+        }
       });
       sequelize.addModels([ Company, Product, Menu, ProductCategory, TableModel, Order, OrderLine]);
-      await sequelize.sync({alter:true});
+      await sequelize.sync();
       return sequelize;
     },
   },

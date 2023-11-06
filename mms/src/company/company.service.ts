@@ -16,6 +16,7 @@ export class CompanyService {
     async getAllCompanys(): Promise<Company[]> {
         return await this.companyRepository.findAll<Company>({
         //   include: { model: Socialmedia, as: 'socialmedias' }
+        attributes: { exclude: ['password'] },
         });
       }
       async createCompany(createCompanyDto): Promise<any> {
@@ -29,11 +30,13 @@ export class CompanyService {
         return await this.companyRepository.create<Company>(createCompanyDto);
       }
       async getOneCompanyById(id:number): Promise<Company>{
-        return await this.companyRepository.findOne( {
+        let company =  await this.companyRepository.findOne( {
           where: {
             id: id
-          }
+          },
+          attributes: { exclude: ['password'] },
         })
+        return company
       }
       async editCompany(editCompany: any): Promise<Company> {
         var toEditCompany = await this.companyRepository.findByPk(editCompany.id);

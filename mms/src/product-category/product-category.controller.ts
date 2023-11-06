@@ -1,10 +1,12 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Req, UseGuards } from '@nestjs/common';
 import { ProductCategoryService } from './product-category.service';
 import { ProductCategory } from './product.category.entity';
 import { ProductCategoryDto } from './dtos/product.category.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { JwtAuthGuard } from 'src/auth/guards/jwtAuthGuard';
 
 
+@UseGuards(JwtAuthGuard)
 @ApiTags('Product Category')
 @Controller('product-category')
 export class ProductCategoryController {
@@ -29,8 +31,8 @@ export class ProductCategoryController {
     }
 
     @Post()
-    public async createProductCategory(@Body() body: ProductCategoryDto): Promise<any> {
-      return this.productCategoryService.createProductCategory(body);
+    public async createProductCategory(@Req() req: any,@Body() body: ProductCategoryDto): Promise<any> {
+      return this.productCategoryService.createProductCategory(body, req.user.id);
     }
 
     @Put()

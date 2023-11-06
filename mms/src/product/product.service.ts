@@ -15,7 +15,8 @@ export class ProductService {
             //   include: { model: Socialmedia, as: 'socialmedias' }
         });
     }
-    async createProduct(createProductDto): Promise<any> {
+    async createProduct(companyId,createProductDto): Promise<any> {
+        createProductDto.companyId = companyId
         let product = await this.productRepository.create<Product>(createProductDto);
         return product;
     }

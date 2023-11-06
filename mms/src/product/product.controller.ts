@@ -1,9 +1,11 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Req, UseGuards } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { Product } from './product.entity';
 import { ProductDto } from './dtos/product.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { JwtAuthGuard } from 'src/auth/guards/jwtAuthGuard';
 
+@UseGuards(JwtAuthGuard)
 @ApiTags('Product')
 @Controller('product')
 export class ProductController {
@@ -31,8 +33,8 @@ export class ProductController {
     }
 
     @Post()
-    public async createProduct(@Body() body: ProductDto): Promise<any> {
-      return this.productService.createProduct(body);
+    public async createProduct(@Req() req: any, @Body() body: ProductDto): Promise<any> {
+      return this.productService.createProduct(req.user.id,body);
     }
 
     @Put()

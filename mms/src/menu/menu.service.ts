@@ -15,7 +15,8 @@ export class MenuService {
               include: [ProductCategory]
         });
     }
-    async createMenu(createMenuDto): Promise<any> {
+    async createMenu(createMenuDto, companyId): Promise<any> {
+        createMenuDto.companyId = companyId;
         let menu = await this.menuRepository.create<Menu>(createMenuDto);
         return menu;
     }
