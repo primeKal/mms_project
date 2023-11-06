@@ -10,12 +10,17 @@ import { MenuModule } from './menu/menu.module';
 import { ProductCategoryModule } from './product-category/product-category.module';
 import { TableModule } from './table/table.module';
 import { OrderModule } from './order/order.module';
+import { APP_FILTER } from '@nestjs/core';
+import { AllExceptionsFilter } from './utils/http.exceptions.handler';
 
 @Module({
   imports: [DatabaseModule, CompanyModule, AuthModule, ConfigModule.forRoot({
     isGlobal: true,
   }), ProductModule, MenuModule, ProductCategoryModule, TableModule, OrderModule],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService,     {
+    provide: APP_FILTER,
+    useClass: AllExceptionsFilter,
+  },],
 })
 export class AppModule {}

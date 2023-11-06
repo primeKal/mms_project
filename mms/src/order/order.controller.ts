@@ -1,9 +1,11 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Req, UseGuards } from '@nestjs/common';
 import { ApiProperty, ApiTags } from '@nestjs/swagger';
 import { OrderService } from './order.service';
 import { Order } from './order.entity';
 import { OrderDto } from './dtos/order.dto';
+import { JwtAuthGuard } from 'src/auth/guards/jwtAuthGuard';
 
+@UseGuards(JwtAuthGuard)
 @ApiTags('Order')
 @Controller('order')
 export class OrderController {
@@ -23,8 +25,8 @@ export class OrderController {
     }
 
     @Post()
-    public async createOrder(@Body() body: OrderDto): Promise<Order> {
-      return this.orderService.createOrder(body);
+    public async createOrder(@Req() req: any,@Body() body: OrderDto): Promise<Order> {
+      return this.orderService.createOrder(req.user.id,body);
     }
 
     @Put()

@@ -9,6 +9,7 @@ import {
     HasMany,
   } from 'sequelize-typescript';
 import { Menu } from 'src/menu/menu.entity';
+import { ProductCategory } from 'src/product-category/product.category.entity';
 import { Product } from 'src/product/product.entity';
 import { TableModel } from 'src/table/table.entity';
   
@@ -80,6 +81,16 @@ import { TableModel } from 'src/table/table.entity';
         defaultValue: false
       })
       moto: string;
+
+      @Column({
+        allowNull: true,
+      })
+      address: string;
+
+      @Column({
+        allowNull: true,
+      })
+      contact_information: string;
     
       @Column({
         allowNull: true,
@@ -107,9 +118,13 @@ import { TableModel } from 'src/table/table.entity';
     @HasMany(() => Product)
     products: Product[]
 
+    @HasMany(() => ProductCategory)
+    productCategories: ProductCategory[]
+
     @HasMany(() => Menu)
     menus: Menu[]
 
     @HasMany(() => TableModel)
     tables: TableModel[]
+    
   }

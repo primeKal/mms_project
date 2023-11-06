@@ -8,4 +8,6 @@ export class CompanyDto {
     readonly primaryColor: string;
     readonly secondaryColor: string;
     readonly specialFeatures: string;
+    readonly address: string;
+    readonly contact_information: string;
   }

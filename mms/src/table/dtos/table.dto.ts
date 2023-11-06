@@ -4,5 +4,4 @@ export class TableDto {
     readonly size: number;
     readonly number: number;
     readonly status: string;
-    readonly companyId: number;
   }

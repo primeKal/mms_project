@@ -11,7 +11,8 @@ export class TableService {
             //   include: [ProductCategory]
         });
     }
-    async createTable(createTableModelDto): Promise<any> {
+    async createTable(companyId,createTableModelDto): Promise<any> {
+        createTableModelDto.companyId = companyId;
         let tableModel = await this.tableRepository.create<TableModel>(createTableModelDto);
         return tableModel;
     }

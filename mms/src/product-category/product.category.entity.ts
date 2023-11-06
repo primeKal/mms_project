@@ -12,6 +12,7 @@ import {
   HasMany,
   BelongsToMany,
 } from 'sequelize-typescript';
+import { Company } from 'src/company/company.entity';
 import { Menu } from 'src/menu/menu.entity';
 import { Product } from 'src/product/product.entity';
 
@@ -36,6 +37,11 @@ export class ProductCategory extends Model<ProductCategory> {
   name: string;
 
   @Column({
+    allowNull: true,
+  })
+  description: string;
+
+  @Column({
     defaultValue: 0
   })
   count: number;
@@ -54,6 +60,12 @@ export class ProductCategory extends Model<ProductCategory> {
 
 
   // forign keys
+  @ForeignKey(() => Company)
+  companyId: number
+
+  @BelongsTo(() => Company)
+  company: Company
+
 
   @ForeignKey(() => Menu)
   menuId: number
