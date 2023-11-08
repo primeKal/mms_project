@@ -1,5 +1,5 @@
 <template>
-    <div class="h-full p-7 flex flex-col bg-gradient-to-b from-emerald-100 to-emerald-200">
+    <div class="h-full p-7 flex flex-col">
         <img src="/images/menu_image.png" class="self-center h-32 w-32 object-cover object-center rounded-full" />
         <h2 class="text-center mt-2 text-primary">Sheraton Addis</h2>
         <router-view v-slot="{Component}">

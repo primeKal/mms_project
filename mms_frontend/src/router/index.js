@@ -19,13 +19,13 @@ const routes = [
     path: '/menu/:id',
     name: 'menu',
     component: () => import('../views/menu/MenuIndex.vue'),
-    // children: [
-    //   {
-    //     path: 'menu',
-    //     name: 'menu',
-    //     component: ()=> import('../views/menu/MenuIndex.vue')
-    //   }
-    // ]
+    children: [
+      {
+        path: 'items',
+        name: 'items',
+        component: ()=> import('../views/menu/MenusView.vue')
+      }
+    ]
   }
 ]
 
