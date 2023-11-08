@@ -19,9 +19,9 @@ export const databaseProviders = [
         password: process.env.DATABASE_PASSWORD,
         database: 'mms',
         ssl: true,
-        dialectOptions: {
-          ssl: true
-        }
+        //dialectOptions: {
+          //ssl: true
+        //}
       });
       sequelize.addModels([ Company, Product, Menu, ProductCategory, TableModel, Order, OrderLine]);
       await sequelize.sync();
