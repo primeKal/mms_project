@@ -1,18 +1,18 @@
 <template>
-    <div class="relative">
-        <p>Menu</p>
-        <div class="mt-2 flex overflow-x-scroll ">
+    <div class="h-full">
+        <p class="px-2 pt-2 pb-1 font-medium">Menu</p>
+        <div class="flex overflow-x-scroll scrollbar-hide">
             <button
                 v-for="section in menuSections"
                 :key="section.id"
                 @click="selectedSection=section.id"
-                :class="{'text-primary border-primary': selectedSection=== section.id}"
-                class="outline-none p-2 text-black/70 border-b"
+                :class="{'text-primary border-primary': selectedSection === section.id}"
+                class="outline-none py-2 px-4 text-black/70 border-b-4"
             >
                 {{ section.name }}
             </button>
         </div>
-        <div class="py-2">
+        <div class="p-3 h-[62vh] overflow-y-scroll">
             <transition-group
                 tag="div"
                 class="flex flex-col w-full space-y-3"
@@ -24,7 +24,7 @@
                 />
             </transition-group>
         </div>
-        <OrderSummaryVue class="absolute inset-b-0 inset-x-0 shadow-md" />
+        <OrderSummaryVue class="z-10 fixed bottom-0 inset-x-0 shadow-lg" />
     </div>
 </template>
 <script>
@@ -43,15 +43,34 @@ export default {
                 {'id': '1003', 'image': '/images/fruit.jpeg', 'name': 'rosotto', 'price': 235},
                 {'id': '1004', 'image': '/images/fish.jpg', 'name': 'rosotto', 'price': 235},
                 {'id': '1005', 'image': '/images/fruit.jpeg', 'name': 'rosotto', 'price': 235},
+                // {'id': '1006', 'image': '/images/fish.jpg', 'name': 'rosotto', 'price': 235},
+                // {'id': '1007', 'image': '/images/fruit.jpeg', 'name': 'rosotto', 'price': 235},
+                // {'id': '1008', 'image': '/images/fish.jpg', 'name': 'rosotto', 'price': 235},
+                // {'id': '1009', 'image': '/images/fruit.jpeg', 'name': 'rosotto', 'price': 235},
             ],
             menuSections: [
-                {'id': '2000', 'name': 'breakfast'},
-                {'id': '2001', 'name': 'lunch'},
-                {'id': '2002', 'name': 'dinner'},
-                {'id': '2003', 'name': 'drinks'},
+                {'id': '2000', 'name': 'Breakfast'},
+                {'id': '2001', 'name': 'Lunch'},
+                {'id': '2002', 'name': 'Dinner'},
+                {'id': '2003', 'name': 'Drinks'},
             ],
             selectedSection: '',
         }
+    },
+    mounted () {
+        this.selectedSection = this.menuSections[0].id
     }
 }
 </script>
+<style>
+/* For Webkit-based browsers (Chrome, Safari and Opera) */
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+
+/* For IE, Edge and Firefox */
+.scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+</style>

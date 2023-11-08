@@ -1,7 +1,7 @@
 <template>
-    <div class="h-full p-7 flex flex-col">
+    <div class="relative h-full py-7 flex flex-col">
         <img src="/images/menu_image.png" class="self-center h-32 w-32 object-cover object-center rounded-full" />
-        <h2 class="text-center mt-2 text-primary">Sheraton Addis</h2>
+        <h2 class="text-center mt-2 text-primary text-lg font-semibold">Sheraton Addis</h2>
         <router-view v-slot="{Component}">
             <!-- enter all transitions -->
             <transition 
