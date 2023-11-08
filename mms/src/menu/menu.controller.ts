@@ -6,7 +6,7 @@ import { MenuDto } from './dtos/menu.dto';
 import { ApiTags } from '@nestjs/swagger';
 
 
-@UseGuards(JwtAuthGuard)
+// @UseGuards(JwtAuthGuard)
 @ApiTags('Menu')
 @Controller('menu')
 export class MenuController {
