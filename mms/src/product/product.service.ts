@@ -2,18 +2,19 @@ import { Inject, Injectable } from '@nestjs/common';
 import { Product } from './product.entity';
 import { PRODUCT_REPOSITORY } from 'src/utils/constants';
 import { Op } from 'sequelize';
+import { PaginationService } from 'src/utils/services/pagination.service';
 
 @Injectable()
 export class ProductService {
     constructor(
         @Inject(PRODUCT_REPOSITORY) private readonly productRepository: typeof Product,
+        private readonly paginationService: PaginationService<Product>
     ) {
+        this.paginationService = new PaginationService<Product>(this.productRepository)
 
     }
-    async getAllProducts(): Promise<Product[]> {
-        return await this.productRepository.findAll<Product>({
-            //   include: { model: Socialmedia, as: 'socialmedias' }
-        });
+    async getAllProducts(page, pageSize): Promise<Product[]> {
+        return await  this.paginationService.findAll(page,pageSize)
     }
     async createProduct(companyId,createProductDto): Promise<any> {
         createProductDto.companyId = companyId

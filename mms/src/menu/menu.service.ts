@@ -3,23 +3,25 @@ import { Menu } from './menu.entity';
 import { MENU_REPOSITORY } from 'src/utils/constants';
 import { ProductCategory } from 'src/product-category/product.category.entity';
 import { Product } from 'src/product/product.entity';
+import { PaginationService } from 'src/utils/services/pagination.service';
 
 @Injectable()
 export class MenuService {
     constructor(
         @Inject(MENU_REPOSITORY) private readonly menuRepository: typeof Menu,
+        private readonly paginationService : PaginationService<Menu>
     ) {
+        this.paginationService = new PaginationService<Menu>(this.menuRepository);
 
     }
-    async getAllMenus(): Promise<Menu[]> {
-        return await this.menuRepository.findAll<Menu>({
-            include: [{
-                model: ProductCategory,
-                include: [{
-                    model: Product,
-                }]
-            }]
-        });
+    async getAllMenus(page,pageSize): Promise<Menu[]> {
+        let toInclude = [{
+                    model: ProductCategory,
+                    include: [{
+                        model: Product,
+                    }]
+                 }]
+        return await this.paginationService.findAll(page,pageSize, toInclude)
     }
     async createMenu(createMenuDto, companyId): Promise<any> {
         createMenuDto.companyId = companyId;

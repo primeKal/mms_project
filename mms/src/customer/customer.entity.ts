@@ -1,4 +1,3 @@
-import { DataTypes } from 'sequelize';
 import {
     Table,
     Column,
@@ -13,13 +12,14 @@ import {
   } from 'sequelize-typescript';
 import { Company } from 'src/company/company.entity';
 import { Order } from 'src/order/order.entity';
+import { ProductCategory } from 'src/product-category/product.category.entity';
 
   const tableOptions = {
-    tableName: 'table',
+    tableName: 'customer',
   } 
   
   @Table(tableOptions)
-  export class TableModel extends Model<TableModel> {
+  export class Customer extends Model<Customer> {
     @Column({
       type: DataType.BIGINT,
       allowNull: false,
@@ -30,25 +30,14 @@ import { Order } from 'src/order/order.entity';
     public id: number;
   
     @Column({
-      allowNull: true,
+      allowNull: false,
     })
-    name: string;
+    phoneNumber: string;
 
     @Column({
         allowNull: true,
       })
-      number: number;
-
-    @Column({
-        allowNull: true,
-      })
-      size: number;
-
-    
-    // @Column({
-    //     allowNull: true,
-    //   })
-    //   status: DataTypes.EnumDataType<Status>(Status);
+      name: string;
     
     @Column({
     defaultValue: false
@@ -64,13 +53,6 @@ import { Order } from 'src/order/order.entity';
 
     // forign keys
 
-    @ForeignKey(() => Company)
-    companyId: number
-    
-    @BelongsTo(() => Company)
-    company: Company
-
     @HasMany(() => Order)
     orders: Order[]
-
   }

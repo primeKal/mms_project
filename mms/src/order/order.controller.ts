@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query, Req, UseGuards } from '@nestjs/common';
 import { ApiProperty, ApiTags } from '@nestjs/swagger';
 import { OrderService } from './order.service';
 import { Order } from './order.entity';
@@ -14,8 +14,8 @@ export class OrderController {
 
     }
     @Get()
-    public async getOrders(): Promise<Order[]> {
-      return this.orderService.getAllOrders();
+    public async getOrders(@Query('page') page: number = 1, @Query('pageSize') pageSize: number = 10): Promise<Order[]> {
+      return this.orderService.getAllOrders(page, pageSize);
     }
 
     @Get(':id')

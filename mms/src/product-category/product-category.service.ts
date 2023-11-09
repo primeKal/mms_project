@@ -4,17 +4,17 @@ import { PRODUCT_CATEGORY_REPOSITORY } from 'src/utils/constants';
 import { Op } from 'sequelize';
 import { ProductService } from 'src/product/product.service';
 import { Product } from 'src/product/product.entity';
+import { PaginationService } from 'src/utils/services/pagination.service';
 
 @Injectable()
 export class ProductCategoryService {
     constructor(@Inject(PRODUCT_CATEGORY_REPOSITORY) private readonly productCategoryRepository: typeof ProductCategory,
-                private readonly productService: ProductService){
-
+                private readonly productService: ProductService,
+                private readonly paginationService: PaginationService<ProductCategory>){
+                    this.paginationService = new PaginationService<ProductCategory>(this.productCategoryRepository)
     }
-    async getAllProductCategorys(): Promise<ProductCategory[]> {
-        return await this.productCategoryRepository.findAll<ProductCategory>({
-            //   include: { model: Socialmedia, as: 'socialmedias' }
-        });
+    async getAllProductCategories(page, pageSize): Promise<ProductCategory[]> {
+        return await this.paginationService.findAll(page, pageSize);
     }
     async createProductCategory(createProductCategoryDto, companyId): Promise<any> {
         createProductCategoryDto.companyId = companyId;

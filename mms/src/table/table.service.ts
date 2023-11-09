@@ -1,15 +1,16 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { TABLE_REPOSITORY } from 'src/utils/constants';
 import { TableModel } from './table.entity';
+import { PaginationService } from 'src/utils/services/pagination.service';
 
 @Injectable()
 export class TableService {
-    constructor(@Inject(TABLE_REPOSITORY) private readonly tableRepository: typeof TableModel){     
+    constructor(@Inject(TABLE_REPOSITORY) private readonly tableRepository: typeof TableModel,
+                private readonly paginationService: PaginationService<TableModel>){     
+                    this.paginationService = new PaginationService<TableModel>(this.tableRepository)
     }
-    async getAllTables(): Promise<TableModel[]> {
-        return await this.tableRepository.findAll<TableModel>({
-            //   include: [ProductCategory]
-        });
+    async getAllTables(page, pageSize): Promise<TableModel[]> {
+        return await this.paginationService.findAll(page, pageSize);
     }
     async createTable(companyId,createTableModelDto): Promise<any> {
         createTableModelDto.companyId = companyId;
