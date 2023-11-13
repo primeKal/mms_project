@@ -18,10 +18,10 @@ class SectionAPI {
             try {
                 const response = await baseAPI.post('product-category', {
                     name: sectionInfo.name,
+                    description: sectionInfo.description,
                     menuId: menuId,
                 })
-                const result = response.data
-                resolve(result)
+                resolve(response)
             }catch(error) {
                 reject(error)
             }

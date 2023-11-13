@@ -1,15 +1,16 @@
 import { createStore } from 'vuex'
-// import createPersistedState from "vuex-persistedstate";
+import createPersistedState from "vuex-persistedstate";
 
 import Company from './modules/Company'
+import Menu from './modules/Menu'
 import Table from './modules/Table'
 export default createStore({
-  // plugins: [
-  //   createPersistedState({ 
-  //     storage: Window.sessionStorage,
-  //     paths: ['Accounts']
-  //   })
-  // ],
+  plugins: [
+    createPersistedState({ 
+      storage: Window.sessionStorage,
+      paths: ['Company']
+    })
+  ],
   state: {
   },
   getters: {
@@ -21,5 +22,6 @@ export default createStore({
   modules: {
     Company,
     Table,
+    Menu,
   }
 })
