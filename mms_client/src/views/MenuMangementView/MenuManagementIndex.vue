@@ -107,8 +107,6 @@
     </div>
 </template>
 <script>
-<<<<<<< Updated upstream
-=======
 import { mapGetters, mapActions } from 'vuex'
 
 import MainRendererVue from '@/layout/MainRenderer.vue'
@@ -133,7 +131,6 @@ export default {
             },
             openNewMenu: false,
             openDelete: null,
->>>>>>> Stashed changes
         }
     },
     methods: {
@@ -176,13 +173,10 @@ export default {
             }else {
                 this.$toast.error('Error occured')
             }
->>>>>>> Stashed changes
         }
     },
     mounted () {
         this.$emit('selectedNav', 3)
-<<<<<<< Updated upstream
-=======
         await this.fetchMenus(1)
         this.loading = false
 >>>>>>> Stashed changes
