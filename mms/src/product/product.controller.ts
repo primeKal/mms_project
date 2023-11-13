@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query, Req, UseGuards } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { Product } from './product.entity';
 import { ProductDto } from './dtos/product.dto';
@@ -13,8 +13,8 @@ export class ProductController {
     }
     
     @Get()
-    public async getProducts(): Promise<Product[]> {
-      return this.productService.getAllProducts();
+    public async getProducts(@Query('page') page: number = 1, @Query('pageSize') pageSize: number = 10): Promise<Product[]> {
+      return this.productService.getAllProducts(page, pageSize);
     }
 
     // @UseGuards(JwtAuthGuard)

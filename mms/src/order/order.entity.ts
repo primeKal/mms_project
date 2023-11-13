@@ -14,6 +14,8 @@ import {
 } from 'sequelize-typescript';
 import { Company } from 'src/company/company.entity';
 import { OrderLine } from './order.line.entity';
+import { TableModel } from 'src/table/table.entity';
+import { Customer } from 'src/customer/customer.entity';
 
 
 const tableOptions = {
@@ -96,4 +98,17 @@ export class Order extends Model<Order> {
   @HasMany(() => OrderLine)
   orderlines: OrderLine[]
 
+
+  @ForeignKey(() => TableModel)
+  tableId: number
+  
+  @BelongsTo(() => TableModel)
+  table: TableModel
+  
+
+  @ForeignKey(() => Customer)
+  customerId: number
+  
+  @BelongsTo(() => Customer)
+  customer: Customer  
 }

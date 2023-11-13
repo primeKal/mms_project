@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query, Req, UseGuards } from '@nestjs/common';
 import { TableService } from './table.service';
 import { TableModel } from './table.entity';
 import { TableDto } from './dtos/table.dto';
@@ -13,8 +13,8 @@ export class TableController {
 
     }
     @Get()
-    public async getTable(): Promise<TableModel[]> {
-      return this.tableService.getAllTables();
+    public async getTable(@Query('page') page: number = 1, @Query('pageSize') pageSize: number = 10): Promise<TableModel[]> {
+      return this.tableService.getAllTables(page,pageSize);
     }
 
     // @UseGuards(JwtAuthGuard)

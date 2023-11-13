@@ -12,11 +12,12 @@ import { TableModule } from './table/table.module';
 import { OrderModule } from './order/order.module';
 import { APP_FILTER } from '@nestjs/core';
 import { AllExceptionsFilter } from './utils/http.exceptions.handler';
+import { CustomerModule } from './customer/customer.module';
 
 @Module({
   imports: [DatabaseModule, CompanyModule, AuthModule, ConfigModule.forRoot({
     isGlobal: true,
-  }), ProductModule, MenuModule, ProductCategoryModule, TableModule, OrderModule],
+  }), ProductModule, MenuModule, ProductCategoryModule, TableModule, OrderModule, CustomerModule],
   controllers: [AppController],
   providers: [AppService,     {
     provide: APP_FILTER,

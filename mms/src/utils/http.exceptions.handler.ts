@@ -17,7 +17,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
             : exception.hasOwnProperty('message')
             ? (exception as { message: string }).message
             : 'Internal server error';
-
+        console.log(exception);
         response.status(status).json({
             statusCode: status,
             timestamp: new Date().toISOString(),

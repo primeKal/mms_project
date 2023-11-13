@@ -1,5 +1,6 @@
 import { Sequelize } from 'sequelize-typescript';
 import { Company } from 'src/company/company.entity';
+import { Customer } from 'src/customer/customer.entity';
 import { Menu } from 'src/menu/menu.entity';
 import { Order } from 'src/order/order.entity';
 import { OrderLine } from 'src/order/order.line.entity';
@@ -25,7 +26,7 @@ export const databaseProviders = [
           ssl: true
         }
       });
-      sequelize.addModels([ Company, Product, Menu, ProductCategory, TableModel, Order, OrderLine]);
+      sequelize.addModels([ Company, Product, Menu, ProductCategory, TableModel, Order, OrderLine, Customer]);
       await sequelize.sync();
       return sequelize;
     },

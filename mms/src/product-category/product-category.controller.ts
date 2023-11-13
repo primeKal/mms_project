@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query, Req, UseGuards } from '@nestjs/common';
 import { ProductCategoryService } from './product-category.service';
 import { ProductCategory } from './product.category.entity';
 import { ProductCategoryDto } from './dtos/product.category.dto';
@@ -15,8 +15,8 @@ export class ProductCategoryController {
     }
 
     @Get()
-    public async getProductCategory(): Promise<ProductCategory[]> {
-      return this.productCategoryService.getAllProductCategorys();
+    public async getProductCategory(@Query('page') page: number = 1, @Query('pageSize') pageSize: number = 10): Promise<ProductCategory[]> {
+      return this.productCategoryService.getAllProductCategories(page, pageSize);
     }
 
     // @UseGuards(JwtAuthGuard)

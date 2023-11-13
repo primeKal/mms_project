@@ -4,6 +4,8 @@ export class OrderDto{
     totalPrice: number;
     totalTax: number;
     uniqueCode: string;
+    tableId: number;
+    customerPhone: string;
     // userId: number; 
     orderlines : OrderLinesDto[]  
 }

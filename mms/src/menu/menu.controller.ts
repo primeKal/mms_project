@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards, Req } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards, Req, Query } from '@nestjs/common';
 import { MenuService } from './menu.service';
 import { Menu } from './menu.entity';
 import { JwtAuthGuard } from 'src/auth/guards/jwtAuthGuard';
@@ -6,7 +6,7 @@ import { MenuDto } from './dtos/menu.dto';
 import { ApiTags } from '@nestjs/swagger';
 
 
-@UseGuards(JwtAuthGuard)
+// @UseGuards(JwtAuthGuard)
 @ApiTags('Menu')
 @Controller('menu')
 export class MenuController {
@@ -14,8 +14,8 @@ export class MenuController {
     }
     
     @Get()
-    public async getMenu(): Promise<Menu[]> {
-      return this.menuService.getAllMenus();
+    public async getMenu(@Query('page') page: number = 1, @Query('pageSize') pageSize: number = 10): Promise<Menu[]> {
+      return this.menuService.getAllMenus(page, pageSize);
     }
 
     // @UseGuards(JwtAuthGuard)
@@ -29,6 +29,7 @@ export class MenuController {
       return this.menuService.getMenusByCompany(id);
     }
 
+    @UseGuards(JwtAuthGuard)
     @Post()
     public async createMenu(@Req() req: any,@Body() body: MenuDto): Promise<any> {
       return this.menuService.createMenu(body, req.user.id);

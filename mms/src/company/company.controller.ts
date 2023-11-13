@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query, UseGuards } from '@nestjs/common';
 import { CompanyService } from './company.service';
 import { Company } from './company.entity';
 import { ApiProperty, ApiTags } from '@nestjs/swagger';
@@ -12,8 +12,8 @@ export class CompanyController {
     }
     @UseGuards(JwtAuthGuard)
     @Get()
-    public async getCompany(): Promise<Company[]> {
-      return this.companyService.getAllCompanys();
+    public async getCompany(@Query('page') page: number = 1, @Query('pageSize') pageSize: number = 10): Promise<Company[]> {
+      return this.companyService.getAllCompanies(page,pageSize);
     }
 
     @UseGuards(JwtAuthGuard)
