@@ -6,5 +6,11 @@
         })
         return value != null ? formatter.format(value) : '-'
     },
+    timeOnly(value) {
+        return value != null ? new Date(value).toLocaleDateString() : '-'
+    },
+    dateOnly(value) {
+        return value != null ? new Date(value).toLocaleTimeString() : '-'
+    }
 }
 export default filter
