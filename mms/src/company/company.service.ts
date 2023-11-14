@@ -4,6 +4,7 @@ import { Company } from './company.entity';
 import * as bcrypt from "bcrypt";
 import { AuthService } from 'src/auth/auth.service';
 import { PaginationService } from 'src/utils/services/pagination.service';
+import { Role } from 'src/role/role.entity';
 
 @Injectable()
 export class CompanyService {
@@ -22,8 +23,10 @@ export class CompanyService {
 
   async createCompany(createCompanyDto): Promise<any> {
     createCompanyDto.password = await bcrypt.hash(createCompanyDto.password, 12);
+    this
     let company = await this.companyRepository.create<Company>(createCompanyDto);
     console.log(company)
+    company.$add("Role",  2)
     let data = this.authService.generateToken(company.dataValues)
     return data;
   }
@@ -35,6 +38,7 @@ export class CompanyService {
       where: {
         id: id
       },
+      include: [Role],
       attributes: { exclude: ['password'] },
     })
     return company

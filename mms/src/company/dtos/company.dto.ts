@@ -10,4 +10,5 @@ export class CompanyDto {
     readonly specialFeatures: string;
     readonly address: string;
     readonly contact_information: string;
+    // readonly roleId : number;
   }

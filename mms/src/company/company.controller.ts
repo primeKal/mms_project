@@ -36,6 +36,6 @@ export class CompanyController {
     @UseGuards(JwtAuthGuard)
     @Delete()
     public async deleteCompany(@Body() id): Promise<void>{
-      return this.companyService.deleteCompany(id);
+      return this.companyService.deleteCompany(id.id);
     }
 }

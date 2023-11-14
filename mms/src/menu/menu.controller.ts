@@ -43,6 +43,6 @@ export class MenuController {
 
     @Delete()
     public async deleteMenu(@Body() id): Promise<void>{
-      return this.menuService.deleteMenu(id);
+      return this.menuService.deleteMenu(id.id);
     }
 }
