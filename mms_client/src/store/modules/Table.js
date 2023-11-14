@@ -1,4 +1,5 @@
 import TableAPI from "@/services/table/table"
+import { FETCH_SUCCESS } from "@/utils/Variables"
 const state = {
     tables: []
 }
@@ -37,6 +38,23 @@ const actions = {
             .catch((error)=>{
                 console.log(error)
                 status = false
+            })
+        return status
+    },
+    deleteTable: async ({dispatch}, tableId) => {
+        var status = null
+        await TableAPI.deleteTable(parseInt(tableId))
+            .then((response)=>{
+                if(response.status === FETCH_SUCCESS) {
+                    dispatch('fetchTables')
+                    status = {'success': true}
+                }else{
+                    status = {'success': false}
+                }
+            })
+            .catch((error)=>{
+                console.log(error)
+                status = {'success':false, 'error': error}
             })
         return status
     }
