@@ -3,6 +3,7 @@ import createPersistedState from "vuex-persistedstate";
 
 import Company from './modules/Company'
 import Menu from './modules/Menu'
+import Order from './modules/Orders'
 import Table from './modules/Table'
 export default createStore({
   plugins: [
@@ -22,6 +23,7 @@ export default createStore({
   modules: {
     Company,
     Table,
+    Order,
     Menu,
   }
 })
