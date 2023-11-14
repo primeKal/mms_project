@@ -13,12 +13,13 @@
                 <p class="text-lg font-semibold">Delete Confirmation</p>
                 <p class="mt-4">Are you sure you want to delete</p>
                 <p class="mt-2 py-2 px-3 text-center border-l-8 border-red-500 bg-red-50 font-semibold text-red-500">{{ title }}</p>
-                <div class="mt-6 flex justify-end">
-                    <button @click="$emit('deleteItem', id)" class="mr-2 py-1 px-3 text-white font-medium bg-red-400 hover:bg-red-500 active:scale-95 rounded">
-                        Delete
-                    </button>
-                    <button @click="$emit('closeModal')" class="py-1 px-3 text-white font-medium bg-gray-400 hover:bg-gray-500 active:scale-95 rounded">
+                <div class="mt-6 flex justify-end">                    
+                    <button @click="$emit('closeModal')" class="py-1 px-3 text-gray-400 font-medium active:scale-95 rounded">
                         Cancel
+                    </button>
+                    <button @click="$emit('deleteItem', id), loading = true" class="mr-2 py-1 px-3 flex items-center text-white font-medium bg-red-400 hover:bg-red-500 active:scale-95 rounded">
+                        <svg v-if="loading" class="mr-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2A10 10 0 1 0 22 12A10 10 0 0 0 12 2Zm0 18a8 8 0 1 1 8-8A8 8 0 0 1 12 20Z" opacity=".5"/><path fill="currentColor" d="M20 12h2A10 10 0 0 0 12 2V4A8 8 0 0 1 20 12Z"><animateTransform attributeName="transform" dur="1s" from="0 12 12" repeatCount="indefinite" to="360 12 12" type="rotate"/></path></svg>
+                        Delete
                     </button>
                 </div>
             </div>
@@ -34,6 +35,14 @@ export default {
     },
     components: {
         ModalLayoutVue,
+    },
+    data () {
+        return {
+            loading: false,
+        }
+    },
+    beforeUnmount() {
+        this.loading = false
     }
 }
 </script>
