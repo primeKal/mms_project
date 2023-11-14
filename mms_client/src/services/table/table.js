@@ -30,5 +30,19 @@ class TableAPI {
             }
         })
     }
+    static deleteTable(tableId) {
+        return new Promise(async(resolve,reject)=>{
+            try {
+                const response = await baseAPI.delete('table', {
+                    data: {
+                        id: tableId,
+                    }
+                })
+                resolve(response)
+            } catch (error) {
+                reject(error)
+            }
+        })
+    }
 }
 export default TableAPI
