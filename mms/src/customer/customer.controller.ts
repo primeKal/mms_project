@@ -2,11 +2,15 @@ import { Body, Controller, Delete, Get, Param, Post, Put, Query, Req } from '@ne
 import { Customer } from './customer.entity';
 import { CustomerService } from './customer.service';
 import { CustomerDto } from './dtos/customer.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+
+@ApiTags("Customer")
 @Controller('customer')
 export class CustomerController {
     constructor(private readonly customerService: CustomerService){
     }
+    
     
     @Get()
     public async getCustomer(@Query('page') page: number = 10, @Query('pageSize') pageSize: number = 1): Promise<Customer[]> {
@@ -32,6 +36,6 @@ export class CustomerController {
 
     @Delete()
     public async deleteCustomer(@Body() id): Promise<void>{
-      return this.customerService.deleteCustomer(id);
+      return this.customerService.deleteCustomer(id.id);
     }
 }

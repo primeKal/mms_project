@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
     Table,
     Column,
@@ -7,10 +8,12 @@ import {
     UpdatedAt,
     DeletedAt,
     HasMany,
+    BelongsToMany,
   } from 'sequelize-typescript';
 import { Menu } from 'src/menu/menu.entity';
 import { ProductCategory } from 'src/product-category/product.category.entity';
 import { Product } from 'src/product/product.entity';
+import { CompanyRole, Role } from 'src/role/role.entity';
 import { TableModel } from 'src/table/table.entity';
   
   const tableOptions = {
@@ -127,4 +130,8 @@ import { TableModel } from 'src/table/table.entity';
     @HasMany(() => TableModel)
     tables: TableModel[]
     
+
+    @BelongsToMany(() => Role, ()=> CompanyRole)
+    @ApiProperty({ type: () => [Role] })
+    roles: Role[];
   }

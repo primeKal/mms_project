@@ -6,6 +6,7 @@ import { Order } from 'src/order/order.entity';
 import { OrderLine } from 'src/order/order.line.entity';
 import { ProductCategory } from 'src/product-category/product.category.entity';
 import { Product } from 'src/product/product.entity';
+import { CompanyRole, Role } from 'src/role/role.entity';
 import { TableModel } from 'src/table/table.entity';
 
 
@@ -26,7 +27,8 @@ export const databaseProviders = [
           ssl: true
         }
       });
-      sequelize.addModels([ Company, Product, Menu, ProductCategory, TableModel, Order, OrderLine, Customer]);
+      sequelize.addModels([ Company, Product, Menu, ProductCategory, TableModel, Order, OrderLine, Customer,
+                            Role, CompanyRole]);
       await sequelize.sync();
       return sequelize;
     },

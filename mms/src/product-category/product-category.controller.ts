@@ -43,6 +43,6 @@ export class ProductCategoryController {
 
     @Delete()
     public async deleteProductCategory(@Body() id): Promise<void>{
-      return this.productCategoryService.deleteProductCategory(id);
+      return this.productCategoryService.deleteProductCategory(id.id);
     }
 }

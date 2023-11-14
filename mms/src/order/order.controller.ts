@@ -4,6 +4,7 @@ import { OrderService } from './order.service';
 import { Order } from './order.entity';
 import { OrderDto } from './dtos/order.dto';
 import { JwtAuthGuard } from 'src/auth/guards/jwtAuthGuard';
+import { RoleGuard } from 'src/auth/guards/role.guards';
 
 @UseGuards(JwtAuthGuard)
 @ApiTags('Order')
@@ -13,6 +14,8 @@ export class OrderController {
     constructor(private orderService : OrderService){
 
     }
+
+    @UseGuards(new RoleGuard(3))
     @Get()
     public async getOrders(@Query('page') page: number = 1, @Query('pageSize') pageSize: number = 10): Promise<Order[]> {
       return this.orderService.getAllOrders(page, pageSize);
@@ -37,7 +40,7 @@ export class OrderController {
 
     @Delete()
     public async deleteOrder(@Body() id): Promise<void>{
-      return this.orderService.deleteOrder(id);
+      return this.orderService.deleteOrder(id.id);
     }
     @Get('ByUser/:id')
     public async getOrdersByUser(@Param('id') id: number): Promise<[Order]>{

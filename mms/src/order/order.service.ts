@@ -5,14 +5,25 @@ import { Order } from './order.entity';
 import { OrderLine } from './order.line.entity';
 import { CustomerService } from 'src/customer/customer.service';
 import { PaginationService } from 'src/utils/services/pagination.service';
-import { toUnicode } from 'punycode';
+import { InjectBot } from 'nestjs-telegraf';
+import { Context, Telegraf } from 'telegraf';
+import { Product } from 'src/product/product.entity';
 
 @Injectable()
 export class OrderService {
   constructor(@Inject(ORDER_REPOSITORY) private readonly orderRepository: typeof Order,
     @Inject(ORDER_LINE_REPOSITORY) private readonly orderLineRepository,
     private customerService: CustomerService,
-    private readonly paginationService: PaginationService<Order>) {
+    private readonly paginationService: PaginationService<Order>,
+    // @InjectBot() private bot: Telegraf
+     ) {
+
+      // this.bot.command('start', (ctx: Context) => {
+      //   const chatId = ctx.chat.id;
+      //   console.log(chatId);
+      //   ctx.reply('Welcome! You can now receive notifications from your favorite menu system.');
+      // });
+
     this.paginationService = new PaginationService<Order>(this.orderRepository);
   }
   async getAllOrders(page,pageSize): Promise<Order[]> {
@@ -22,16 +33,23 @@ export class OrderService {
   async createOrder(companyId, createOrderDto: any): Promise<Order> {
     createOrderDto.companyId = companyId;
     createOrderDto.customerId = await this.customerService.getOrCreateCustomerByPhone(createOrderDto.customerPhone);
-    return await this.orderRepository.create<Order>(createOrderDto, {
+    let newOrder: Order =  await this.orderRepository.create<Order>(createOrderDto, {
       include: [OrderLine]
     });
+    // setTimeout(()=>{
+    //   this.bot.telegram.sendMessage(353435199, `A New Order has been submitted.${newOrder.name}`,);
+    // })
+    return newOrder
   }
   async getOneOrderById(id: number): Promise<Order> {
     return await this.orderRepository.findOne({
       where: {
         id: id
       },
-      include: [OrderLine]
+      include: [{
+        model: OrderLine,
+        include: [Product]
+      }]
     })
   }
   async editOrder(editOrder: any): Promise<Order> {

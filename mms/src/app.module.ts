@@ -13,15 +13,21 @@ import { OrderModule } from './order/order.module';
 import { APP_FILTER } from '@nestjs/core';
 import { AllExceptionsFilter } from './utils/http.exceptions.handler';
 import { CustomerModule } from './customer/customer.module';
+import { TelegrafModule } from 'nestjs-telegraf';
+import { RoleModule } from './role/role.module';
 
 @Module({
   imports: [DatabaseModule, CompanyModule, AuthModule, ConfigModule.forRoot({
     isGlobal: true,
-  }), ProductModule, MenuModule, ProductCategoryModule, TableModule, OrderModule, CustomerModule],
+  }), ProductModule, MenuModule, ProductCategoryModule, TableModule, OrderModule, CustomerModule,
+    TelegrafModule.forRoot({
+      token: process.env.TELEGRAM_BOT_TOKEN,
+    }),
+    RoleModule],
   controllers: [AppController],
-  providers: [AppService,     {
+  providers: [AppService, {
     provide: APP_FILTER,
     useClass: AllExceptionsFilter,
   },],
 })
-export class AppModule {}
+export class AppModule { }

@@ -41,6 +41,6 @@ export class TableController {
 
     @Delete()
     public async deleteTable(@Body() id): Promise<void>{
-      return this.tableService.deleteTable(id);
+      return this.tableService.deleteTable(id.id);
     }
 }
