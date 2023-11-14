@@ -1,5 +1,13 @@
 <template>
     <table class="w-full">
+        <DeleteConfirmationModalVue 
+            v-if="openDeleteTable"
+            :title="openDeleteTable.name"
+            :id="openDeleteTable.id"
+            @deleteItem="deleteTable"
+            @closeModal="openDeleteTable = null"
+        />
+
         <thead class="bg-slate-50 border-y shadow-sm">
             <th class="py-2 pl-4 text-left">Table No.</th>
             <th class="py-2 pl-4 text-left">Size</th>
@@ -7,26 +15,6 @@
             <th class="py-2 pl-4 text-center">Action</th>
         </thead>
         <tbody>
-            <transition
-                enter-from-class="h-0"
-                enter-to-class="h-auto"
-                enter-active-class="transition-all duration-500"
-                leave-from-class="h-auto"
-                leave-to-class="h-0"
-                leave-active-class="transition-all duration-500"
-            >
-                <tr v-if="openNewTable">
-                    <td class="pl-4 py-1">New</td>
-                    <td class="pl-4 py-1">
-                        <input class="py-2 pl-1 rounded border" v-model="newTable.name" />
-                    </td>
-                    <td></td>
-                    <td class="flex justify-center items-center space-x-3 pl-4 py-1">
-                        <button @click="createTable" class="py-1 px-4 text-white bg-green-400 hover:bg-green-500 active:scale-95 transition-all font-semibold rounded">Save</button>
-                        <button @click="openNewTable = false" class="py-1 px-4 text-white bg-gray-400 hover:bg-gray-500 active:scale-95 transition-all font-semibold rounded">cancel</button>
-                    </td>
-                </tr>
-            </transition>
             <tr
                 v-for="table in tables"
                 :key="table.id"
@@ -38,28 +26,40 @@
             <td class="pl-4 py-3 flex justify-center items-center">
                 <svg class="p-1 hover:border rounded hover:text-blue-400 cursor-pointer transition-all" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M3 6.5A3.5 3.5 0 0 1 6.5 3h1.864a1 1 0 0 1 0 2H6.5A1.5 1.5 0 0 0 5 6.5v1.864a1 1 0 0 1-2 0V6.5ZM14.636 4a1 1 0 0 1 1-1H17.5A3.5 3.5 0 0 1 21 6.5v1.864a1 1 0 1 1-2 0V6.5A1.5 1.5 0 0 0 17.5 5h-1.864a1 1 0 0 1-1-1ZM4 14.636a1 1 0 0 1 1 1V17.5A1.5 1.5 0 0 0 6.5 19h1.864a1 1 0 1 1 0 2H6.5A3.5 3.5 0 0 1 3 17.5v-1.864a1 1 0 0 1 1-1Zm16 0a1 1 0 0 1 1 1V17.5a3.5 3.5 0 0 1-3.5 3.5h-1.864a1 1 0 1 1 0-2H17.5a1.5 1.5 0 0 0 1.5-1.5v-1.864a1 1 0 0 1 1-1ZM10 7H7v3h3v4H7v3h3v-3h4v3h3v-3h-3v-4h3V7h-3v3h-4V7Z"/></svg>
                 <svg class="ml-3 p-1 hover:border rounded hover:text-yellow-400 cursor-pointer transition-all" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5 16l-1 4l4-1L19.586 7.414a2 2 0 0 0 0-2.828l-.172-.172a2 2 0 0 0-2.828 0L5 16ZM15 6l3 3m-5 11h8"/></svg>
-                <svg class="ml-3 p-1 hover:border rounded hover:text-red-500 cursor-pointer transition-all" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M6 19a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7H6v12M8 9h8v10H8V9m7.5-5l-1-1h-5l-1 1H5v2h14V4h-3.5Z"/></svg>
+                <svg @click="openDeleteTable = table" class="ml-3 p-1 hover:border rounded hover:text-red-500 cursor-pointer transition-all" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M6 19a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7H6v12M8 9h8v10H8V9m7.5-5l-1-1h-5l-1 1H5v2h14V4h-3.5Z"/></svg>
             </td>
             </tr>
         </tbody>
     </table>
 </template>
 <script>
+import DeleteConfirmationModalVue from '@/components/modals/DeleteConfirmationModal.vue';
 export default {
     props: {
         tables: Array,
     },
+    components:{
+        DeleteConfirmationModalVue,
+    },
     data () {
         return {
             openNewTable: false,
+            openDeleteTable: null,
             newTable: {
                 name: ''
             }
         }
     },
     methods: {
-        createTable(){
-            //
+        async deleteTable(id) {
+            const status = await this.$store.dispatch('Table/deleteTable', id)
+            if(status.success) {
+                this.$toast.success('Table deleted successfully')
+                
+            }else{
+                this.$toast.error('Error deleting table')
+            }
+            this.openDeleteTable = null
         }
     }
 }
