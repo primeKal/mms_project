@@ -16,6 +16,7 @@ import { Company } from 'src/company/company.entity';
 import { OrderLine } from './order.line.entity';
 import { TableModel } from 'src/table/table.entity';
 import { Customer } from 'src/customer/customer.entity';
+import { ORDER_STATUS_VALUES } from 'src/utils/constants';
 
 
 const tableOptions = {
@@ -76,6 +77,12 @@ export class Order extends Model<Order> {
   })
   linkCount: number;
 
+  @Column({
+    type: DataType.ENUM(...ORDER_STATUS_VALUES),
+    allowNull: false,
+    defaultValue: 'Ordered'
+  })
+  status: string;
 
   @CreatedAt public createdAt: Date;
 

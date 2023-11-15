@@ -15,30 +15,21 @@ export class OrderService {
     @Inject(ORDER_LINE_REPOSITORY) private readonly orderLineRepository,
     private customerService: CustomerService,
     private readonly paginationService: PaginationService<Order>,
-    // @InjectBot() private bot: Telegraf
+    @InjectBot() private bot: Telegraf
      ) {
-
-      // this.bot.command('start', (ctx: Context) => {
-      //   const chatId = ctx.chat.id;
-      //   console.log(chatId);
-      //   ctx.reply('Welcome! You can now receive notifications from your favorite menu system.');
-      // });
-
     this.paginationService = new PaginationService<Order>(this.orderRepository);
   }
   async getAllOrders(page,pageSize): Promise<Order[]> {
     let toInclude = [OrderLine]
     return await this.paginationService.findAll(page,pageSize, toInclude)
   }
-  async createOrder(companyId, createOrderDto: any): Promise<Order> {
-    createOrderDto.companyId = companyId;
+  async createOrder(company, createOrderDto: any): Promise<Order> {
+    createOrderDto.companyId = company.companyId;
     createOrderDto.customerId = await this.customerService.getOrCreateCustomerByPhone(createOrderDto.customerPhone);
     let newOrder: Order =  await this.orderRepository.create<Order>(createOrderDto, {
       include: [OrderLine]
     });
-    // setTimeout(()=>{
-    //   this.bot.telegram.sendMessage(353435199, `A New Order has been submitted.${newOrder.name}`,);
-    // })
+    this.sendCreateOrderNotification(company)
     return newOrder
   }
   async getOneOrderById(id: number): Promise<Order> {
@@ -73,13 +64,26 @@ export class OrderService {
   async createOrderLines(orderlines: any) {
     var result = this.orderLineRepository.create(orderlines);
   }
-  async getOrdersByCompanay(companyId: number): Promise<any> {
+  async getOrdersByCompany(companyId: number): Promise<any> {
     return this.orderRepository.findAll({
       where: {
         companyId: companyId
       },
       include: [OrderLine]
     })
+  }
+  async updateOrderStatus(updateStatusDto: any): Promise<Order>{
+    let order = await this.orderRepository.findByPk(updateStatusDto.id)
+    const result = await order.update({
+      status : updateStatusDto.status
+    });
+    return result;
+  }
+  
+  sendCreateOrderNotification(company: any): void {
+    if (company.telegramChatId){
+      this.bot.telegram.sendMessage(company.telegramChatId, `Dear ${company.name},A New Order has been submitted.`);
+    }
   }
 
 }

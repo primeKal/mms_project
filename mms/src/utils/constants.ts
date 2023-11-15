@@ -8,3 +8,15 @@ export const ORDER_REPOSITORY = "order_repo";
 export const ORDER_LINE_REPOSITORY = "order_line_repository"
 export const CUSTOMER_REPOSITORY = "customer_repo";
 export const ROLE_REPOSITORY = "role_repo";
+
+
+
+// file constants
+export const MAX_PROFILE_PICTURE_SIZE_IN_BYTES = 2 * 1024 * 1024;
+
+
+
+// ENUM CONSTANT
+export const ORDER_STATUS_VALUES = ['Ordered', 'Prepared', 'Closed', 'Canceled'];
+export const TABLE_STATUS_VALUES = ['Open', 'Occupied', 'OutOfService', 'Canceled'];
+

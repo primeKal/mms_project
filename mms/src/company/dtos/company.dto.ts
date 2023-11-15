@@ -10,5 +10,7 @@ export class CompanyDto {
     readonly specialFeatures: string;
     readonly address: string;
     readonly contact_information: string;
+    readonly imgUrl: string;
+    readonly telegramUserName: string;
     // readonly roleId : number;
   }
