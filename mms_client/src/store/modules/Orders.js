@@ -20,9 +20,9 @@ const actions = {
                 commit('setOrders', result)
             })
     },
-    setOrderStatus: async({dispatch}, orderStatus)=>{
+    setOrderStatus: async({dispatch}, orderStatus, orderId)=>{
         var status = null
-        await OrderAPI.editOrderStatus(orderStatus)
+        await OrderAPI.editOrderStatus(orderStatus, orderId)
             .then(async (result)=>{
                 if(result.status === CREATE_SUCCESS){
                     await dispatch('fetchOrders')

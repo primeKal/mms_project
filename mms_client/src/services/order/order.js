@@ -13,10 +13,11 @@ class OrderAPI {
             }
         })
     }
-    static editOrderStatus(status)  {
+    static editOrderStatus(status, orderId)  {
         return new Promise(async(resolve, reject)=>{
             try {
-                const response = await baseAPI.put('order',{
+                const response = await baseAPI.put('order/UpdateStatus',{
+                    id: orderId,
                     status: status
                 })
                 resolve(response)
