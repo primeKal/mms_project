@@ -82,13 +82,29 @@ const actions = {
             })
         return status
     },
-    removeMenu: async({dispatch}, menuId) =>{
+    activateMenu: async({state, dispatch}, menuId) =>{
+        var status = null
+        await MenuAPI.activateMenu(menuId)
+            .then(async (response)=>{
+                if(response.status === FETCH_SUCCESS) {
+                    status = {'success': true}
+                    await dispatch('fetchMenu', state.menuId)
+                }else {
+                    status = {'success': false}
+                }
+            })
+            .catch((error)=>{
+                status = {'success': false, 'error': error}
+            })
+        return status
+    },
+    removeMenu: async({state,dispatch}, menuId) =>{
         var status = null
         await MenuAPI.deleteMenu(menuId)
             .then(async (response)=>{
                 if(response.status === FETCH_SUCCESS) {
                     status = {'success': true}
-                    await dispatch('fetchMenus', 1)
+                    await dispatch('fetchMenus', state.menuId)
                 }else {
                     status = {'success': false}
                 }

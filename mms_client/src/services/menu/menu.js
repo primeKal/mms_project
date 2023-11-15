@@ -40,8 +40,19 @@ class MenuAPI {
         return new Promise(async(resolve,reject)=>{
             try{
                 const response = await baseAPI.put('menu',{
+                    id: menuInfo.id,
                     name: menuInfo.name
                 })
+                resolve(response)
+            } catch (error) {
+                reject(error)
+            }
+        })
+    }
+    static activateMenu (menuId) {
+        return new Promise(async(resolve,reject)=>{
+            try{
+                const response = await baseAPI.get(`menu/ActivateMenu/${menuId}`)
                 resolve(response)
             } catch (error) {
                 reject(error)
