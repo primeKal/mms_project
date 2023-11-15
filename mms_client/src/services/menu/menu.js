@@ -36,11 +36,26 @@ class MenuAPI {
             }
         })
     }
-    // static editMenu(menuInfo)
+    static editMenu(menuInfo) {
+        return new Promise(async(resolve,reject)=>{
+            try{
+                const response = await baseAPI.put('menu',{
+                    name: menuInfo.name
+                })
+                resolve(response)
+            } catch (error) {
+                reject(error)
+            }
+        })
+    }
     static deleteMenu(menuId) {
         return new Promise(async(resolve,reject)=>{
             try {
-                const response = await baseAPI.delete(`delete/${menuId}`)
+                const response = await baseAPI.delete('menu',{
+                    data: {
+                        id: menuId,
+                    }
+                })
                 resolve(response)
             } catch (error) {
                 reject(error)
