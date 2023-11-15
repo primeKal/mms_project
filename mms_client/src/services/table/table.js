@@ -23,8 +23,23 @@ class TableAPI {
                     status: tableInfo.status,
                     companyId: companyId,
                 })
-                const result = response.data
-                resolve(result)
+                resolve(response)
+            } catch (error) {
+                reject(error)
+            }
+        })
+    }
+    static updateTable(tableInfo) {
+        return new Promise(async(resolve,reject)=>{
+            try {
+                const response = await baseAPI.put('table',{
+                    name: tableInfo.name,
+                    size: tableInfo.size,
+                    number: tableInfo.number,
+                    status: tableInfo.status,
+                    id: tableInfo.id
+                })
+                resolve(response)
             } catch (error) {
                 reject(error)
             }

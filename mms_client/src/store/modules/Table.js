@@ -1,5 +1,5 @@
 import TableAPI from "@/services/table/table"
-import { FETCH_SUCCESS } from "@/utils/Variables"
+import { CREATE_SUCCESS, FETCH_SUCCESS } from "@/utils/Variables"
 const state = {
     tables: []
 }
@@ -28,16 +28,32 @@ const actions = {
     addTable: async ({dispatch}, tableInfo) => {
         var status = null
         await TableAPI.createTable(tableInfo)
-            .then((result)=>{
-                if(result){
-                    console.log(result)
-                    status = true
-                }
-                dispatch('fetchTables')
+            .then(async (result)=>{
+                if(result.status === CREATE_SUCCESS){
+                    await dispatch('fetchTables')
+                    status = {'success': true}
+                }else{
+                    status = {'success':false}
+                }                
             })
             .catch((error)=>{
-                console.log(error)
-                status = false
+                status = {'success': false, 'error': error}
+            })
+        return status
+    },
+    updateTable: async({dispatch}, tableInfo) =>{
+        var status = null
+        await TableAPI.updateTable(tableInfo)
+            .then(async (result)=>{
+                if(result.status === FETCH_SUCCESS){
+                    await dispatch('fetchTables')
+                    status = {'success': true}
+                }else{
+                    status = {'success':false}
+                }                
+            })
+            .catch((error)=>{
+                status = {'success': false, 'error': error}
             })
         return status
     },
@@ -53,7 +69,6 @@ const actions = {
                 }
             })
             .catch((error)=>{
-                console.log(error)
                 status = {'success':false, 'error': error}
             })
         return status

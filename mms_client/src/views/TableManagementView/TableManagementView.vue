@@ -1,7 +1,13 @@
 <template>
     <MainRendererVue :loading="loading">
         <div class="p-6 pr-12 w-full">
-            <AddTableViewVue class="z-10" v-if="addTable" @closeModal="()=>addTable=false" />
+            <AddTableViewVue 
+                class="z-10" 
+                v-if="addTable || editTable"
+                :editTable="editTable"
+                :isNew="editTable ? false : true" 
+                @closeModal="addTable=false, editTable=null" 
+            />
 
             <h3 class="text-primary font-medium text-xl">Table</h3>
             <div class="mt-8 w-full flex justify-between">
@@ -28,6 +34,7 @@
             <TableListVue 
                 class="mt-5"
                 :tables="tables"
+                @editTable="(table)=>{editTable = table}"
             />
         </div>
     </MainRendererVue>        
@@ -50,6 +57,7 @@ export default {
         return {
             loading: true,
             addTable: false,
+            editTable: null,
             openDeleteTable: null,
         }
     },
