@@ -64,6 +64,11 @@ export class Product extends Model<Product> {
     })
     isActive: boolean;
 
+    @Column({
+        allowNull: true,
+      })
+    imgUrl: string;
+
 
     @CreatedAt public createdAt: Date;
 

@@ -55,4 +55,11 @@ export class ProductService {
     async getProductsByIds(ids:Array<number>) {
         return await this.productRepository.findAll({ where: { id: { [Op.in]: ids } }});
     }
+    async saveProductPic(fileUrl: string, companyId: string): Promise<Product> {
+        let product = await this.productRepository.findByPk(companyId)
+        let result = await product.update({
+          imgUrl : fileUrl
+        });
+        return result;
+      }
 }

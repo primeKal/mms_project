@@ -5,6 +5,7 @@ import { Order } from './order.entity';
 import { OrderDto } from './dtos/order.dto';
 import { JwtAuthGuard } from 'src/auth/guards/jwtAuthGuard';
 import { RoleGuard } from 'src/auth/guards/role.guards';
+import { UpdateStatusDto } from 'src/utils/dtos/updateStatusDto';
 
 @UseGuards(JwtAuthGuard)
 @ApiTags('Order')
@@ -29,7 +30,7 @@ export class OrderController {
 
     @Post()
     public async createOrder(@Req() req: any,@Body() body: OrderDto): Promise<Order> {
-      return this.orderService.createOrder(req.user.id,body);
+      return this.orderService.createOrder(req.user,body);
     }
 
     @Put()
@@ -42,8 +43,13 @@ export class OrderController {
     public async deleteOrder(@Body() id): Promise<void>{
       return this.orderService.deleteOrder(id.id);
     }
-    @Get('ByUser/:id')
+    @Get('ByCompany/:id')
     public async getOrdersByUser(@Param('id') id: number): Promise<[Order]>{
-      return this.orderService.getOrdersByCompanay(id);
-    }    
+      return this.orderService.getOrdersByCompany(id);
+    }
+   
+    @Post("UpdateStatus")
+    public async updateStatus(@Req() req: any,@Body() body: UpdateStatusDto): Promise<Order> {
+      return this.orderService.updateOrderStatus(body);
+    }
 }

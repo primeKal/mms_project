@@ -4,6 +4,7 @@ import { TableModel } from './table.entity';
 import { TableDto } from './dtos/table.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/guards/jwtAuthGuard';
+import { UpdateStatusDto } from 'src/utils/dtos/updateStatusDto';
 
 @UseGuards(JwtAuthGuard)
 @ApiTags('Table')
@@ -42,5 +43,10 @@ export class TableController {
     @Delete()
     public async deleteTable(@Body() id): Promise<void>{
       return this.tableService.deleteTable(id.id);
+    }
+
+    @Post("UpdateStatus")
+    public async updateStatus(@Req() req: any,@Body() body: UpdateStatusDto): Promise<TableModel> {
+      return this.tableService.updateOrderStatus(body);
     }
 }

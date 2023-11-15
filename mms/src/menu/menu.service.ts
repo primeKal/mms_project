@@ -60,4 +60,19 @@ export class MenuService {
             where: { companyId: companyId },
         })
     }
+    async activateMenu(menuId,companyId): Promise<Menu>{
+        const menus = await this.menuRepository.findAll({
+            where : { companyId  : companyId }
+        })
+        menus.forEach( async function (menu){
+            let result = await menu.update({isActive: false})
+            console.log(result)
+            console.log('success');
+        })
+        const toActiveMenu = await this.menuRepository.findByPk(menuId);
+        const updatedActiveMenu = toActiveMenu.update({
+            isActive: true
+        })
+        return updatedActiveMenu
+    }
 }

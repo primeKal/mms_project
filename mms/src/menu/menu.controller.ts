@@ -35,6 +35,7 @@ export class MenuController {
       return this.menuService.createMenu(body, req.user.id);
     }
 
+    @UseGuards(JwtAuthGuard)
     @Put()
     public async editMenu(@Body() body: MenuDto): Promise<Menu> {
 
@@ -44,5 +45,11 @@ export class MenuController {
     @Delete()
     public async deleteMenu(@Body() id): Promise<void>{
       return this.menuService.deleteMenu(id.id);
+    }
+
+    @UseGuards(JwtAuthGuard)
+    @Get("ActivateMenu/:id")
+    public async activateMenu(@Req() req: any,@Param('id') menuId: number): Promise<any> {
+      return this.menuService.activateMenu(menuId, req.user.id);
     }
 }

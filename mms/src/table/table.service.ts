@@ -39,9 +39,17 @@ export class TableService {
         var toDeleteTableModel = await this.tableRepository.findByPk(id);
         return await toDeleteTableModel.destroy();
     }
+
     async getTablesByCompany(companyId: any): Promise<any> {
         return this.tableRepository.findAll({
             where: { companyId: companyId },
         })
     }
+  async updateOrderStatus(updateStatusDto: any): Promise<TableModel>{
+    let table = await this.tableRepository.findByPk(updateStatusDto.id)
+    const result = await table.update({
+      status : updateStatusDto.status
+    });
+    return result;
+  }
 }
