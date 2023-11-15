@@ -28,6 +28,7 @@
                     <th class="py-2 pl-4 text-center">Actions</th>
                 </thead>
                 <tbody>
+                    <!-- create menu start -->
                     <transition
                         enter-from-class="h-0"
                         enter-to-class="h-auto"
@@ -38,17 +39,18 @@
                     >
                         <tr v-if="openNewMenu">
                             <td class="pl-4 py-1">New</td>
-                            <td class="pl-4 py-1">
-                                <input class="py-2 pl-1 rounded border" v-model="newMenu.name" />
+                            <td class="pl-4 py-2">
+                                <input class="py-1 pl-1 rounded border" v-model="newMenu.name" />
                             </td>
                             <td></td>
-                            <td class="flex justify-center items-center space-x-3 pl-4 py-1">
+                            <td class="flex justify-center items-center space-x-3 pl-4 py-2">
+                                <button @click="openNewMenu = false" class="py-1 px-4 text-gray-400 hover:text-gray-500 active:scale-95 transition-all font-semibold rounded">cancel</button>
                                 <button @click="createMenu" class="py-1 px-4 text-white bg-green-400 hover:bg-green-500 active:scale-95 transition-all font-semibold rounded">Save</button>
-                                <button @click="openNewMenu = false" class="py-1 px-4 text-white bg-gray-400 hover:bg-gray-500 active:scale-95 transition-all font-semibold rounded">cancel</button>
+                                
                             </td>
                         </tr>
                     </transition>
-                    
+                    <!-- create menu end -->
                     <tr 
                         v-for="menu in menus"
                         :key="menu.id"
@@ -98,7 +100,7 @@ export default {
     methods: {
         ...mapActions({
             fetchMenus: 'Menu/fetchAllMenus',
-            deleteMenu: 'Menu/removeMenu',
+            removeMenu: 'Menu/removeMenu',
         }),
         searchCategories(searchString) {
             console.log(searchString)
@@ -119,14 +121,17 @@ export default {
                     this.$toast.error('Error creating menu')
                 }
             }
-            this.loading = false
+            setTimeout(()=>{
+                this.loading = false
+            },1000)
+            
         },
         editMenu (menu){
             this.$store.commit('Menu/setMenuId', menu.id)
             this.$router.push({name: 'edit_menu', params: {name: menu.name}})
         },
         async deleteMenu(id) {
-            const status = await this.deleteMenu(id)
+            const status = await this.removeMenu(id)
             if(status.success) {
                 this.$toast.success('Menu deleted successfully')
                 this.openDelete = null
