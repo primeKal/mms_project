@@ -7,7 +7,7 @@ import { JwtAuthGuard } from 'src/auth/guards/jwtAuthGuard';
 import { RoleGuard } from 'src/auth/guards/role.guards';
 import { UpdateStatusDto } from 'src/utils/dtos/updateStatusDto';
 
-@UseGuards(JwtAuthGuard)
+
 @ApiTags('Order')
 @Controller('order')
 export class OrderController {
@@ -16,11 +16,13 @@ export class OrderController {
 
     }
 
+    @UseGuards(JwtAuthGuard)
     @UseGuards(new RoleGuard(3))
     @Get()
     public async getOrders(@Query('page') page: number = 1, @Query('pageSize') pageSize: number = 10): Promise<Order[]> {
       return this.orderService.getAllOrders(page, pageSize);
     }
+
 
     @Get(':id')
     @ApiProperty()
@@ -33,21 +35,26 @@ export class OrderController {
       return this.orderService.createOrder(req.user,body);
     }
 
+    @UseGuards(JwtAuthGuard)
     @Put()
     public async editOrder(@Body() body: OrderDto): Promise<Order> {
 
       return this.orderService.editOrder(body);
     }
 
+    @UseGuards(JwtAuthGuard)
     @Delete()
     public async deleteOrder(@Body() id): Promise<void>{
       return this.orderService.deleteOrder(id.id);
     }
+
+    @UseGuards(JwtAuthGuard)
     @Get('ByCompany/:id')
     public async getOrdersByUser(@Param('id') id: number): Promise<[Order]>{
       return this.orderService.getOrdersByCompany(id);
     }
    
+    @UseGuards(JwtAuthGuard)
     @Post("UpdateStatus")
     public async updateStatus(@Req() req: any,@Body() body: UpdateStatusDto): Promise<Order> {
       return this.orderService.updateOrderStatus(body);
