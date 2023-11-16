@@ -16,10 +16,15 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/registration/SignupView.vue')
   },
   {
-    path: '/menu/:id',
+    path: '/menu/:companyId/table/:tableId',
     name: 'menu',
     component: () => import('../views/menu/MenuIndex.vue'),
     children: [
+      {
+        path: '',
+        name: 'index',
+        component: () => import('../views/menu/RestaurantOptions.vue')
+      },
       {
         path: 'items',
         name: 'items',
