@@ -6,6 +6,9 @@ const state = {
 const getters = {
     getCompanyInfo: (state) => {
         return state.companyInfo
+    },
+    getCompanyLogo: (state) => {
+        return state.companyInfo.imgUrl
     }
 }
 const mutations = {
