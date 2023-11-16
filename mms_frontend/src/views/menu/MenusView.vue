@@ -3,11 +3,11 @@
         <p>Menu</p>
         <div class="mt-2 flex overflow-x-scroll ">
             <button
-                v-for="section in menuSections"
+                v-for="section in menu.productCategories"
                 :key="section.id"
-                @click="selectedSection=section.id"
-                :class="{'text-primary border-primary': selectedSection=== section.id}"
-                class="outline-none p-2 text-black/70 border-b"
+                @click="selectedSection=section"
+                :class="{'text-primary border-primary': selectedSection.id=== section.id}"
+                class="outline-none p-2 text-black/70 border-b w-max"
             >
                 {{ section.name }}
             </button>
@@ -18,7 +18,7 @@
                 class="flex flex-col w-full space-y-3"
             >
                 <MenuItemVue 
-                    v-for="menuItem in menuItems"
+                    v-for="menuItem in selectedSection.products"
                     :key="menuItem.id"
                     :menuItem="menuItem"
                 />
@@ -28,6 +28,8 @@
     </div>
 </template>
 <script>
+import { mapGetters } from 'vuex'
+
 import MenuItemVue from '@/components/menu/MenuItem.vue'
 import OrderSummaryVue from './OrderSummary.vue'
 export default {
@@ -37,20 +39,23 @@ export default {
     },
     data () {
         return {
-            menuItems: [
-                {'id': '1000', 'image': '/images/fish.jpg', 'name': 'rosotto', 'price': 235},
-                {'id': '1002', 'image': '/images/hotdog.png', 'name': 'rosotto', 'price': 235},
-                {'id': '1003', 'image': '/images/fruit.jpeg', 'name': 'rosotto', 'price': 235},
-                {'id': '1004', 'image': '/images/fish.jpg', 'name': 'rosotto', 'price': 235},
-                {'id': '1005', 'image': '/images/fruit.jpeg', 'name': 'rosotto', 'price': 235},
-            ],
-            menuSections: [
-                {'id': '2000', 'name': 'breakfast'},
-                {'id': '2001', 'name': 'lunch'},
-                {'id': '2002', 'name': 'dinner'},
-                {'id': '2003', 'name': 'drinks'},
-            ],
-            selectedSection: '',
+            selectedSection: {},
+        }
+    },
+    computed: {
+        ...mapGetters({
+            menu: 'Company/getMenuInfo',
+        })
+    },
+    async mounted () {
+        this.$emit('loading', true)
+        const companyId = this.$route.params.companyId
+        const status = await this.$store.dispatch('Company/fetchMenu', companyId)
+        if(status.success) {
+            this.selectedSection = this.menu.productCategories[0]
+            this.$emit('loading', false)
+        }else{
+            this.$router.replace('/')
         }
     }
 }
