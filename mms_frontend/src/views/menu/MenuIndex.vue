@@ -1,29 +1,49 @@
 <template>
-    <div class="h-full p-7 flex flex-col">
-        <img src="/images/menu_image.png" class="self-center h-32 w-32 object-cover object-center rounded-full" />
-        <h2 class="text-center mt-2 text-primary">Sheraton Addis</h2>
-        <router-view v-slot="{Component}">
-            <!-- enter all transitions -->
-            <transition 
-                mode="out-in"   
-            >
-                <component :is="Component"></component>
-            </transition>
-        </router-view>  
-
-    </div>
+    <MainRendererVue :loading="loading">
+        <div class="h-full p-7 flex flex-col">
+            <img src="/images/menu_image.png" class="self-center h-32 w-32 object-cover object-center rounded-full" />
+            <h2 class="text-center mt-2 text-primary">Sheraton Addis</h2>
+            <router-view v-slot="{Component}">
+                <!-- enter all transitions -->
+                <transition 
+                    mode="out-in"   
+                >
+                    <component :is="Component" @loading="(value)=> {loading=value}" ></component>
+                </transition>
+            </router-view>  
+        </div>
+    </MainRendererVue>    
 </template>
 <script>
-import { useRoute } from 'vue-router'
+import MainRendererVue from '@/layout/MainRenderer.vue'
 export default {
-    setup () {
-        const route = useRoute();
-        console.log(route.query)
-        // fetch menu information from API
+    components: {
+        MainRendererVue
+    },
+    data () {
+        return {
+            loading: true,
+        }
     },
     mounted () {
         // get menu id from url
         this.$emit('select_nav', 1)
+    },
+    async beforeCreate() {
+        const companyId = this.$route.params.companyId
+        const tableId = this.$route.params.tableId
+        console.log(`${companyId} , ${tableId}`)
+        // localStorage.setItem('tableId', tableId)
+        // const status = await this.$store.dispatch('Company/fetchCompanyInfo', companyId)
+        // if(status.success) {
+        //     this.loading = false
+        // }else {
+        //     // route to 404 not menu found
+        //     this.$router.push('/')
+        // }
+        setTimeout(()=>{
+            this.loading = false
+        }, 1300)
     }
 }
 </script>
