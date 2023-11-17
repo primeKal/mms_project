@@ -19,7 +19,7 @@ export class CompanyController {
       return this.companyService.getAllCompanies(page,pageSize);
     }
 
-    @UseGuards(JwtAuthGuard)
+    // @UseGuards(JwtAuthGuard)
     @Get(':id')
     public async getACompany(@Param('id') id: number): Promise<Company>{
       return this.companyService.getOneCompanyById(id);

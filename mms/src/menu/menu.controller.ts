@@ -52,4 +52,9 @@ export class MenuController {
     public async activateMenu(@Req() req: any,@Param('id') menuId: number): Promise<any> {
       return this.menuService.activateMenu(menuId, req.user.id);
     }
+
+    @Get("GetActivateMenuByCompany/:id")
+    public async getActiveMenuByCompany(@Param('id') companyId: number): Promise<any> {
+      return this.menuService.getActiveMenuByCompany(companyId);
+    }
 }

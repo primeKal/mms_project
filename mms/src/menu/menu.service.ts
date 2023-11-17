@@ -75,4 +75,14 @@ export class MenuService {
         })
         return updatedActiveMenu
     }
+    async getActiveMenuByCompany(companyId): Promise<Menu>{
+        let activeMenu = await this.menuRepository.findOne( {
+            where: { isActive: true, companyId: companyId},
+            include: [{
+                model: ProductCategory,
+                include: [Product]
+            }]
+        })
+        return activeMenu;
+    }
 }
