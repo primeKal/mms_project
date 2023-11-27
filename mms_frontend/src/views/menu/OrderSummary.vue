@@ -2,11 +2,11 @@
     <div>
             <div class="shadow-lg p-3 w-full flex justify-between bg-white rounded-t-xl" >
                 <div class="flex space-x-1">
-                    <p>{{ totalOrderSize }} items</p>
+                    <p>{{ orderedProducts }} items</p>
                     <p class="font-medium">--- {{ $filters.formatPriceCurrency(totalOrder, 'ETB') }}</p>
                 </div>
                 <div class="flex space-x-2">
-                    <button v-if="!expand" class="rounded py-1 px-3 bg-primary text-white">
+                    <button v-if="!expand" @click="$emit('submitOrder')" class="rounded py-1 px-3 bg-primary text-white">
                         SUBMIT
                     </button>
                     <svg @click="expand = !expand" :class="[expand ? 'rotate-0':'rotate-180']" class="transition-transform ease-in-out duration-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M7.41 8.58L12 13.17l4.59-4.59L18 10l-6 6l-6-6l1.41-1.42Z"/></svg>
@@ -63,7 +63,7 @@ export default {
             cart: 'Order/getCart',
         }),
         orderedProducts() {
-            return this.cart.length
+            return this.$store.getters['Order/getCart'].length
         },
     },
 }

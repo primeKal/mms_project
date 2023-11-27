@@ -5,8 +5,22 @@
 @tailwind utilities;
 
 
-@layer components {
-    .primary-button {
-        @apply  bg-emerald-400 hover:bg-emerald-500 text-white font-semibold rounded active:scale-95
+@layer utilities {
+    .qr-scrollbar::-webkit-scrollbar{
+      width: 8px;
+      height: 6px;
     }
-}
+    .qr-scrollbar::-webkit-scrollbar-track{
+      border-radius: 100vh;
+      background: #eef2ff;
+    }
+    .qr-scrollbar::-webkit-scrollbar-thumb{
+      border-radius: 100vh;
+      background: #000080;
+      opacity: 50%;
+      border: 1px solid #f6f7ed;
+    }
+    .qr-scrollbar::-webkit-scrollbar-thumb:hover{
+      background: black;
+    }
+  }
