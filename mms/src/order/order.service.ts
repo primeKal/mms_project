@@ -23,13 +23,13 @@ export class OrderService {
     let toInclude = [OrderLine]
     return await this.paginationService.findAll(page,pageSize, toInclude)
   }
-  async createOrder(company, createOrderDto: any): Promise<Order> {
-    createOrderDto.companyId = company.companyId;
+  async createOrder(createOrderDto: any): Promise<Order> {
+    createOrderDto.companyId = 3;
     createOrderDto.customerId = await this.customerService.getOrCreateCustomerByPhone(createOrderDto.customerPhone);
     let newOrder: Order =  await this.orderRepository.create<Order>(createOrderDto, {
       include: [OrderLine]
     });
-    this.sendCreateOrderNotification(company)
+    // this.sendCreateOrderNotification(company)
     return newOrder
   }
   async getOneOrderById(id: number): Promise<Order> {

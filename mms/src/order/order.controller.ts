@@ -16,8 +16,7 @@ export class OrderController {
 
     }
 
-    @UseGuards(JwtAuthGuard)
-    @UseGuards(new RoleGuard(3))
+    @UseGuards(JwtAuthGuard, new RoleGuard(3))
     @Get()
     public async getOrders(@Query('page') page: number = 1, @Query('pageSize') pageSize: number = 10): Promise<Order[]> {
       return this.orderService.getAllOrders(page, pageSize);
@@ -32,7 +31,7 @@ export class OrderController {
 
     @Post()
     public async createOrder(@Req() req: any,@Body() body: OrderDto): Promise<Order> {
-      return this.orderService.createOrder(req.user,body);
+      return this.orderService.createOrder(body);
     }
 
     @UseGuards(JwtAuthGuard)

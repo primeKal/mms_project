@@ -15,6 +15,7 @@ import { AllExceptionsFilter } from './utils/http.exceptions.handler';
 import { CustomerModule } from './customer/customer.module';
 import { TelegrafModule } from 'nestjs-telegraf';
 import { RoleModule } from './role/role.module';
+import { ReportsModule } from './reports/reports.module';
 
 @Module({
   imports: [DatabaseModule, CompanyModule, AuthModule, ConfigModule.forRoot({
@@ -23,7 +24,8 @@ import { RoleModule } from './role/role.module';
     TelegrafModule.forRoot({
       token: process.env.TELEGRAM_BOT_TOKEN,
     }),
-    RoleModule],
+    RoleModule,
+    ReportsModule],
   controllers: [AppController],
   providers: [AppService, {
     provide: APP_FILTER,
