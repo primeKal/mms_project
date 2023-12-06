@@ -6,7 +6,7 @@ import { OrderLine } from './order.line.entity';
 import { CustomerService } from 'src/customer/customer.service';
 import { PaginationService } from 'src/utils/services/pagination.service';
 import { InjectBot } from 'nestjs-telegraf';
-import { Context, Telegraf } from 'telegraf';
+// import { Context, Telegraf } from 'telegraf';
 import { Product } from 'src/product/product.entity';
 
 @Injectable()
@@ -15,7 +15,7 @@ export class OrderService {
     @Inject(ORDER_LINE_REPOSITORY) private readonly orderLineRepository,
     private customerService: CustomerService,
     private readonly paginationService: PaginationService<Order>,
-    @InjectBot() private bot: Telegraf
+    // @InjectBot() private bot: Telegraf
      ) {
     this.paginationService = new PaginationService<Order>(this.orderRepository);
   }
@@ -80,10 +80,10 @@ export class OrderService {
     return result;
   }
   
-  sendCreateOrderNotification(company: any): void {
-    if (company.telegramChatId){
-      this.bot.telegram.sendMessage(company.telegramChatId, `Dear ${company.name},A New Order has been submitted.`);
-    }
-  }
+  // sendCreateOrderNotification(company: any): void {
+  //   if (company.telegramChatId){
+  //     this.bot.telegram.sendMessage(company.telegramChatId, `Dear ${company.name},A New Order has been submitted.`);
+  //   }
+  // }
 
 }

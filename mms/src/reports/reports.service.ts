@@ -21,7 +21,7 @@ export class ReportsService {
     ) {
 
     }
-    async getOrdersByDay(date: Date): Promise<Order[]> {
+    async getOrdersByDay(date: Date, companyId: number): Promise<Order[]> {
         const startOfDay = new Date(date);
         startOfDay.setHours(0, 0, 0, 0);
 
@@ -34,6 +34,7 @@ export class ReportsService {
                     createdAt: {
                         [Op.between]: [startOfDay, endOfDay],
                     },
+                    companyId: companyId
                 },
 
             });
@@ -44,7 +45,7 @@ export class ReportsService {
         }
     }
 
-    async getTotalOrdersPerDay(): Promise<{ date: string; totalOrders: number }[]> {
+    async getTotalOrdersPerDay(companyId: number): Promise<{ date: string; totalOrders: number }[]> {
         const startDate = new Date();
         startDate.setDate(startDate.getDate() - 30);
         startDate.setHours(0, 0, 0, 0);
@@ -59,6 +60,7 @@ export class ReportsService {
                     createdAt: {
                         [Op.gte]: startDate,
                     },
+                    companyId: companyId
                 },
                 group: ['date'],
                 order: [['date', 'DESC']],
@@ -76,7 +78,7 @@ export class ReportsService {
         }
     }
 
-    async getMostSoldProducts(): Promise<{ productName: string; totalQuantity: number }[]> {
+    async getMostSoldProducts(companyId: number): Promise<{ productName: string; totalQuantity: number }[]> {
         const startDate = new Date();
         startDate.setDate(startDate.getDate() - 15);
         startDate.setHours(0, 0, 0, 0);
@@ -100,6 +102,7 @@ export class ReportsService {
                     createdAt: {
                         [Op.gte]: startDate,
                     },
+                    companyId: companyId
                 },
                 group: ['productId','product.id'],
                 order: [[Sequelize.literal('product.name'), 'DESC']],
@@ -120,7 +123,7 @@ export class ReportsService {
     }
 
 
-    async getTotalSalesForPast30Days(): Promise<{ date: string; totalSales: number }[]> {
+    async getTotalSalesForPast30Days(companyId: number): Promise<{ date: string; totalSales: number }[]> {
         const startDate = new Date();
         startDate.setDate(startDate.getDate() - 30);
         startDate.setHours(0, 0, 0, 0);
@@ -138,6 +141,7 @@ export class ReportsService {
                     createdAt: {
                         [Op.gte]: startDate,
                     },
+                    companyId: companyId
                 },
                 group: ['date'],
                 order: [['date', 'DESC']],
@@ -156,7 +160,7 @@ export class ReportsService {
     }
 
 
-    async getTotalSalesPerMonth(): Promise<{ month: string; totalSales: number }[]> {
+    async getTotalSalesPerMonth(companyId: number): Promise<{ month: string; totalSales: number }[]> {
         try {
             const results = await this.orderRepository.findAll({
                 attributes: [
@@ -168,6 +172,9 @@ export class ReportsService {
                 ],
                 group: ['month'],
                 order: [['month', 'DESC']],
+                where: {
+                    companyId: companyId
+                }
             });
 
             // Convert results to a more user-friendly format
