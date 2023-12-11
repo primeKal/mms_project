@@ -34,7 +34,7 @@ export class ReportsService {
                     createdAt: {
                         [Op.between]: [startOfDay, endOfDay],
                     },
-                    companyId: companyId
+                    // companyId: companyId
                 },
 
             });
@@ -60,7 +60,7 @@ export class ReportsService {
                     createdAt: {
                         [Op.gte]: startDate,
                     },
-                    companyId: companyId
+                    // companyId: companyId
                 },
                 group: ['date'],
                 order: [['date', 'DESC']],
@@ -102,7 +102,7 @@ export class ReportsService {
                     createdAt: {
                         [Op.gte]: startDate,
                     },
-                    companyId: companyId
+                    // companyId: companyId
                 },
                 group: ['productId','product.id'],
                 order: [[Sequelize.literal('product.name'), 'DESC']],
@@ -141,7 +141,7 @@ export class ReportsService {
                     createdAt: {
                         [Op.gte]: startDate,
                     },
-                    companyId: companyId
+                    // companyId: companyId
                 },
                 group: ['date'],
                 order: [['date', 'DESC']],
@@ -173,7 +173,7 @@ export class ReportsService {
                 group: ['month'],
                 order: [['month', 'DESC']],
                 where: {
-                    companyId: companyId
+                    // companyId: companyId
                 }
             });
 
