@@ -10,7 +10,7 @@
         
 
         <div :class="[collapse ? 'basis-full':'basis-5/6']" class="h-full">
-            <div class="flex flex-row-reverse bg-white h-9 shadow-lg z-10">
+            <div class="px-8 pt-2 flex flex-row-reverse bg-white h-9 shadow-lg z-10">
                 <p>Profile</p>
             </div>
             <div>
