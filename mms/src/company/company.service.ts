@@ -14,23 +14,23 @@ export class CompanyService {
     @Inject(COMPANY_REPOSITORY) private readonly companyRepository: typeof Company,
     private authService: AuthService,
     private readonly paginationService: PaginationService<Company>,
-    @InjectBot() private bot: Telegraf
+    // @InjectBot() private bot: Telegraf
   ) {
     this.paginationService = new PaginationService<Company>(this.companyRepository);
-    this.bot.command('start', async (ctx: Context) => {
-      const chatId = ctx.chat.id;
-      console.log(chatId);
-      console.log(ctx.from.username);
-      let company = await this.findCompanyByTelegramUserName(ctx.from.username);
-      if (!company){
-        ctx.reply('Oops, we could not find your username in our database please.'); 
-        ctx.reply('Steps To COnfigure:- go to your dashboard and add your telegram username.Finally come here and start the process again by deleting the bot');
-      }
-      else {
-        let result = await this.updateCompanyWithTelegramChatId(chatId,company);
-        result?ctx.reply('Nice, you will receive created orders here.Thank you'):ctx.reply('Oops, something went wrong');
-      }
-    });
+    // this.bot.command('start', async (ctx: Context) => {
+    //   const chatId = ctx.chat.id;
+    //   console.log(chatId);
+    //   console.log(ctx.from.username);
+    //   let company = await this.findCompanyByTelegramUserName(ctx.from.username);
+    //   if (!company){
+    //     ctx.reply('Oops, we could not find your username in our database please.'); 
+    //     ctx.reply('Steps To COnfigure:- go to your dashboard and add your telegram username.Finally come here and start the process again by deleting the bot');
+    //   }
+    //   else {
+    //     let result = await this.updateCompanyWithTelegramChatId(chatId,company);
+    //     result?ctx.reply('Nice, you will receive created orders here.Thank you'):ctx.reply('Oops, something went wrong');
+    //   }
+    // });
 
     
   }
