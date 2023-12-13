@@ -1,5 +1,12 @@
 <template>
     <MainRendererVue :loading="loading">
+        <QRCodeModalVue
+            v-if="openQRView"
+            :companyInfo="openQRView"
+            :qrValue="'https://www.google.com'"
+            @closeModal="()=> openQRView=null"
+        />
+
         <DeleteConfirmationModalVue 
             v-if="openDelete"
             :title="openDelete.name"
@@ -60,7 +67,7 @@
                         <td class="pl-4 py-3 font-light">{{ menu.name }}</td>
                         <td :class="[menu.isActive ? 'text-green-400' : 'text-red-600']" class="pl-4 py-3 font-light">{{ menu.isActive }}</td>
                         <td class="pl-4 py-3 flex justify-center items-center">
-                            <svg class="p-1 hover:border rounded hover:text-blue-400 cursor-pointer transition-all" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2V5a2 2 0 0 0-2-2zm0 16H5V7h14v12zm-7-8.5c1.84 0 3.48.96 4.34 2.5c-.86 1.54-2.5 2.5-4.34 2.5s-3.48-.96-4.34-2.5c.86-1.54 2.5-2.5 4.34-2.5M12 9c-2.73 0-5.06 1.66-6 4c.94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4zm0 5.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5s1.5.67 1.5 1.5s-.67 1.5-1.5 1.5z"/></svg>
+                            <svg @click="setQRinfo(menu)" class="p-1 hover:border rounded hover:text-blue-400 cursor-pointer transition-all" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2V5a2 2 0 0 0-2-2zm0 16H5V7h14v12zm-7-8.5c1.84 0 3.48.96 4.34 2.5c-.86 1.54-2.5 2.5-4.34 2.5s-3.48-.96-4.34-2.5c.86-1.54 2.5-2.5 4.34-2.5M12 9c-2.73 0-5.06 1.66-6 4c.94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4zm0 5.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5s1.5.67 1.5 1.5s-.67 1.5-1.5 1.5z"/></svg>
                             <svg @click="editMenu(menu)" class="p-1 hover:border rounded hover:text-yellow-400 cursor-pointer transition-all" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5 16l-1 4l4-1L19.586 7.414a2 2 0 0 0 0-2.828l-.172-.172a2 2 0 0 0-2.828 0L5 16ZM15 6l3 3m-5 11h8"/></svg>
                             <svg @click="openDelete = menu" class="ml-3 p-1 hover:border rounded hover:text-red-500 cursor-pointer transition-all" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M6 19a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7H6v12M8 9h8v10H8V9m7.5-5l-1-1h-5l-1 1H5v2h14V4h-3.5Z"/></svg>
                         </td>
@@ -75,11 +82,13 @@ import { mapGetters, mapActions } from 'vuex'
 
 import MainRendererVue from '@/layout/MainRenderer.vue'
 import SearchBarVue from '@/components/fields/SearchBar.vue'
+import QRCodeModalVue from '@/components/qr_code/QRCodeModal.vue'
 import DeleteConfirmationModalVue from '@/components/modals/DeleteConfirmationModal.vue'
 export default {
     components: {
         MainRendererVue,
         SearchBarVue,
+        QRCodeModalVue,
         DeleteConfirmationModalVue,
     },
     data () {
@@ -89,12 +98,14 @@ export default {
                 name: '',
             },
             openNewMenu: false,
+            openQRView: null,
             openDelete: null,
         }
     },
     computed: {
         ...mapGetters({
-            menus: 'Menu/getAllMenus'
+            menus: 'Menu/getAllMenus',
+            basicInfo: 'Company/getCompanyInfo',
         })
     },
     methods: {
@@ -108,6 +119,19 @@ export default {
         },
         searchMenuItem (searchString) {
             console.log(searchString)
+        },
+        setQRinfo(menu) {
+            console.log(this.basicInfo)
+            this.openQRView = {
+                logo: '/images/restaurant_logo.png',
+                menu: {
+                    id: menu.id,
+                    name: menu.name,
+                },
+                primaryColor: '#43AA84',
+                secondaryColor: '#000000',
+            }
+            console.log(this.openQRView)
         },
         async createMenu() {
             this.loading = true
