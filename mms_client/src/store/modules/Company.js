@@ -1,6 +1,9 @@
 import AuthAPI from "@/services/auth/auth"
 const state = {
-    companyInfo: {},
+    companyInfo: {
+        primaryColor: '#43AA84',
+        secondaryColor: '#000000'
+    },
     isLoggedIn: false,
 }
 const getters = {
