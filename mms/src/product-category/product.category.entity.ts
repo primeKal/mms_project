@@ -14,7 +14,7 @@ import {
 } from 'sequelize-typescript';
 import { Company } from 'src/company/company.entity';
 import { Menu } from 'src/menu/menu.entity';
-import { Product } from 'src/product/product.entity';
+import { Product, ProductCategoryProduct } from 'src/product/product.entity';
 
 const tableOptions = {
   tableName: 'product_category',
@@ -73,6 +73,7 @@ export class ProductCategory extends Model<ProductCategory> {
   @BelongsTo(() => Menu)
   menu: Menu
 
-  @HasMany(() => Product)
-  products: Product[]
+  @BelongsToMany(() => Product, () => ProductCategoryProduct)
+  @ApiProperty({ type: () => [Product] })
+  products: Product[];
 }

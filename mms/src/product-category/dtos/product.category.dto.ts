@@ -3,5 +3,5 @@ export class ProductCategoryDto {
     readonly description : string;
     readonly menuId? : number;
     id? : number;
-    // readonly productId?: number
+    // readonly productIds?: number[]
   }

@@ -42,9 +42,7 @@ export class CompanyService {
 
   async createCompany(createCompanyDto): Promise<any> {
     createCompanyDto.password = await bcrypt.hash(createCompanyDto.password, 12);
-    this
     let company = await this.companyRepository.create<Company>(createCompanyDto);
-    console.log(company)
     company.$add("Role",  2)
     let data = this.authService.generateToken(company.dataValues)
     return data;

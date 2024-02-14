@@ -86,9 +86,26 @@ export class Product extends Model<Product> {
     company: Company
 
 
-    @ForeignKey(() => ProductCategory)
-    productCategoryId: number
+    @BelongsToMany(() => ProductCategory, () => ProductCategoryProduct)
+    @ApiProperty({ type: () => [ProductCategory] })
+    productCategories: ProductCategory[];
+}
+@Table
+export class ProductCategoryProduct extends Model<ProductCategoryProduct> {
+    @ForeignKey(() => Product)
+    @Column({
+        type: DataType.BIGINT,
+        allowNull: false,
+    })
 
-    @BelongsTo(() => ProductCategory)
-    productCategory: ProductCategory
+    productId: number;
+
+    @ForeignKey(() => ProductCategory)
+    @Column({
+        type: DataType.BIGINT,
+        allowNull: false,
+    })
+
+    productCategoryId: number;
+
 }

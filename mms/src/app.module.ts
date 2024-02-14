@@ -16,6 +16,8 @@ import { CustomerModule } from './customer/customer.module';
 // import { TelegrafModule } from 'nestjs-telegraf';
 import { RoleModule } from './role/role.module';
 import { ReportsModule } from './reports/reports.module';
+import { ServeStaticModule } from '@nestjs/serve-static/dist/serve-static.module';
+import { join } from 'path';
 
 @Module({
   imports: [DatabaseModule, CompanyModule, AuthModule, ConfigModule.forRoot({
@@ -25,7 +27,11 @@ import { ReportsModule } from './reports/reports.module';
     //   token: process.env.TELEGRAM_BOT_TOKEN,
     // }),
     RoleModule,
-    ReportsModule],
+    ReportsModule,
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, ".."),
+      renderPath: "public",
+  }),],
   controllers: [AppController],
   providers: [AppService, {
     provide: APP_FILTER,

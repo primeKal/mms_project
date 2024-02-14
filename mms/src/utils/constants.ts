@@ -20,3 +20,6 @@ export const MAX_PROFILE_PICTURE_SIZE_IN_BYTES = 2 * 1024 * 1024;
 export const ORDER_STATUS_VALUES = ['Ordered', 'Prepared', 'Closed', 'Canceled'];
 export const TABLE_STATUS_VALUES = ['Open', 'Occupied', 'OutOfService', 'Canceled'];
 
+// Role IDs
+export const COMPANY_ROLE_ID = 2;
+

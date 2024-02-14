@@ -3,6 +3,7 @@ import { Product } from './product.entity';
 import { PRODUCT_REPOSITORY } from 'src/utils/constants';
 import { Op } from 'sequelize';
 import { PaginationService } from 'src/utils/services/pagination.service';
+import { ProductDto } from './dtos/product.dto';
 
 @Injectable()
 export class ProductService {
@@ -55,8 +56,16 @@ export class ProductService {
     async getProductsByIds(ids:Array<number>) {
         return await this.productRepository.findAll({ where: { id: { [Op.in]: ids } }});
     }
-    async saveProductPic(fileUrl: string, companyId: string): Promise<Product> {
-        let product = await this.productRepository.findByPk(companyId)
+    async saveProductPic(fileUrl: string, productDto: ProductDto, companyId : Number): Promise<Product> {
+        //check if product dto has id,
+        console.log(fileUrl)
+        console.log(productDto)
+        let product = null
+        if ((productDto.id)){
+            product = await this.productRepository.findByPk(productDto.id)
+        }else {
+            product = await this.createProduct(companyId, productDto)
+        }
         let result = await product.update({
           imgUrl : fileUrl
         });

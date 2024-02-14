@@ -8,6 +8,7 @@ async function bootstrap() {
   app.enableCors();
   app.setGlobalPrefix('v1/api');
   app.useGlobalFilters(new AllExceptionsFilter());
+  
 
   // swagger documentation
   const config = new DocumentBuilder()
