@@ -16,7 +16,7 @@
                 <p v-else class="self-center">LOGIN</p>
             </button>
             <div class="mt-5 flex justify-between">
-                <p class="text-xs text-blue-400 hover:underline cursor-pointer ">Create account</p>
+                <a href="/registration" class="text-xs text-blue-400 hover:underline cursor-pointer ">Create account</a>
                 <p class="text-xs text-blue-400 hover:underline cursor-pointer ">Forgot password?</p>
             </div>
         </div>
