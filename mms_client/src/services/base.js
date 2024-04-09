@@ -1,9 +1,9 @@
 import axios from "axios";
 
 const baseAPI = axios.create({
-  // baseURL: process.env.VUE_APP_API_SERVER,
-  baseURL: "http://localhost:3003/v1/api/",
+  baseURL: process.env.VUE_APP_API_SERVER,
 });
+
 baseAPI.interceptors.request.use(
   (request) => {
     const token = localStorage.getItem("access_token");
