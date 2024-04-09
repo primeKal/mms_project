@@ -58,8 +58,7 @@ const actions = {
       await CompanyAPI.createAccount(account)
         .then((response) => {
           if (response) {
-            commit("setAccount", response);
-            console.log(response);
+            commit("setAccount", response.data);
             status = true;
           }
         })
