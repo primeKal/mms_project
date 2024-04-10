@@ -31,12 +31,17 @@ class CompanyAPI {
   }
 
   static async createAccount(account) {
-    try {
-      return await account;
-    } catch (error) {
-      console.log(error);
-      return await error;
-    }
+    return new Promise(async (resolve, reject) => {
+      try {
+        const response = await baseAPI.post("company", account);
+        console.log(response);
+        if (response.status === 201) {
+          return resolve(response.data);
+        }
+      } catch (error) {
+        return reject(error);
+      }
+    });
   }
 }
 export default CompanyAPI;

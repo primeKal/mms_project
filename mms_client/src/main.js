@@ -9,7 +9,7 @@ import filter from "./filters/index";
 import "./assets/tailwind.css";
 
 const toasterProperties = {
-  position: "top-right",
+  position: "top",
 };
 
 const app = createApp(App);
