@@ -79,8 +79,13 @@ export default {
             // validate entry
             await this.v$.$validate();
             if (!this.v$.$error) {
-                await this.$store.dispatch('Company/createAccount', this.account);
-                this.$toast.success('New account created.')
+                const status = await this.$store.dispatch('Company/createAccount', this.account);
+                if (status) {
+                    this.$toast.success('New account created.')
+                    this.$router.replace({ name: 'dashboard' })
+                } else {
+                    this.$toast.error('Operation failed!')
+                }
             } else
                 this.$toast.error('[' + this.v$.$errors[0].$property + '] ' + this.v$.$errors[0].$message.toLocaleLowerCase())
             this.loading = false
