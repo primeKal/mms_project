@@ -16,12 +16,7 @@ class CompanyAPI {
   static updateCompanyInfo(companyInfo) {
     return new Promise(async (resolve, reject) => {
       try {
-        const response = await baseAPI.put("company", {
-          id: companyInfo.id,
-          primaryColor: companyInfo.primaryColor,
-          secondaryColor: companyInfo.secondaryColor,
-          specialFeatures: companyInfo.specialFeatures,
-        });
+        const response = await baseAPI.put("company", companyInfo);
         const result = response.data;
         resolve(result);
       } catch (error) {
@@ -44,4 +39,5 @@ class CompanyAPI {
     });
   }
 }
+
 export default CompanyAPI;

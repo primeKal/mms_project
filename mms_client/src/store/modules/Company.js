@@ -76,6 +76,30 @@ const actions = {
       status = false;
     }
   },
+
+  updateCompany: async ({ commit }, company) => {
+    var status = null;
+    try {
+      await CompanyAPI.updateCompanyInfo(company)
+        .then((response) => {
+          if (response) {
+            console.log(response);
+            const { ...companyInfo } = response;
+            commit("setCompanyInfo", companyInfo);
+            status = true;
+          }
+        })
+        .catch((error) => {
+          status = false;
+          console.log(error);
+        });
+
+      return status;
+    } catch (error) {
+      console.error("message: " + error);
+      status = false;
+    }
+  },
 };
 
 export default {
