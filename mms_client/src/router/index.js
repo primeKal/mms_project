@@ -84,6 +84,18 @@ const routes = [
         component: () =>
           import("../views/OrderProcessingView/OrderProcessingIndex.vue"),
       },
+      {
+        path: "payments",
+        name: "payments",
+        component: () =>
+          import("../views/PaymentView/PaymentView.vue"),
+      },
+      {
+        path: "methods",
+        name: "methods",
+        component: () =>
+          import("../views/MethodView/MethodView.vue"),
+      },
     ],
   },
 ];
