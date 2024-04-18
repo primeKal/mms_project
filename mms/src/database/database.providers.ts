@@ -4,6 +4,8 @@ import { Customer } from 'src/customer/customer.entity';
 import { Menu } from 'src/menu/menu.entity';
 import { Order } from 'src/order/order.entity';
 import { OrderLine } from 'src/order/order.line.entity';
+import { PaymentMethodModel } from 'src/payment-method/method.entity';
+import { PaymentModel } from 'src/payment/payment.entity';
 import { ProductCategory } from 'src/product-category/product.category.entity';
 import { Product, ProductCategoryProduct } from 'src/product/product.entity';
 import { CompanyRole, Role } from 'src/role/role.entity';
@@ -27,9 +29,22 @@ export const databaseProviders = [
           ssl: true
         }
       });
-      sequelize.addModels([ Company, Product, Menu, ProductCategory, TableModel, Order, OrderLine, Customer,
-                            Role, CompanyRole, ProductCategoryProduct]);
-      await sequelize.sync();
+      sequelize.addModels([Company,
+        Product,
+        Menu,
+        ProductCategory,
+        TableModel,
+        Order,
+        OrderLine,
+        Customer,
+        Role,
+        CompanyRole,
+        ProductCategoryProduct,
+        PaymentMethodModel,
+        PaymentModel]);
+      // await sequelize.sync();
+      await sequelize.sync({ alter: true });
+
       return sequelize;
     },
   },

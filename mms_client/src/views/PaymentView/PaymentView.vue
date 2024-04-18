@@ -61,7 +61,9 @@ export default {
   },
   async mounted() {
     this.$emit("selectedNav", 6);
-    await this.$store.dispatch("Payments/fetchAllPayments");
+    // console.log(this.$store.state)
+    let companyId = this.$store.state.Company.companyInfo.id;
+    await this.$store.dispatch("Payments/fetchAllPayments", companyId);
     this.loading = false;
   },
 };

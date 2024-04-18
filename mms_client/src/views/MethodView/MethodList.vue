@@ -3,7 +3,8 @@
     <thead class="bg-slate-50 border-y shadow-sm">
       <th class="py-2 pl-4 text-left">Payment Method No.</th>
       <th class="py-2 pl-4 text-left">Name</th>
-      <th class="py-2 pl-4 text-left">Transaction Count</th>
+      <th class="py-2 pl-4 text-left">Type</th>
+      <th class="py-2 pl-4 text-left">Status</th>
       <th class="py-2 pl-4 text-center">Action</th>
     </thead>
     <tbody>
@@ -15,7 +16,10 @@
         <td class="pl-4 py-3 font-light">{{ method.id }}</td>
         <td class="pl-4 py-3 font-light">{{ method.name }}</td>
         <td class="pl-4 py-3 font-light">
-          {{ method.count }}
+          {{ method.type }}
+        </td>
+        <td class="pl-4 py-3 font-light">
+          {{ method.isActive }}
         </td>
         <td class="pl-4 py-3 flex justify-center items-center"></td>
       </tr>
