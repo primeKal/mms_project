@@ -16,7 +16,7 @@ export class OrderController {
 
     }
 
-    @UseGuards(JwtAuthGuard, new RoleGuard(3))
+    @UseGuards(JwtAuthGuard)
     @Get()
     public async getOrders(@Query('page') page: number = 1, @Query('pageSize') pageSize: number = 10): Promise<Order[]> {
       return this.orderService.getAllOrders(page, pageSize);

@@ -5,7 +5,7 @@ class MethodAPI {
     static getAllMethods(companyId) {
         return new Promise(async(resolve, reject)=>{
             try {
-                const response = await baseAPI.get(`Method/ByCompany/${companyId}`)
+                const response = await baseAPI.get(`paymentMethod/ByCompany/${companyId}`)
                 const result = response.data
                 resolve(result)
             } catch (error) {
@@ -13,15 +13,16 @@ class MethodAPI {
             }
         })
     }
-    static createMethod(MethodInfo, companyId) {
+    static createMethod(MethodInfo) {
         return new Promise(async(resolve,reject)=>{
             try {
-                const response = await baseAPI.post('Method',{
+                const response = await baseAPI.post('paymentMethod',{
                     name: MethodInfo.name,
-                    size: MethodInfo.size,
-                    number: MethodInfo.number,
-                    status: MethodInfo.status,
-                    companyId: companyId,
+                    type: MethodInfo.type,
+                    status: MethodInfo.status == "ON"? true: false,
+                    // parameters: MethodInfo.parameters,
+                    parameters: "[]",
+                    companyId: MethodInfo.companyId,
                 })
                 resolve(response)
             } catch (error) {
@@ -32,7 +33,7 @@ class MethodAPI {
     static updateMethod(MethodInfo) {
         return new Promise(async(resolve,reject)=>{
             try {
-                const response = await baseAPI.put('Method',{
+                const response = await baseAPI.put('paymentMethod',{
                     name: MethodInfo.name,
                     size: MethodInfo.size,
                     number: MethodInfo.number,
@@ -48,7 +49,7 @@ class MethodAPI {
     static deleteMethod(MethodId) {
         return new Promise(async(resolve,reject)=>{
             try {
-                const response = await baseAPI.delete('Method', {
+                const response = await baseAPI.delete('paymentMethod', {
                     data: {
                         id: MethodId,
                     }

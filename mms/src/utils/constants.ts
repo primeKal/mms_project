@@ -8,7 +8,8 @@ export const ORDER_REPOSITORY = "order_repo";
 export const ORDER_LINE_REPOSITORY = "order_line_repository"
 export const CUSTOMER_REPOSITORY = "customer_repo";
 export const ROLE_REPOSITORY = "role_repo";
-
+export const PAYMENT_METHOD_REPOSITORY = "payment_method_repo"
+export const PAYMENT_REPOSITORY = "payment_repo"
 
 
 // file constants
@@ -22,4 +23,7 @@ export const TABLE_STATUS_VALUES = ['Open', 'Occupied', 'OutOfService', 'Cancele
 
 // Role IDs
 export const COMPANY_ROLE_ID = 2;
+
+export const PAYMENT_METHOD_TYPES = ['Chapa', 'SantimPay', 'Telebirr']
+export const PAYMENT_STATUS = ["Draft", "Pending", "Confirmed"]
 

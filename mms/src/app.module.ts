@@ -18,11 +18,22 @@ import { RoleModule } from './role/role.module';
 import { ReportsModule } from './reports/reports.module';
 import { ServeStaticModule } from '@nestjs/serve-static/dist/serve-static.module';
 import { join } from 'path';
+import { PaymentMethodModule } from './payment-method/payment-method.module';
+import { PaymentModule } from './payment/payment.module';
 
 @Module({
-  imports: [DatabaseModule, CompanyModule, AuthModule, ConfigModule.forRoot({
-    isGlobal: true,
-  }), ProductModule, MenuModule, ProductCategoryModule, TableModule, OrderModule, CustomerModule,
+  imports: [DatabaseModule,
+    CompanyModule,
+    AuthModule,
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+    ProductModule,
+    MenuModule,
+    ProductCategoryModule,
+    TableModule,
+    OrderModule,
+    CustomerModule,
     // TelegrafModule.forRoot({
     //   token: process.env.TELEGRAM_BOT_TOKEN,
     // }),
@@ -31,7 +42,10 @@ import { join } from 'path';
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, ".."),
       renderPath: "public",
-  }),],
+    }),
+    PaymentMethodModule,
+    PaymentModule
+  ],
   controllers: [AppController],
   providers: [AppService, {
     provide: APP_FILTER,

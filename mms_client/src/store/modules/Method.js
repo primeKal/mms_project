@@ -7,6 +7,7 @@ const state = {
 }
 const getters = {
     getAllMethods: (state) => {
+        console.log(state.Methods)
         return state.Methods
     },
     getMethod: (state) => {
@@ -50,11 +51,12 @@ const actions = {
     },
     addNewMethod: async({dispatch}, MethodInfo) =>{
         var status = null
+        console.log("hiiikalellele")
         await MethodAPI.createMethod(MethodInfo)
             .then(async (response)=>{
                 if(response.status === CREATE_SUCCESS) {
                     status = {'success': true}
-                    await dispatch('fetchAllMethods', 1)
+                    await dispatch('fetchAllMethods', MethodInfo.companyId)
                 }else {
                     status = {'success': false}
                 }
