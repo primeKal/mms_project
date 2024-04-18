@@ -2,7 +2,7 @@
     <div class="relative">
         <input class="w-full py-2 pl-12 text-sm font-light border rounded select" :placeholder="placeholderString"
             @input="search(searchString)" v-model.trim="searchString" />
-        <svg v-on:click="() => { this.showOptions = !this.showOptions }"
+        <svg v-on:click="() => { showOptions = !showOptions }"
             class="cursor-pointer absolute left-4 top-2 text-black/100 border-e" xmlns="http://www.w3.org/2000/svg"
             width="24" height="24" viewBox="0 0 24 24">
             <path fill-rule="evenodd"
@@ -11,11 +11,11 @@
         </svg>
 
         <ul v-show="showOptions" class="bg-white z-10 w-full text-sm font-light border shadow absolute">
-            <li v-on:click="createNew" v-if="this.data.length === 0" class="hover:bg-gray-500 p-2 cursor-pointer">
-                Create: {{ this.searchString }}
+            <li v-on:click="createNew" v-if="data.length === 0" class="hover:bg-gray-500 p-2 cursor-pointer">
+                Create: {{ searchString }}
             </li>
             <li class="hover:bg-gray-500 p-2 cursor-pointer"
-                :class="[selectedOption === option.index ? 'bg-gray-500' : 'bg-white']" v-for="option in data"
+                :class="[selectedOption === option.id ? 'bg-gray-500' : 'bg-white']" v-for="option in data"
                 v-on:click="handleSelectOption(option)" v-bind:key="option.name">{{
                     option.name }}</li>
         </ul>
@@ -30,9 +30,10 @@ input:focus-visible {
 export default {
     props: {
         placeholderString: String,
-        options: Array,
         selectedIndex: Number,
+        options: Array,
     },
+
     data() {
         return {
             searchString: '',
