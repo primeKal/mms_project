@@ -54,12 +54,10 @@
             <div class="mt-4 w-full flex justify-between">
                 <SelectList :placeholderString="'Select category'" :selectedIndex="0" :options="allCategories"
                     @handleCreateNew="createNewCategory" @handleSelectedOption="handleSelectedOption" class="w-2/3" />
-                <button @click="openNewCategory = true"
-                    class="w-1/5 bg-transparent hover:bg-primary text-primary hover:text-white border-primary  rounded border active:scale-95 transition-all">
-                    + NEW PRODUCT
-                </button>
             </div>
-            <div>
+            <h3 class="mt-7 text-primary font-medium text-xl">Product</h3>
+
+            <div class="my-5 w-2/3">
                 <AddProduct :categoryId="selectedCategory" :openAddProduct="true" />
             </div>
 
@@ -89,7 +87,7 @@
                     + NEW PRODUCT
                 </button>
             </div> -->
-        <MenuListTableVue class="mt-5" />
+        <MenuListTableVue :menuItem="menus" class="mt-5" />
 
     </MainRendererVue>
 
@@ -133,6 +131,7 @@ export default {
     computed: {
         ...mapGetters({
             menuId: 'Menu/getMenuId',
+            menus: 'Menu/getAllMenus',
             menu: 'Menu/getMenu',
         }),
     },
@@ -162,6 +161,7 @@ export default {
         },
         initialization() {
             this.allCategories = this.menuInformation.productCategories;
+            console.log(this.menus)
         },
 
         async createNewCategory(item) {

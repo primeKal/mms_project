@@ -12,7 +12,7 @@
             </button>
             <hr class="border w-20" />
         </div>
-        <div v-else class="flex border rounded shadow-md w-full py-2 px-10">
+        <div v-else class="flex border rounded w-full py-5 px-10">
             <div class="">
                 <label v-if="!newProduct.image" for="image_upload" class="text-black/60">
                     <!-- profile image with plus button svg -->
@@ -31,7 +31,7 @@
                     </button>
                 </div>
             </div>
-            <div class="ml-8 basis-2/5 flex flex-col space-y-2">
+            <div class="ml-8 w-full flex flex-col space-y-2">
                 <input class="py-1 pl-1  rounded border" placeholder="Product Name" v-model="newProduct.name" />
                 <input class="py-1 pl-1 rounded border" placeholder="Product Price" type="number"
                     v-model="newProduct.price" />
