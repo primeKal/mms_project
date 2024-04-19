@@ -70,6 +70,59 @@
         >
           {{ error.message }}
         </div>
+        <div v-if="this.paymentMethodInfo.type == 'Chapa'">
+          <fieldset
+            class="w-full border rounded"
+            :class="v$.paymentMethodInfo.type.$error ? 'border-red-500' : ''"
+          >
+            <legend class="ml-3 text-xs px-1">Chapa Secret Key</legend>
+            <input
+              @input="setTouched('chapa_secret_key')"
+              type="text"
+              class="w-full pt-1 pb-1 px-2 outline-none"
+              v-model="paymentMethodInfo.chapa_secret_key"
+            />
+          </fieldset>
+          <fieldset
+            class="w-full border rounded"
+            :class="v$.paymentMethodInfo.type.$error ? 'border-red-500' : ''"
+          >
+            <legend class="ml-3 text-xs px-1">Chapa Public Key</legend>
+            <input
+              @input="setTouched('chapa_public_key')"
+              type="text"
+              class="w-full pt-1 pb-1 px-2 outline-none"
+              v-model="paymentMethodInfo.chapa_public_key"
+            />
+          </fieldset>
+        </div>
+
+        <div v-if="this.paymentMethodInfo.type == 'Telebirr'">
+          <fieldset
+            class="w-full border rounded"
+            :class="v$.paymentMethodInfo.type.$error ? 'border-red-500' : ''"
+          >
+            <legend class="ml-3 text-xs px-1">Telebir Merchant Id</legend>
+            <input
+              @input="setTouched('chapa_secret_key')"
+              type="text"
+              class="w-full pt-1 pb-1 px-2 outline-none"
+              v-model="paymentMethodInfo.telebirr_merchant_id"
+            />
+          </fieldset>
+          <fieldset
+            class="w-full border rounded"
+            :class="v$.paymentMethodInfo.type.$error ? 'border-red-500' : ''"
+          >
+            <legend class="ml-3 text-xs px-1">Telebirr Public Key</legend>
+            <input
+              @input="setTouched('chapa_public_key')"
+              type="text"
+              class="w-full pt-1 pb-1 px-2 outline-none"
+              v-model="paymentMethodInfo.telebirr_secret_key"
+            />
+          </fieldset>
+        </div>
         <button
           type="submit"
           class="py-2 mt-2 self-center flex justify-center items-center w-2/3 bg-primary text-white active:scale-95 rounded font-semibold"
@@ -132,6 +185,10 @@ export default {
         name: "",
         isActive: "",
         type: "",
+        chapa_secret_key: "",
+        chapa_public_key: "",
+        telebirr_merchant_id: "",
+        telebirr_secret_key: "",
       },
       loading: false,
     };
@@ -172,9 +229,7 @@ export default {
         if (this.isNew) {
           console.log(this.paymentMethodInfo);
           let companyId = this.$store.state.Company.companyInfo.id;
-          console.log(companyId);
-          this.paymentMethodInfo.companyId = companyId
-          console.log("hii kaleb", this.paymentMethodInfo)
+          this.paymentMethodInfo.companyId = companyId;
           const status = await this.addTable(this.paymentMethodInfo);
           if (status.success) {
             this.$toast.success("Payment Method created successfully");
