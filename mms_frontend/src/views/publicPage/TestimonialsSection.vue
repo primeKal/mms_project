@@ -1,8 +1,8 @@
 <template>
-    <section class="py-20 px-24 bg-slate-50">
-        <p class="text-center">2,157 people have said how good QR Menu </p>
-        <p class="mt-6 text-center font-medium text-4xl">Our happy clients said this about us</p>
-        <carousel class="w-full mt-16 mb-10" :items-to-show="3" :wrapAround="true" :autoplay="3000" :transition="800" :pauseAutoplayOnHover="true" >
+    <section class="pt-10 px-24 bg-slate-50 flex flex-col gap-2">
+        <!-- <p class="text-center">2,157 people have said how good QR Menu </p> -->
+        <p class="text-center font-semobold font-semibold text-4xl">Our happy clients said this about us</p>
+        <carousel class="w-full mb-10" :items-to-show="3" :wrapAround="true" :autoplay="3000" :transition="800" :pauseAutoplayOnHover="true" >
           <slide v-for="testimonial in testimonials" :key="testimonial.id" slideWidth="100px" >
             <div class="bg-white p-10">
                 <div class="flex space-x-1 text-amber-400">
@@ -21,10 +21,9 @@
             <navigation />
           </template>
         </carousel>
-        <div class="flex justify-center items-center">
+        <!-- <div class="flex justify-center items-center">
             <p class="text-center text-sm font-medium text-secondary px-2 hover:underline cursor-pointer w-max">Check all 1,000 reviews</p>
-        </div>
-        
+        </div> -->
     </section>
 </template>
 <script>
@@ -39,11 +38,9 @@ export default {
     data () {
         return {
             testimonials: [
-                {'id': 1, 'testimonial': 'Revolutionized our restaurant operations! The QR Code Ordering System is a must-have for any dining setablishment. Efficient, user-friendly, and essential for adapting to the digital age.', 'name': 'Frezer Zewdu', 'position': 'Head Chef'},
-                {'id': 2, 'testimonial': 'Revolutionized our restaurant operations! The QR Code Ordering System is a must-have for any dining setablishment. Efficient, user-friendly, and essential for adapting to the digital age.', 'name': 'Frezer Zewdu', 'position': 'Head Chef'},
-                {'id': 3, 'testimonial': 'Revolutionized our restaurant operations! The QR Code Ordering System is a must-have for any dining setablishment. Efficient, user-friendly, and essential for adapting to the digital age.', 'name': 'Frezer Zewdu', 'position': 'Head Chef'},
-                {'id': 4, 'testimonial': 'Revolutionized our restaurant operations! The QR Code Ordering System is a must-have for any dining setablishment. Efficient, user-friendly, and essential for adapting to the digital age.', 'name': 'Frezer Zewdu', 'position': 'Head Chef'},
-                {'id': 5, 'testimonial': 'Revolutionized our restaurant operations! The QR Code Ordering System is a must-have for any dining setablishment. Efficient, user-friendly, and essential for adapting to the digital age.', 'name': 'Frezer Zewdu', 'position': 'Head Chef'},
+                {'id': 1, 'testimonial': 'Exceptional service! The QR Code Ordering System streamlined our orders and enhanced customer satisfaction. A game-changer for our restaurant\'s efficiency and growth.', 'name': 'Frezer Zewdu', 'position': 'Restaurant Manager'},
+                {'id': 2, 'testimonial': 'Innovative, efficient, and customer-friendly. The QR Code Ordering System brought a new level of convenience to our restaurant. Highly recommended for modernizing dining experiences.', 'name': 'Frezer Zewdu', 'position': 'Restaurant Owner'},
+                {'id': 3, 'testimonial': 'Revolutionized our restaurant operations! The QR Code Ordering System is a must-have for any dining establishment. Efficient, user-friendly, and essential for adapting to the digital age.', 'name': 'Frezer Zewdu', 'position': 'Head Chef'},
             ]
         }
     }

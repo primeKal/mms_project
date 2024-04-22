@@ -1,21 +1,22 @@
 <template>
-    <div class="lg:px-24 py-12 bg-secondary">
-        <div class="flex justify-between">
-            <div class="basis-1/3">
-                <button class="text-3xl text-white font-semibold flex outline-none">
-                    <svg class="mr-3 text-primary" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><path fill="currentColor" d="M11 9H9V2H7v7H5V2H3v7c0 2.12 1.66 3.84 3.75 3.97V22h2.5v-9.03C11.34 12.84 13 11.12 13 9V2h-2v7m5-3v8h2.5v8H21V2c-2.76 0-5 2.24-5 4Z"/></svg>
-                    QRmenu
+    <div class="lg:px-24 py-12 bg-primary">
+        <div class="flex justify-between gap-4">
+            <div >
+                <button class="text-2xl text-white font-semibold font-poppins flex outline-none items-center justify-between gap-4">
+                    <img src="@/assets/mms_logo_white.png" width="50" height="50"/>
+                    <!-- <svg class="mr-3 text-black" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><path fill="currentColor" d="M11 9H9V2H7v7H5V2H3v7c0 2.12 1.66 3.84 3.75 3.97V22h2.5v-9.03C11.34 12.84 13 11.12 13 9V2h-2v7m5-3v8h2.5v8H21V2c-2.76 0-5 2.24-5 4Z"/></svg> -->
+                    ZEUS MENU'S
                 </button>
-                <p class="my-5 text-white/70">Subscribe to our news letter</p>
+                <p class="my-5 text-white">Stay Hungry for Deals: Sign Up for Our Newsletter!</p>
                 <div class="relative">
-                    <input class="w-full bg-transparent border border-white/70 p-3 rounded-3xl" placeholder="Enter your email here" />
+                    <input class="w-full border border-primary p-3 rounded-3xl focus:border-primary" placeholder="Enter your email here" />
                     <button class="absolute right-2 top-1 text-white p-2 bg-green-400 rounded-full">
                         <svg class="-rotate-45" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M5 6.41L6.41 5L17 15.59V9h2v10H9v-2h6.59L5 6.41Z"/></svg>
                     </button>
                 </div>
             </div>
-            <div class="basis-1/4">
-                <ul class="w-full mt-5 text-white/70 flex justify-between">
+            <div>
+                <ul class="w-full mt-5 flex justify-between text-white gap-4">
                     <li class="cursor-pointer">About Us</li>
                     <li class="cursor-pointer">Pricing</li>
                     <li class="cursor-pointer">Testimonials</li>
@@ -43,7 +44,7 @@
         </div>
         <hr class="w-full my-6 border border-white/70" />
         <div class="flex justify-between text-sm text-white">
-            <p>2023 QRMenu. Copyright and rights reserved</p>
+            <p>2023 ZEUS MENU'S. Copyright and rights reserved</p>
             <div class="w-1/4 flex justify-between">
                 <p>Terms and Conditions</p>
                 <p>Privacy Policy</p>
