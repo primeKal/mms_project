@@ -9,9 +9,9 @@
 
     <tr 
         :class="openProducts ? 'shadow-md bg-primary text-white': 'bg-white text-black shadow-none hover:bg-slate-50/60'" 
-        class="grid grid-cols-3 auto-cols-min justify-between border-b transition-colors"
+        class="grid grid-cols-3 lg:gap-4 gap-2 auto-cols-min justify-between border-b lg:text-base text-xs transition-colors"
     >
-        <td class="pl-4 py-3 flex items-center font-light">
+        <td class="lg:pl-4 pl-2 py-3 flex items-center font-light">
             <svg class="mr-3" @click="openProducts = !openProducts" :class="[openProducts ? 'rotate-180' : 'rotate-0']"  xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M7.41 8.58L12 13.17l4.59-4.59L18 10l-6 6l-6-6l1.41-1.42Z"/></svg>
             <p v-if="!editSection" >{{ category.name }}</p>
             <input v-else class="py-1 px-2 rounded border" v-model="sectionInfo.name" />
@@ -20,13 +20,13 @@
             <p v-if="!editSection">{{ category.description }}</p> 
             <textarea v-else style="resize:none;" class="border rounded h-20 p-1" v-model="sectionInfo.description" ></textarea>
         </td>
-        <td v-if="!editSection" class="pl-4 py-3 flex justify-center items-center">
+        <td v-if="!editSection" class="lg:pl-4 pl-2 lg:py-3 py-2 flex justify-center items-center">
             <svg @click="editSection = true" class="p-1 hover:border rounded hover:text-yellow-400 cursor-pointer transition-all" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5 16l-1 4l4-1L19.586 7.414a2 2 0 0 0 0-2.828l-.172-.172a2 2 0 0 0-2.828 0L5 16ZM15 6l3 3m-5 11h8"/></svg>
             <svg @click="openDeleteCategory=category" class="ml-3 p-1 hover:border rounded hover:text-red-500 cursor-pointer transition-all" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M6 19a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7H6v12M8 9h8v10H8V9m7.5-5l-1-1h-5l-1 1H5v2h14V4h-3.5Z"/></svg>
         </td>
-        <td v-else class="pl-1 py-2 flex justify-center items-center">
+        <td v-else class="pl-1 py-2 flex lg:flex-row flex-col lg:justify-center justify-start lg:items-center items-start">
             <button @click="editSection = false" class="py-1 px-4 text-gray-400 hover:text-gray-500 active:scale-95 transition-all font-semibold rounded">cancel</button>
-            <button @click="updateSection" class="py-1 px-4 text-white bg-green-400 hover:bg-green-500 active:scale-95 transition-all font-semibold rounded">Save</button>
+            <button @click="updateSection" class="lg:mt-0 mt-2 py-1 px-4 text-white bg-green-400 hover:bg-green-500 active:scale-95 transition-all font-semibold rounded">Save</button>
         </td>
         <!-- view all products under section -->
         <transition
@@ -39,7 +39,24 @@
         > 
             <td v-if="openProducts" class="col-span-full grid p-4 bg-slate-100 text-black shadow-inner">
                 <p class="mb-1">Products:</p>
+                <VueMultiselect
+                    v-model="newProducts"
+                    placeholder="Select Products to add"
+                    tag-placeholder="Add new product"
+                    :taggable="true" 
+                    @tag="addProduct"
+                    track-by="name"
+                    label="name"
+                    :options="allProducts"
+                    :searchable="true"
+                    :multiple="true"
+                />
                 <div class="pb-5 bg-white text-black rounded-lg">
+                    <ProductRowVue 
+                        v-for="product in newProducts"
+                        :key="product.name"
+                        :index="-1"
+                    />
                     <ProductRowVue  
                         v-for="(product,index) in category.products" 
                         :key="product.id" 
@@ -59,7 +76,9 @@
     </tr>
 </template>
 <script>
-import { mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex'
+import 'vue-multiselect/dist/vue-multiselect.css'
+import VueMultiselect from 'vue-multiselect'
 import DeleteConfirmationModalVue from '@/components/modals/DeleteConfirmationModal.vue'
 import ProductRowVue from './ProductRow.vue'
 import AddProductVue from './AddProduct.vue'
@@ -68,12 +87,15 @@ export default {
         category: Object,
     },
     components: {
+        VueMultiselect,
         DeleteConfirmationModalVue,
         ProductRowVue,
         AddProductVue,
     },
     data () {
         return {
+            newProducts: [],
+            allProducts: [],
             openProducts: false,
             editSection: false,
             sectionInfo: {},
@@ -87,6 +109,11 @@ export default {
                 this.sectionInfo = this.category
             }
         }
+    },
+    computed: {
+        ...mapState({
+            fetchedProducts: 'Menu/getAllProducts',
+        })
     },
     methods: {
         ...mapActions({
@@ -122,7 +149,18 @@ export default {
             setTimeout(()=>{
                 this.openDeleteCategory = null
             }, 1000)        
-        },        
+        },
+        async addProduct (productName) {
+            const productInfo = {
+                name: productName,
+                description: 'New Product',
+                price: 0,
+            }
+            this.newProducts.push(productInfo)
+        }        
+    },
+    mounted() {
+
     }
 }
 </script>
