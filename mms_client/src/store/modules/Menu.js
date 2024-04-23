@@ -5,6 +5,7 @@ import { CREATE_SUCCESS, FETCH_SUCCESS } from '@/utils/Variables'
 const state = {
     menus: [],
     menu: {},
+    allProducts: [],
     menuId: null,
 }
 const getters = {
@@ -16,6 +17,9 @@ const getters = {
     },
     getMenuId: (state) => {
         return state.menuId
+    },
+    getAllProducts: (state) => {
+        return state.allProducts
     }
 }
 const mutations = {
@@ -27,6 +31,9 @@ const mutations = {
     },
     setMenuId: (state, menuId)=>{
         state.menuId = menuId
+    },
+    setAllProducts: (state, products) => {
+        state.allProducts = products
     }
 }
 const actions = {
@@ -161,6 +168,15 @@ const actions = {
                 status = {'success': false, 'error': error}
             })
         return status
+    },
+    fetchAllProducts: async({commit}) => {
+        await ProductAPI.getProducts()
+            .then((result) => {
+                commit('setAllProducts', result)
+            })
+            .catch((error) =>{
+                console.log(error)
+            })
     },
     createProduct: async ({state,dispatch}, productInfo) =>{
         var status = null
