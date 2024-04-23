@@ -12,50 +12,50 @@ import { UpdateStatusDto } from 'src/utils/dtos/updateStatusDto';
 @Controller('order')
 export class OrderController {
 
-    constructor(private orderService : OrderService){
+  constructor(private orderService: OrderService) {
 
-    }
+  }
 
-    @UseGuards(JwtAuthGuard)
-    @Get()
-    public async getOrders(@Query('page') page: number = 1, @Query('pageSize') pageSize: number = 10): Promise<Order[]> {
-      return this.orderService.getAllOrders(page, pageSize);
-    }
+  @UseGuards(JwtAuthGuard)
+  @Get()
+  public async getOrders(@Query('page') page: number = 1, @Query('pageSize') pageSize: number = 10): Promise<Order[]> {
+    return this.orderService.getAllOrders(page, pageSize);
+  }
 
 
-    @Get(':id')
-    @ApiProperty()
-    public async getAOrder(@Param('id') id: number): Promise<Order>{
-      return this.orderService.getOneOrderById(id);
-    }
+  @Get(':id')
+  @ApiProperty()
+  public async getAOrder(@Param('id') id: number): Promise<Order> {
+    return this.orderService.getOneOrderById(id);
+  }
 
-    @Post()
-    public async createOrder(@Req() req: any,@Body() body: OrderDto): Promise<Order> {
-      return this.orderService.createOrder(body);
-    }
+  @Post()
+  public async createOrder(@Req() req: any, @Body() body: OrderDto): Promise<Order> {
+    return this.orderService.createOrder(body);
+  }
 
-    @UseGuards(JwtAuthGuard)
-    @Put()
-    public async editOrder(@Body() body: OrderDto): Promise<Order> {
+  @UseGuards(JwtAuthGuard)
+  @Put()
+  public async editOrder(@Body() body: OrderDto): Promise<Order> {
 
-      return this.orderService.editOrder(body);
-    }
+    return this.orderService.editOrder(body);
+  }
 
-    @UseGuards(JwtAuthGuard)
-    @Delete()
-    public async deleteOrder(@Body() id): Promise<void>{
-      return this.orderService.deleteOrder(id.id);
-    }
+  @UseGuards(JwtAuthGuard)
+  @Delete()
+  public async deleteOrder(@Body() id): Promise<void> {
+    return this.orderService.deleteOrder(id.id);
+  }
 
-    @UseGuards(JwtAuthGuard)
-    @Get('ByCompany/:id')
-    public async getOrdersByUser(@Param('id') id: number): Promise<[Order]>{
-      return this.orderService.getOrdersByCompany(id);
-    }
-   
-    @UseGuards(JwtAuthGuard)
-    @Post("UpdateStatus")
-    public async updateStatus(@Req() req: any,@Body() body: UpdateStatusDto): Promise<Order> {
-      return this.orderService.updateOrderStatus(body);
-    }
+  @UseGuards(JwtAuthGuard)
+  @Get('ByCompany/:id')
+  public async getOrdersByUser(@Param('id') id: number): Promise<[Order]> {
+    return this.orderService.getOrdersByCompany(id);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post("UpdateStatus")
+  public async updateStatus(@Req() req: any, @Body() body: UpdateStatusDto): Promise<Order> {
+    return this.orderService.updateOrderStatus(body);
+  }
 }

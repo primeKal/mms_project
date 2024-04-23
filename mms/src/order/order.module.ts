@@ -10,6 +10,7 @@ import { PaginationService } from 'src/utils/services/pagination.service';
 @Module({
   providers: [OrderService, ...orderProvider, ...orderLineProvider, PaginationService],
   controllers: [OrderController],
-  imports: [CustomerModule]
+  imports: [CustomerModule],
+  exports: [OrderService]
 })
-export class OrderModule {}
+export class OrderModule { }

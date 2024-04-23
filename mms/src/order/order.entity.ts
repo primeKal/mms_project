@@ -40,6 +40,11 @@ export class Order extends Model<Order> {
   name: string;
 
   @Column({
+    allowNull: true,
+  })
+  customerPhone: string;
+
+  @Column({
     allowNull: false,
   })
   totalPrice: number;
@@ -108,14 +113,14 @@ export class Order extends Model<Order> {
 
   @ForeignKey(() => TableModel)
   tableId: number
-  
+
   @BelongsTo(() => TableModel)
   table: TableModel
-  
+
 
   @ForeignKey(() => Customer)
   customerId: number
-  
+
   @BelongsTo(() => Customer)
-  customer: Customer  
+  customer: Customer
 }

@@ -42,7 +42,7 @@ export class PaymentModel extends Model<PaymentModel> {
     total: number;
 
     @Column({
-        allowNull: false,
+        allowNull: true,
     })
     phone: string;
 

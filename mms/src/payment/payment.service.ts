@@ -3,13 +3,16 @@ import { PaymentModel } from './payment.entity';
 import { PAYMENT_REPOSITORY, PRODUCT_REPOSITORY } from 'src/utils/constants';
 import { Op } from 'sequelize';
 import { PaginationService } from 'src/utils/services/pagination.service';
-import { PaymentDto } from './dtos/payment.dtos';
+import { GeneratePaymentDto, PaymentDto, SuccessPaymentDto } from './dtos/payment.dtos';
+import { OrderService } from 'src/order/order.service';
 
 @Injectable()
 export class PaymentService {
     constructor(
         @Inject(PAYMENT_REPOSITORY) private readonly paymentRepository: typeof PaymentModel,
-        private readonly paginationService: PaginationService<PaymentModel>
+        private readonly paginationService: PaginationService<PaymentModel>,
+        @Inject(OrderService) private orderService: OrderService,
+
     ) {
         this.paginationService = new PaginationService<PaymentModel>(this.paymentRepository)
 
@@ -54,5 +57,29 @@ export class PaymentService {
     }
     async getPaymentsByIds(ids: Array<number>) {
         return await this.paymentRepository.findAll({ where: { id: { [Op.in]: ids } } });
+    }
+    async generatePayment(generatePaymentDto: GeneratePaymentDto) {
+        try {
+            const order = await this.orderService.getOneOrderById(generatePaymentDto.orderId);
+            let paymentDto = new PaymentDto();
+            paymentDto.orderId = order.id;
+            paymentDto.total = String(order.totalPrice);
+            paymentDto.phone = order.customerPhone;
+            paymentDto.companyId = String(order.companyId);
+            paymentDto.email = `Walking Customer For Order ${order.id}`;
+            let success_data = await this.paymentRepository.create<PaymentModel>(paymentDto as any);
+            let returned_data = new SuccessPaymentDto();
+            returned_data.data = success_data;
+            returned_data.call_back = "https://google.com/payment/success";
+            return returned_data
+        }
+        catch (error) {
+            console.log("errror", error)
+            return {
+                isSuccessful: false,
+                call_back: "https://google.com/payment/failed",
+                data: error
+            }
+        }
     }
 }
