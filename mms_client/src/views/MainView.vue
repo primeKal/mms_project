@@ -1,6 +1,6 @@
 <template>
-    <div class="w-full min-h-screen flex">
-        <div :class="[collapse ? 'basis-auto':'basis-1/6']" class="shadow-lg">
+    <div class="w-full min-h-screen flex lg:flex-row flex-col">
+        <div :class="[collapse ? 'lg:basis-auto':'lg:basis-1/6']" class="shadow-lg">
             <NavBarVue 
                 :navValue="navValue" 
                 @collapse="(value)=> {collapse=value}" 
