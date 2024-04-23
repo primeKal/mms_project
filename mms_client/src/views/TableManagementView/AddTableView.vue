@@ -1,9 +1,10 @@
 <template>
     <ModalLayoutVue>
-        <div class="w-1/2 p-8 bg-white rounded-xl">
+        <div class="lg:w-1/2 w-11/12 p-8 bg-white rounded-xl">
             <div class="w-full flex justify-between">
-                <h2>Add Table</h2>
-                <div @click="$emit('closeModal' )">
+                <h2 v-if="isNew">Add Table</h2>
+                <h2 v-else>Edit Table</h2>
+                <div class="cursor-pointer" @click="$emit('closeModal' )">
                     CLOSE X
                 </div>
             </div>

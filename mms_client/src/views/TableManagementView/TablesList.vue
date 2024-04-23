@@ -15,7 +15,7 @@
             @closeModal="openDeleteTable = null"
         />
 
-        <thead class="bg-slate-50 border-y shadow-sm">
+        <thead class="bg-slate-50 border-y shadow-sm lg:text-base text-sm">
             <th class="py-2 pl-4 text-left">Table No.</th>
             <th class="py-2 pl-4 text-left">Size</th>
             <th class="py-2 pl-4 text-left">Table Status</th>
@@ -25,7 +25,7 @@
             <tr
                 v-for="table in tables"
                 :key="table.id"
-                class="hover:bg-slate-50/60 border-b transition-colors"
+                class="hover:bg-slate-50/60 border-b transition-colors lg:text-base text-xs"
             >
             <td class="pl-4 py-3 font-light">{{ table.id }}</td>
             <td class="pl-4 py-3 font-light">{{ table.size }}</td>

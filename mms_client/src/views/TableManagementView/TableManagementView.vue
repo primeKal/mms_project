@@ -1,6 +1,6 @@
 <template>
     <MainRendererVue :loading="loading">
-        <div class="p-6 pr-12 w-full">
+        <div class="lg:p-6 p-2 lg:pr-12 pr-2 w-full">
             <AddTableViewVue 
                 class="z-10" 
                 v-if="addTable || editTable"
@@ -10,8 +10,8 @@
             />
 
             <h3 class="text-primary font-medium text-xl">Table</h3>
-            <div class="mt-8 w-full flex justify-between">
-                <div class="flex justify-between w-3/5">
+            <div class="mt-8 w-full flex lg:flex-row flex-col lg:justify-between">
+                <div class="flex justify-between lg:w-3/5 w-full">
                     <SearchBarVue 
                         class="w-3/5"
                         :placeholderString="'Search by table number'"
@@ -27,7 +27,7 @@
                     </fieldset>
 
                 </div>
-            <button @click="addTable=true" class="w-1/5 bg-transparent hover:bg-primary text-primary hover:text-white border-primary  rounded border active:scale-95 transition-all">
+            <button @click="addTable=true" class="lg:w-1/5 w-1/3 lg:mt-0 mt-3 lg:self-auto self-end bg-transparent hover:bg-primary text-primary hover:text-white border-primary  rounded border active:scale-95 transition-all">
                     + NEW TABLE
                 </button>
             </div>
