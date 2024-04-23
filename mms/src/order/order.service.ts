@@ -24,7 +24,7 @@ export class OrderService {
     return await this.paginationService.findAll(page,pageSize, toInclude)
   }
   async createOrder(createOrderDto: any): Promise<Order> {
-    createOrderDto.companyId = 3;
+    // createOrderDto.companyId = 3;
     createOrderDto.customerId = await this.customerService.getOrCreateCustomerByPhone(createOrderDto.customerPhone);
     let newOrder: Order =  await this.orderRepository.create<Order>(createOrderDto, {
       include: [OrderLine]

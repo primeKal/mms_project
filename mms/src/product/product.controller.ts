@@ -55,8 +55,9 @@ export class ProductController {
     @Post('upload')
     @UseInterceptors(FileInterceptor('file', {
       storage: diskStorage({
-        destination: './uploads/products',
+        destination: './public/products',
         filename: (req: any, file: Express.Multer.File, cb): void => {
+          console.log("jiiiiiiiiiiiiiii")
           const file_extension : string = file.originalname.split('.')[1]
           const newFileName = req.user.id + "_" + Date.now() + "." + file_extension
           cb(null, newFileName);
@@ -74,9 +75,10 @@ export class ProductController {
         // .addFileTypeValidator({ fileType: 'image/jpeg' })
         .addMaxSizeValidator({ maxSize: MAX_PROFILE_PICTURE_SIZE_IN_BYTES })
         .build({ errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY }),
-    ) file: Express.Multer.File, @Body() id) {
+    ) file: Express.Multer.File, @Req() req: any,@Body() productDto: ProductDto) {
       console.log("saved file updating model");
-      let company = await this.productService.saveProductPic(file.path, id.id)
+      console.log("am confused");
+      let company = await this.productService.saveProductPic(file.path,productDto,req?.user?.id)
       return company;
     }
 }

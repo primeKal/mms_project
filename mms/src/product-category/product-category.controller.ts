@@ -4,6 +4,7 @@ import { ProductCategory } from './product.category.entity';
 import { ProductCategoryDto } from './dtos/product.category.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/guards/jwtAuthGuard';
+import { addProductsToCategoryDto } from './dtos/add.products.category.dto';
 
 
 @UseGuards(JwtAuthGuard)
@@ -27,7 +28,7 @@ export class ProductCategoryController {
 
     @Get('ByMenu/:id')
     public async getProductCategoryByCompany(@Param('id') id: number): Promise<ProductCategory[]>{
-      return this.productCategoryService.getProductCategorysByMenu(id);
+      return this.productCategoryService.getProductCategoriesByMenu(id);
     }
 
     @Post()
@@ -44,5 +45,13 @@ export class ProductCategoryController {
     @Delete()
     public async deleteProductCategory(@Body() id): Promise<void>{
       return this.productCategoryService.deleteProductCategory(id.id);
+    }
+    @Post('AddProducts')
+    public async addProductsToCategory(@Req() req: any,@Body() body: addProductsToCategoryDto): Promise<any> {
+      return this.productCategoryService.addProducts(body);
+    }
+    @Post('RemoveProducts')
+    public async removeProductsFromCategory(@Req() req: any,@Body() body: addProductsToCategoryDto): Promise<any> {
+      return this.productCategoryService.removeProducts(body);
     }
 }

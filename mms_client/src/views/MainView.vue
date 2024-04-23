@@ -7,14 +7,16 @@
                 class="w-full"
             />
         </div>
-        
-
-        <div :class="[collapse ? 'basis-full':'basis-5/6']" class="h-full">
-            <div class="px-8 pt-2 flex flex-row-reverse bg-white h-9 shadow-lg z-10">
-                <p>Profile</p>
-            </div>
-            <div>
-                <router-view @selectedNav="selectNav"/>
+        <div :class="[collapse ? 'basis-full' : 'basis-5/6 ']" class="max-h-screen w-full overflow-y-scroll ">
+            <!-- <div class="relative w-full"> -->
+            <div class="h-full relative">
+                <div class="fixed-top p-3 flex flex-row-reverse bg-white shadow z-10 mb-2 border-l">
+                    <p>Profile</p>
+                </div>
+                <div class="">
+                    <router-view @selectedNav="selectNav" />
+                </div>
+                <!-- </div> -->
             </div>
         </div>
     </div>
@@ -25,14 +27,14 @@ export default {
     components: {
         NavBarVue,
     },
-    data () {
+    data() {
         return {
             navValue: 1,
             collapse: false,
         }
     },
     methods: {
-        selectNav (value) {
+        selectNav(value) {
             this.navValue = value
         }
     }

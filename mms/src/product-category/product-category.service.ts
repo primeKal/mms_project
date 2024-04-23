@@ -5,6 +5,7 @@ import { Op } from 'sequelize';
 import { ProductService } from 'src/product/product.service';
 import { Product } from 'src/product/product.entity';
 import { PaginationService } from 'src/utils/services/pagination.service';
+import { addProductsToCategoryDto } from './dtos/add.products.category.dto';
 
 @Injectable()
 export class ProductCategoryService {
@@ -43,13 +44,30 @@ export class ProductCategoryService {
         var toDeleteProductCategory = await this.productCategoryRepository.findByPk(id);
         return await toDeleteProductCategory.destroy();
     }
-    async getProductCategorysByMenu(menuId: any): Promise<ProductCategory[]> {
+    async getProductCategoriesByMenu(menuId: any): Promise<ProductCategory[]> {
         return this.productCategoryRepository.findAll({
             where: { menuId: menuId },
         })
     }
     async getCategoryByIds(ids:Array<number>) {
         return await this.productCategoryRepository.findAll({ where: { id: { [Op.in]: ids } }});
+    }
+
+    async addProducts(addProductDto : addProductsToCategoryDto) {
+        const productCategory = await this.productCategoryRepository.findOne( {
+            where : {
+                id : addProductDto.productCategoryId
+            }
+        });
+        return productCategory.$add("Product",addProductDto.productIds);
+    }
+    async removeProducts(toRemoveProducts : addProductsToCategoryDto){
+        const productCategory = await this.productCategoryRepository.findOne( {
+            where : {
+                id : toRemoveProducts.productCategoryId
+            }
+        });
+        return productCategory.$remove("Product",toRemoveProducts.productIds);  
     }
     
 }

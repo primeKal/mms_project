@@ -6,6 +6,7 @@ export class OrderDto{
     uniqueCode: string;
     tableId: number;
     customerPhone: string;
+    companyId: number;
     // userId: number; 
     orderlines : OrderLinesDto[]  
 }

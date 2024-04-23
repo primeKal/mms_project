@@ -10,51 +10,51 @@ import { ApiTags } from '@nestjs/swagger';
 @ApiTags('Menu')
 @Controller('menu')
 export class MenuController {
-    constructor(private readonly menuService: MenuService){
-    }
-    
-    @Get()
-    public async getMenu(@Query('page') page: number = 1, @Query('pageSize') pageSize: number = 10): Promise<Menu[]> {
-      return this.menuService.getAllMenus(page, pageSize);
-    }
+  constructor(private readonly menuService: MenuService) {
+  }
 
-    // @UseGuards(JwtAuthGuard)
-    @Get(':id')
-    public async getAMenu(@Param('id') id: number): Promise<Menu>{
-      return this.menuService.getOneMenuById(id);
-    }
+  @Get()
+  public async getMenu(@Query('page') page: number = 1, @Query('pageSize') pageSize: number = 10): Promise<Menu[]> {
+    return this.menuService.getAllMenus(page, pageSize);
+  }
 
-    @Get('ByCompany/:id')
-    public async getMenuByCompany(@Param('id') id: number): Promise<Menu[]>{
-      return this.menuService.getMenusByCompany(id);
-    }
+  // @UseGuards(JwtAuthGuard)
+  @Get(':id')
+  public async getAMenu(@Param('id') id: number): Promise<Menu> {
+    return this.menuService.getOneMenuById(id);
+  }
 
-    @UseGuards(JwtAuthGuard)
-    @Post()
-    public async createMenu(@Req() req: any,@Body() body: MenuDto): Promise<any> {
-      return this.menuService.createMenu(body, req.user.id);
-    }
+  @Get('ByCompany/:id')
+  public async getMenuByCompany(@Param('id') id: number): Promise<Menu[]> {
+    return this.menuService.getMenusByCompany(id);
+  }
 
-    @UseGuards(JwtAuthGuard)
-    @Put()
-    public async editMenu(@Body() body: MenuDto): Promise<Menu> {
+  @UseGuards(JwtAuthGuard)
+  @Post()
+  public async createMenu(@Req() req: any, @Body() body: MenuDto): Promise<any> {
+    return this.menuService.createMenu(body, req.user.id);
+  }
 
-      return this.menuService.editMenu(body);
-    }
+  @UseGuards(JwtAuthGuard)
+  @Put()
+  public async editMenu(@Body() body: MenuDto): Promise<Menu> {
 
-    @Delete()
-    public async deleteMenu(@Body() id): Promise<void>{
-      return this.menuService.deleteMenu(id.id);
-    }
+    return this.menuService.editMenu(body);
+  }
 
-    @UseGuards(JwtAuthGuard)
-    @Get("ActivateMenu/:id")
-    public async activateMenu(@Req() req: any,@Param('id') menuId: number): Promise<any> {
-      return this.menuService.activateMenu(menuId, req.user.id);
-    }
+  @Delete()
+  public async deleteMenu(@Body() id): Promise<void> {
+    return this.menuService.deleteMenu(id.id);
+  }
 
-    @Get("GetActivateMenuByCompany/:id")
-    public async getActiveMenuByCompany(@Param('id') companyId: number): Promise<any> {
-      return this.menuService.getActiveMenuByCompany(companyId);
-    }
+  @UseGuards(JwtAuthGuard)
+  @Get("ActivateMenu/:id")
+  public async activateMenu(@Req() req: any, @Param('id') menuId: number): Promise<any> {
+    return this.menuService.activateMenu(menuId, req.user.id);
+  }
+
+  @Get("GetActivateMenuByCompany/:id")
+  public async getActiveMenuByCompany(@Param('id') companyId: number): Promise<any> {
+    return this.menuService.getActiveMenuByCompany(companyId);
+  }
 }
