@@ -47,6 +47,11 @@ export class PaymentModel extends Model<PaymentModel> {
     phone: string;
 
     @Column({
+        allowNull: false,
+    })
+    email: string;
+
+    @Column({
         type: DataType.ENUM(...PAYMENT_STATUS),
         allowNull: false,
         defaultValue: 'Draft'

@@ -42,8 +42,8 @@ export const databaseProviders = [
         ProductCategoryProduct,
         PaymentMethodModel,
         PaymentModel]);
-      // await sequelize.sync();
-      await sequelize.sync({ alter: true });
+      await sequelize.sync();
+      // await sequelize.sync({ alter: true });
 
       return sequelize;
     },
