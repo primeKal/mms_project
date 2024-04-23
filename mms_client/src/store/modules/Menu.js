@@ -5,30 +5,37 @@ import { CREATE_SUCCESS, FETCH_SUCCESS } from "@/utils/Variables";
 const state = {
   menus: [],
   menu: {},
+  allProducts: [],
   menuId: null,
 };
 const getters = {
-  getAllMenus: (state) => {
-    return state.menus;
-  },
-  getMenu: (state) => {
-    return state.menu;
-  },
-  getMenuId: (state) => {
-    return state.menuId;
-  },
-};
+    getAllMenus: (state) => {
+        return state.menus
+    },
+    getMenu: (state) => {
+        return state.menu
+    },
+    getMenuId: (state) => {
+        return state.menuId
+    },
+    getAllProducts: (state) => {
+        return state.allProducts
+    }
+}
 const mutations = {
-  setAllMenus: (state, menus) => {
-    state.menus = menus;
-  },
-  setMenu: (state, menu) => {
-    state.menu = menu;
-  },
-  setMenuId: (state, menuId) => {
-    state.menuId = menuId;
-  },
-};
+    setAllMenus: (state, menus) => {
+        state.menus = menus
+    },
+    setMenu: (state, menu) => {
+        state.menu = menu
+    },
+    setMenuId: (state, menuId)=>{
+        state.menuId = menuId
+    },
+    setAllProducts: (state, products) => {
+        state.allProducts = products
+    }
+}
 const actions = {
   fetchAllMenus: async ({ commit }, companyId) => {
     await MenuAPI.getAllMenus(companyId)
@@ -161,6 +168,15 @@ const actions = {
         status = { success: false, error: error };
       });
     return status;
+  },
+  fetchAllProducts: async({commit}) => {
+      await ProductAPI.getProducts()
+          .then((result) => {
+              commit('setAllProducts', result)
+          })
+          .catch((error) =>{
+              console.log(error)
+          })
   },
   createProduct: async ({ state, dispatch }, productInfo) => {
     var status = null;

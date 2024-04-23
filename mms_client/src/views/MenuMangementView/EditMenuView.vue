@@ -1,15 +1,15 @@
 <template>
     <MainRendererVue :loading="loading">
-        <div class="p-6 pr-12 w-full">
-            <div class="flex justify-between">
+        <div class="lg:p-6 p-2 lg:pr-12 pr-2 w-full">
+            <div class="flex lg:flex-row flex-col lg:justify-between">
                 <button @click="$router.go(-1)"
-                    class="px-3 outline-none flex items-center hover:border rounded hover:shadow-sm">
+                    class="lg:px-3 px-0 outline-none flex items-center hover:border rounded hover:shadow-sm">
                     <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                         <path fill="currentColor" d="M20 11H7.83l5.59-5.59L12 4l-8 8l8 8l1.41-1.41L7.83 13H20v-2z" />
                     </svg>
                     BACK
                 </button>
-                <div class="flex space-x-5">
+                <div class="lg:mt-0 mt-4 flex lg:space-x-5 space-x-2 lg:text-base text-sm">
                     <button @click="saveChanges"
                         class="px-3 flex items-center bg-transparent hover:bg-primary text-primary hover:text-white border-primary  rounded border active:scale-95 transition-all">
                         <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
@@ -39,13 +39,13 @@
                 </div>
             </div>
             <h3 class="mt-10 text-primary font-medium text-xl">Menu Info</h3>
-            <p class="mt-3 mb-5 text-black/50 text-sm">Edit name and number of your menu to be displayed.</p>
+            <p class="lg:mt-3 mt-2 mb-5 text-black/50 text-sm">Edit name and number of your menu to be displayed.</p>
             <div class="w-full flex space-x-5">
-                <fieldset class="w-1/4 border rounded">
+                <fieldset class="lg:w-1/4 w-2/5 border rounded">
                     <legend class="ml-3 text-xs px-1">Menu Name</legend>
                     <input type="text" class="w-full pt-1 pb-1 px-2 outline-none" v-model="menuInformation.name" />
                 </fieldset>
-                <fieldset class="w-1/4 border rounded">
+                <fieldset class="lg:w-1/4 w-2/5 border rounded">
                     <legend class="ml-3 text-xs px-1">Menu No.</legend>
                     <input type="text" class="w-full pt-1 pb-1 px-2 outline-none" v-model="menuInformation.id" />
                 </fieldset>
@@ -148,6 +148,7 @@ export default {
             updateMenu: 'Menu/updateMenu',
             activateMenu: 'Menu/activateMenu',
             getMenu: 'Menu/fetchMenu',
+            getProducts: 'Menu/fetchAllProducts',
         }),
         toogleAdd(value) {
             this.$emit('update:openAddProduct', value)
@@ -223,6 +224,7 @@ export default {
         }
         await this.getMenu(this.menuId)
         this.menuInformation = this.menu
+        await this.getProducts()
         this.loading = false
         this.initialization()
     }

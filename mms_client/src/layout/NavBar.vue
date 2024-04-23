@@ -1,6 +1,6 @@
 <template>
-  <div class="py-3 flex flex-col">
-    <div class="px-3 flex items-center">
+  <div class="lg:py-3 py-0 flex lg:flex-col flex-row">
+    <div class="px-3 lg:flex hidden items-center">
       <input
         :class="[collapse ? 'hidden' : 'block']"
         class="w-full mr-3 bg-gray-100 py-1 text-sm pl-3 rounded"
@@ -37,20 +37,20 @@
         </svg>
       </div>
     </div>
-    <div class="mt-8 flex flex-col text-gray-800">
+    <div class="lg:mt-8 mt-2 lg:w-auto w-full flex lg:flex-col flex-row overflow-x-scroll lg:snap-none snap-x snap-proximity touch-pan-x text-gray-800">
       <router-link
         v-for="nav in navItems"
         :key="nav.name"
         :to="{ name: nav.link }"
-        class="pl-4 py-3 w-full flex items-center border-l-4 hover:bg-blue-200"
+        class="lg:pl-4 pl-0 lg:py-3 py-2 w-full flex items-center lg:border-l-4 border-b-4 hover:bg-blue-200 text-nowrap snap-center"
         :class="[
           nav.id === navValue
-            ? 'border-l-blue-700 bg-blue-200'
-            : 'border-l-white',
+            ? 'lg:border-l-blue-700 border-b-blue-700 bg-blue-200'
+            : 'lg:border-l-white border-b-white',
         ]"
       >
-        <Icon :icon="nav.icon" />
-        <label :class="[collapse ? 'hidden' : 'block']" class="ml-2">{{
+        <Icon class="lg:block hidden" :icon="nav.icon" />
+        <label :class="[collapse ? 'hidden' : 'block']" class="ml-2 lg:text-base text-sm text-nowrap">{{
           nav.name
         }}</label>
       </router-link>

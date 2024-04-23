@@ -1,7 +1,11 @@
 <template>
-    <div class="w-full min-h-screen flex justify-between">
-        <div :class="[collapse ? 'basis-auto' : 'basis-1/6']" class="shadow-lg p-2 h-100 bg-warning overflow-y-hidden">
-            <NavBarVue :navValue="navValue" @collapse="(value) => { collapse = value }" class="w-full" />
+    <div class="w-full min-h-screen flex lg:flex-row flex-col">
+        <div :class="[collapse ? 'lg:basis-auto':'lg:basis-1/6']" class="shadow-lg">
+            <NavBarVue 
+                :navValue="navValue" 
+                @collapse="(value)=> {collapse=value}" 
+                class="w-full"
+            />
         </div>
         <div :class="[collapse ? 'basis-full' : 'basis-5/6 ']" class="max-h-screen w-full overflow-y-scroll ">
             <!-- <div class="relative w-full"> -->
