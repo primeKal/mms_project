@@ -1,29 +1,29 @@
 <template>
-    <div class="bg-white py-20">
+    <div class="bg-white py-10">
         <div class="flex justify-around">
             <div class="basis-1/3">
-                <p class="text-4xl font-medium">Get in touch with us</p>
-                <p class="mt-8">
-                    Reach out for inquiries, support, or to explore how our QR Code<br/> Ordering System can elevate your restaurant experience.
+                <p class="text-4xl font-medium font-poppins">Get in touch with us</p>
+                <p class="mt-8 leading-relaxed font-poppins">
+                    Reach out for inquiries, support, or to explore how our QR Code Ordering System can elevate your restaurant experience.
                 </p>
-                <div class="mt-14 flex flex-col space-y-8">
+                <div class="mt-10 flex flex-col space-y-8">
                     <div class="flex items-center">
                         <div class="p-3 bg-secondary text-white rounded-full">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12 4c2.2 0 4 1.8 4 4c0 2.1-2.1 5.5-4 7.9c-1.9-2.5-4-5.8-4-7.9c0-2.2 1.8-4 4-4m0-2C8.7 2 6 4.7 6 8c0 4.5 6 11 6 11s6-6.6 6-11c0-3.3-2.7-6-6-6m0 4c-1.1 0-2 .9-2 2s.9 2 2 2s2-.9 2-2s-.9-2-2-2m8 13c0 2.2-3.6 4-8 4s-8-1.8-8-4c0-1.3 1.2-2.4 3.1-3.2l.6.9c-1 .5-1.7 1.1-1.7 1.8c0 1.4 2.7 2.5 6 2.5s6-1.1 6-2.5c0-.7-.7-1.3-1.8-1.8l.6-.9c2 .8 3.2 1.9 3.2 3.2Z"/></svg>
                         </div>
-                        <p class="ml-3">Riverside 25, San Francisco, California</p>
+                        <p class="ml-3">Addis Ababa, Ethiopia</p>
                     </div>
                     <div class="flex items-center">
                         <div class="p-3 bg-secondary text-white rounded-full">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6m-2 0l-8 5l-8-5h16m0 12H4V8l8 5l8-5v10Z"/></svg>
                         </div>
-                        <p class="ml-3">qrmenu@gmail.com</p>
+                        <p class="ml-3">zeusmenu@gmail.com</p>
                     </div>
                     <div class="flex items-center">
                         <div class="p-3 bg-secondary text-white rounded-full">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M20 15.5c-1.2 0-2.5-.2-3.6-.6h-.3c-.3 0-.5.1-.7.3l-2.2 2.2c-2.8-1.5-5.2-3.8-6.6-6.6l2.2-2.2c.3-.3.4-.7.2-1c-.3-1.1-.5-2.4-.5-3.6c0-.5-.5-1-1-1H4c-.5 0-1 .5-1 1c0 9.4 7.6 17 17 17c.5 0 1-.5 1-1v-3.5c0-.5-.5-1-1-1M5 5h1.5c.1.9.3 1.8.5 2.6L5.8 8.8C5.4 7.6 5.1 6.3 5 5m14 14c-1.3-.1-2.6-.4-3.8-.8l1.2-1.2c.8.2 1.7.4 2.6.4V19Z"/></svg>
                         </div>
-                        <p class="ml-3">+251-911-11-1121</p>
+                        <p class="ml-3">+251-923242040</p>
                     </div>
                     <ul class="w-1/2 flex justify-between">
                         <li class="p-2 text-secondary hover:text-white bg-gray-200 hover:bg-secondary transition-colors rounded-full cursor-pointer">
