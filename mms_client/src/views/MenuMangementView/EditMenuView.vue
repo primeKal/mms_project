@@ -1,15 +1,15 @@
 <template>
     <MainRendererVue :loading="loading">
-        <div class="lg:p-6 p-2 lg:pr-12 pr-2 w-full">
-            <div class="flex lg:flex-row flex-col lg:justify-between">
+        <div class="p-6 pr-12 w-full">
+            <div class="flex justify-between">
                 <button @click="$router.go(-1)"
-                    class="lg:px-3 px-0 outline-none flex items-center hover:border rounded hover:shadow-sm">
+                    class="px-3 outline-none flex items-center hover:border rounded hover:shadow-sm">
                     <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                         <path fill="currentColor" d="M20 11H7.83l5.59-5.59L12 4l-8 8l8 8l1.41-1.41L7.83 13H20v-2z" />
                     </svg>
                     BACK
                 </button>
-                <div class="lg:mt-0 mt-4 flex lg:space-x-5 space-x-2 lg:text-base text-sm">
+                <div class="flex space-x-5">
                     <button @click="saveChanges"
                         class="px-3 flex items-center bg-transparent hover:bg-primary text-primary hover:text-white border-primary  rounded border active:scale-95 transition-all">
                         <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
@@ -39,34 +39,30 @@
                 </div>
             </div>
             <h3 class="mt-10 text-primary font-medium text-xl">Menu Info</h3>
-            <p class="lg:mt-3 mt-2 mb-5 text-black/50 text-sm">Edit name and number of your menu to be displayed.</p>
+            <p class="mt-3 mb-5 text-black/50 text-sm">Edit name and number of your menu to be displayed.</p>
             <div class="w-full flex space-x-5">
-                <fieldset class="lg:w-1/4 w-2/5 border rounded">
+                <fieldset class="w-1/4 border rounded">
                     <legend class="ml-3 text-xs px-1">Menu Name</legend>
                     <input type="text" class="w-full pt-1 pb-1 px-2 outline-none" v-model="menuInformation.name" />
                 </fieldset>
-                <fieldset class="lg:w-1/4 w-2/5 border rounded">
+                <fieldset class="w-1/4 border rounded">
                     <legend class="ml-3 text-xs px-1">Menu No.</legend>
                     <input type="text" class="w-full pt-1 pb-1 px-2 outline-none" v-model="menuInformation.id" />
                 </fieldset>
             </div>
             <h3 class="mt-7 text-primary font-medium text-xl">Section</h3>
             <div class="mt-4 w-full flex justify-between">
-                <SelectList :placeholderString="'Select category'" :selectedIndex="0" :options="allCategories"
-                    @handleCreateNew="createNewCategory" @handleSelectedOption="handleSelectedOption" class="w-2/3" />
+                <SearchBarVue class="w-2/3" :placeholderString="'Search sections'" @searchChanged="searchCategories" />
+                <button @click="openNewCategory = true"
+                    class="w-1/5 bg-transparent hover:bg-primary text-primary hover:text-white border-primary  rounded border active:scale-95 transition-all">
+                    + NEW SECTION
+                </button>
             </div>
-            <h3 class="mt-7 text-primary font-medium text-xl">Product</h3>
-
-            <div class="my-5 w-2/3">
-                <AddProduct :categoryId="selectedCategory" :openAddProduct="true" />
-            </div>
-
-        </div>
-        <!-- <CategoriesTableVue class="mt-4" :categories="menuInformation.productCategories"
+            <CategoriesTableVue class="mt-4" :categories="menuInformation.productCategories"
                 :openNewCategory="openNewCategory" @closeNewCategory="() => { openNewCategory = false }" @loading="(value) => {
                     loading = value
-                }" /> -->
-        <!-- <h3 class="mt-10 text-primary font-medium text-xl">Products list</h3>
+                }" />
+            <!-- <h3 class="mt-10 text-primary font-medium text-xl">Products list</h3>
             <div class="mt-4 w-full flex justify-between">
                 <div class="flex justify-between w-3/5">
                     <SearchBarVue 
@@ -86,9 +82,9 @@
             <button class="w-1/5 bg-transparent hover:bg-primary text-primary hover:text-white border-primary  rounded border active:scale-95 transition-all">
                     + NEW PRODUCT
                 </button>
-            </div> -->
-        <MenuListTableVue :menuItem="menus" class="mt-5" />
-
+            </div>
+            <MenuListTableVue class="mt-5" /> -->
+        </div>
     </MainRendererVue>
 
 </template>
@@ -96,42 +92,26 @@
 import { mapGetters, mapActions } from 'vuex'
 
 import MainRendererVue from '@/layout/MainRenderer.vue'
-// import CategoriesTableVue from './CategoriesTable.vue'
-import SelectList from '@/components/fields/SelectList.vue'
-
-// import SearchBarVue from '@/components/fields/SearchBar.vue'
-import AddProduct from '@/components/category/AddProduct.vue'
-import MenuListTableVue from './MenuListTable.vue'
+import SearchBarVue from '@/components/fields/SearchBar.vue'
+import CategoriesTableVue from './CategoriesTable.vue'
+// import MenuListTableVue from './MenuListTable.vue'
 export default {
     components: {
         MainRendererVue,
-        // CategoriesTableVue,
-        SelectList,
-        // SearchBarVue,
-        MenuListTableVue,
-        AddProduct
+        SearchBarVue,
+        CategoriesTableVue,
+        // MenuListTableVue,
     },
     data() {
         return {
             loading: true,
             openNewCategory: false,
             menuInformation: {},
-            allCategories: [],
-            selectedCategory: "",
-            newProduct: {
-                name: '',
-                price: '',
-                description: '',
-                image: null,
-                productCategoryId: null,
-            },
-            file: null,
         }
     },
     computed: {
         ...mapGetters({
             menuId: 'Menu/getMenuId',
-            menus: 'Menu/getAllMenus',
             menu: 'Menu/getMenu',
         }),
     },
@@ -148,46 +128,7 @@ export default {
             updateMenu: 'Menu/updateMenu',
             activateMenu: 'Menu/activateMenu',
             getMenu: 'Menu/fetchMenu',
-            getProducts: 'Menu/fetchAllProducts',
         }),
-        toogleAdd(value) {
-            this.$emit('update:openAddProduct', value)
-        },
-        file_change(e) {
-            this.file = e.target.files[0];
-            this.newProduct.image = URL.createObjectURL(this.file);
-        },
-        removeImage() {
-
-        },
-        initialization() {
-            this.allCategories = this.menuInformation.productCategories;
-            console.log(this.menus)
-        },
-
-        async createNewCategory(item) {
-            console.log(item);
-            // if(this.newCategory.name.length > 0) {
-            this.$emit('loading', true)
-            const status = await this.$store.dispatch('Menu/createNewSection', { name: item, description: '' })
-            if (status) {
-                this.$toast.success('Section created successfully')
-                this.initialization();
-                // this.$emit('closeNewCategory')
-                // this.newCategory.name = ''
-                // this.newCategory.description = ''
-            } else {
-                this.$toast.error('Error creating section')
-            }
-            this.$emit('loading', false)
-            // } 
-        },
-
-        handleSelectedOption(index) {
-            console.log(index);
-            this.selectedCategory = index.id;
-        },
-
         searchCategories(searchString) {
             console.log(searchString)
             // do the search
@@ -224,9 +165,7 @@ export default {
         }
         await this.getMenu(this.menuId)
         this.menuInformation = this.menu
-        await this.getProducts()
         this.loading = false
-        this.initialization()
     }
 }
 </script>
