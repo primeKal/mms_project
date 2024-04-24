@@ -9,33 +9,33 @@ const state = {
   menuId: null,
 };
 const getters = {
-    getAllMenus: (state) => {
-        return state.menus
-    },
-    getMenu: (state) => {
-        return state.menu
-    },
-    getMenuId: (state) => {
-        return state.menuId
-    },
-    getAllProducts: (state) => {
-        return state.allProducts
-    }
-}
+  getAllMenus: (state) => {
+    return state.menus;
+  },
+  getMenu: (state) => {
+    return state.menu;
+  },
+  getMenuId: (state) => {
+    return state.menuId;
+  },
+  getAllProducts: (state) => {
+    return state.allProducts;
+  },
+};
 const mutations = {
-    setAllMenus: (state, menus) => {
-        state.menus = menus
-    },
-    setMenu: (state, menu) => {
-        state.menu = menu
-    },
-    setMenuId: (state, menuId)=>{
-        state.menuId = menuId
-    },
-    setAllProducts: (state, products) => {
-        state.allProducts = products
-    }
-}
+  setAllMenus: (state, menus) => {
+    state.menus = menus;
+  },
+  setMenu: (state, menu) => {
+    state.menu = menu;
+  },
+  setMenuId: (state, menuId) => {
+    state.menuId = menuId;
+  },
+  setAllProducts: (state, products) => {
+    state.allProducts = products;
+  },
+};
 const actions = {
   fetchAllMenus: async ({ commit }, companyId) => {
     await MenuAPI.getAllMenus(companyId)
@@ -52,6 +52,15 @@ const actions = {
     await MenuAPI.getMenuById(menuId)
       .then((result) => {
         commit("setMenu", result);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  },
+  fetchAllProducts: async ({ commit }, companyId) => {
+    await ProductAPI.getProductsByCompanyId(companyId)
+      .then((result) => {
+        commit("setAllProducts", result);
       })
       .catch((error) => {
         console.log(error);
@@ -169,18 +178,27 @@ const actions = {
       });
     return status;
   },
-  fetchAllProducts: async({commit}) => {
-      await ProductAPI.getProducts()
-          .then((result) => {
-              commit('setAllProducts', result)
-          })
-          .catch((error) =>{
-              console.log(error)
-          })
-  },
   createProduct: async ({ state, dispatch }, productInfo) => {
     var status = null;
     await ProductAPI.createProduct(productInfo)
+      .then(async (response) => {
+        if (response.status === CREATE_SUCCESS) {
+          status = { success: true };
+          await dispatch("fetchMenu", state.menuId);
+        } else {
+          status = { success: false };
+        }
+      })
+      .catch((error) => {
+        status = { success: false, error: error };
+      });
+    return status;
+  },
+  createCategoryProduct: async ({ state, dispatch }, productInfo) => {
+    console.log(state, productInfo);
+    var status = null;
+
+    await ProductAPI.createCategoryProduct(productInfo)
       .then(async (response) => {
         if (response.status === CREATE_SUCCESS) {
           status = { success: true };
