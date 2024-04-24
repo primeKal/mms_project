@@ -42,11 +42,14 @@
             leave-from-class="h-auto" leave-to-class="h-0" leave-transiton="transition-all">
             <td v-if="openProducts" class="col-span-full grid p-4 bg-slate-100 text-black shadow-inner">
                 <p class="mb-1">Products:</p>
-                <div class="pb-5 bg-white text-black rounded-lg">
-                    <ProductRowVue v-for="(product, index) in category.products" :key="product.id" :product="product"
+                <div class="pb-5  text-black rounded-lg">
+                    <ProductRowVue v-for="(product, index) in products" :key="product.id" :product="product"
                         :index="index" @loading="(value) => { $emit('loading', value) }" />
-                    <AddProductVue :categoryId="parseInt(category.id)" v-model:openAddProduct="openAddProduct"
-                        @loading="(value) => { $emit('loading', value) }" />
+                    <AddProductVue v-if="openAddProduct" :categoryId="parseInt(category.id)"
+                        v-model:openAddProduct="openAddProduct" @loading="(value) => { $emit('loading', value) }" />
+                    <SelectList :options="allProducts" :selectedIndex="0" :placeholderString="'Search products'"
+                        :productName="newProductName" @handleCreateNew="handleCreateNew"
+                        :handleSelectedOption="handleSelectedOption" />
                 </div>
             </td>
 
@@ -54,10 +57,11 @@
     </tr>
 </template>
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import DeleteConfirmationModalVue from '@/components/modals/DeleteConfirmationModal.vue'
 import ProductRowVue from './ProductRow.vue'
 import AddProductVue from './AddProduct.vue'
+import SelectList from '../fields/SelectList.vue'
 export default {
     props: {
         category: Object,
@@ -66,6 +70,7 @@ export default {
         DeleteConfirmationModalVue,
         ProductRowVue,
         AddProductVue,
+        SelectList
     },
     data() {
         return {
@@ -74,6 +79,8 @@ export default {
             sectionInfo: {},
             openDeleteCategory: null,
             openAddProduct: false,
+            newProductName: '',
+            products: this.category.products,
         }
     },
     watch: {
@@ -87,7 +94,29 @@ export default {
         ...mapActions({
             changeSection: 'Menu/updateSection',
             removeSection: 'Menu/removeSection',
+            fetchProducts: 'Menu/fetchAllProducts',
+            getMenu: 'Menu/fetchMenu',
+            createNewProduct: 'Menu/createCategoryProduct',
         }),
+        async initialization() {
+            this.fetchProducts(this.companyInfo.id);
+        },
+        async handleCreateNew(val) {
+            this.newProductName = val;
+            this.openAddProduct = true;
+        },
+        async handleSelectedOption(val) {
+            await this.createNewProduct({ productCategoryId: this.category.id, productIds: val.id })
+            this.products
+            await this.menu.productCategories.map(async (product) => {
+                if (product.id === this.category.id) {
+                    await this.getMenu(this.menuId);
+                    this.products = await product.products;
+                    return { ...product }
+                }
+            });
+            this.$toast.success('new product created for ' + this.category.name + ' Section')
+        },
         async updateSection() {
             if (this.sectionInfo.name.length > 0) {
                 this.$emit('loading', true)
@@ -118,6 +147,20 @@ export default {
                 this.openDeleteCategory = null
             }, 1000)
         },
-    }
+
+    },
+    computed: {
+        ...mapGetters({
+            companyInfo: 'Company/getCompanyInfo',
+            allProducts: 'Menu/getAllProducts',
+            menu: 'Menu/getMenu',
+            menuId: 'Menu/getMenuId',
+        })
+    },
+    created() {
+        this.initialization();
+        console.log(this.products);
+        console.log(this.menu);
+    },
 }
 </script>

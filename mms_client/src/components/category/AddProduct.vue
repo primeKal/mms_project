@@ -53,12 +53,13 @@ export default {
     props: {
         categoryId: Number,
         openAddProduct: Boolean,
+        productName: String
     },
     emits: ["update:openAddProduct"],
     data() {
         return {
             newProduct: {
-                name: '',
+                name: this.productName,
                 price: '',
                 description: '',
                 image: null,
