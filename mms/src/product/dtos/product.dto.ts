@@ -5,6 +5,7 @@ export class ProductDto {
     readonly price: number;
     readonly id?: number = null;
     readonly link: string;
+     img: string;
     // readonly productCategoryId?: number
     
   }

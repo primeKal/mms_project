@@ -7,6 +7,7 @@ import { JwtAuthGuard } from 'src/auth/guards/jwtAuthGuard';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { MAX_PROFILE_PICTURE_SIZE_IN_BYTES } from 'src/utils/constants';
 import { diskStorage } from 'multer';
+import { multerOptionsCompanyImg } from 'multer.config';
 
 @ApiTags('Company')
 @Controller('Company')
@@ -25,8 +26,12 @@ export class CompanyController {
       return this.companyService.getOneCompanyById(id);
     }
 
+  @UseInterceptors(
+    FileInterceptor('company_img', multerOptionsCompanyImg))
     @Post()
-    public async createCompany(@Body() body: CompanyDto): Promise<any> {
+    public async createCompany(@UploadedFile() company_img,@Body() body: CompanyDto): Promise<any> {
+      body.company_img = company_img.path;
+
       return this.companyService.createCompany(body);
     }
 

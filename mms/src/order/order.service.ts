@@ -8,6 +8,7 @@ import { PaginationService } from 'src/utils/services/pagination.service';
 import { InjectBot } from 'nestjs-telegraf';
 // import { Context, Telegraf } from 'telegraf';
 import { Product } from 'src/product/product.entity';
+import { Customer } from 'src/customer/customer.entity';
 
 @Injectable()
 export class OrderService {
@@ -16,17 +17,17 @@ export class OrderService {
     private customerService: CustomerService,
     private readonly paginationService: PaginationService<Order>,
     // @InjectBot() private bot: Telegraf
-     ) {
+  ) {
     this.paginationService = new PaginationService<Order>(this.orderRepository);
   }
-  async getAllOrders(page,pageSize): Promise<Order[]> {
+  async getAllOrders(page, pageSize): Promise<Order[]> {
     let toInclude = [OrderLine]
-    return await this.paginationService.findAll(page,pageSize, toInclude)
+    return await this.paginationService.findAll(page, pageSize, toInclude)
   }
   async createOrder(createOrderDto: any): Promise<Order> {
     // createOrderDto.companyId = 3;
     createOrderDto.customerId = await this.customerService.getOrCreateCustomerByPhone(createOrderDto.customerPhone);
-    let newOrder: Order =  await this.orderRepository.create<Order>(createOrderDto, {
+    let newOrder: Order = await this.orderRepository.create<Order>(createOrderDto, {
       include: [OrderLine]
     });
     // this.sendCreateOrderNotification(company)
@@ -40,6 +41,8 @@ export class OrderService {
       include: [{
         model: OrderLine,
         include: [Product]
+      }, {
+        model: Customer
       }]
     })
   }
@@ -72,14 +75,14 @@ export class OrderService {
       include: [OrderLine]
     })
   }
-  async updateOrderStatus(updateStatusDto: any): Promise<Order>{
+  async updateOrderStatus(updateStatusDto: any): Promise<Order> {
     let order = await this.orderRepository.findByPk(updateStatusDto.id)
     const result = await order.update({
-      status : updateStatusDto.status
+      status: updateStatusDto.status
     });
     return result;
   }
-  
+
   // sendCreateOrderNotification(company: any): void {
   //   if (company.telegramChatId){
   //     this.bot.telegram.sendMessage(company.telegramChatId, `Dear ${company.name},A New Order has been submitted.`);

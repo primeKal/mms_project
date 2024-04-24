@@ -44,6 +44,17 @@ export class PaymentMethodModel extends Model<PaymentMethodModel> {
     })
     type: string;
 
+    //chapa private and public keys
+    @Column({
+        allowNull: true,
+    })
+    chapa_private_key: string;
+
+    @Column({
+        allowNull: true,
+    })
+    chapa_public_key: string;
+
     @Column({
         type: DataType.JSON,
         allowNull: false,

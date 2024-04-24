@@ -66,8 +66,8 @@ export class Product extends Model<Product> {
 
     @Column({
         allowNull: true,
-      })
-    imgUrl: string;
+    })
+    img: string;
 
 
     @CreatedAt public createdAt: Date;

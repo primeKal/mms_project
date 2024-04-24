@@ -10,6 +10,7 @@ import {
   HasMany,
   BelongsToMany,
 } from 'sequelize-typescript';
+import { Col } from 'sequelize/types/utils';
 import { Menu } from 'src/menu/menu.entity';
 import { ProductCategory } from 'src/product-category/product.category.entity';
 import { Product } from 'src/product/product.entity';
@@ -117,15 +118,20 @@ export class Company extends Model<Company> {
 
   @Column({
     allowNull: true,
-    defaultValue : null
+    defaultValue: null
   })
   telegramChatId: string;
 
   @Column({
     allowNull: true,
-    defaultValue : null
+    defaultValue: null
   })
   telegramUserName: string;
+
+  @Column({
+    allowNull: true
+  })
+  company_img: string;
 
 
   @CreatedAt public createdAt: Date;
