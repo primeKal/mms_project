@@ -37,7 +37,9 @@
         </svg>
       </div>
     </div>
-    <div class="lg:mt-8 mt-2 lg:w-auto w-full flex lg:flex-col flex-row overflow-x-scroll lg:snap-none snap-x snap-proximity touch-pan-x text-gray-800">
+    <div
+      class="lg:mt-8 mt-2 lg:w-auto w-full flex lg:flex-col flex-row overflow-x-scroll lg:snap-none snap-x snap-proximity touch-pan-x text-gray-800"
+    >
       <router-link
         v-for="nav in navItems"
         :key="nav.name"
@@ -50,9 +52,11 @@
         ]"
       >
         <Icon class="lg:block hidden" :icon="nav.icon" />
-        <label :class="[collapse ? 'hidden' : 'block']" class="ml-2 lg:text-base text-sm text-nowrap">{{
-          nav.name
-        }}</label>
+        <label
+          :class="[collapse ? 'hidden' : 'block']"
+          class="ml-2 lg:text-base text-sm text-nowrap"
+          >{{ nav.name }}</label
+        >
       </router-link>
     </div>
   </div>
@@ -82,6 +86,12 @@ export default {
           name: "Menu Management",
           link: "menu_management",
           icon: "ic:twotone-restaurant-menu",
+        },
+        {
+          id: 8,
+          name: "Products",
+          link: "products",
+          icon: "mdi:cart",
         },
         {
           id: 4,

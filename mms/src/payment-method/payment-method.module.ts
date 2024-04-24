@@ -6,6 +6,7 @@ import { PaginationService } from 'src/utils/services/pagination.service';
 
 @Module({
   controllers: [PaymentMethodController],
-  providers: [PaymentMethodService, ...paymentMethodProvider, PaginationService]
+  providers: [PaymentMethodService, ...paymentMethodProvider, PaginationService],
+  exports: [PaymentMethodService]
 })
 export class PaymentMethodModule { }

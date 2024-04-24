@@ -39,10 +39,12 @@ import { PaymentModule } from './payment/payment.module';
     // }),
     RoleModule,
     ReportsModule,
-    ServeStaticModule.forRoot({
-      rootPath: join(__dirname, ".."),
-      renderPath: "public",
-    }),
+    ServeStaticModule.forRoot(
+      {
+        rootPath: join(__dirname, '..', 'uploads'),
+        serveRoot: '/uploads',
+      }
+    ),
     PaymentMethodModule,
     PaymentModule
   ],
