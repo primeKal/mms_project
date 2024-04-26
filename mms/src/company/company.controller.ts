@@ -30,7 +30,7 @@ export class CompanyController {
     FileInterceptor('company_img', multerOptionsCompanyImg))
     @Post()
     public async createCompany(@UploadedFile() company_img,@Body() body: CompanyDto): Promise<any> {
-      body.company_img = company_img.path;
+      // body.company_img = company_img.path;
 
       return this.companyService.createCompany(body);
     }
