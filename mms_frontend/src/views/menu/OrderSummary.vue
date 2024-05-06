@@ -2,8 +2,8 @@
     <div>
             <div class="shadow-lg p-3 w-full flex justify-between bg-white rounded-t-xl" >
                 <div class="flex space-x-1">
-                    <p>{{ orderedProducts }} items</p>
-                    <p class="font-medium">--- {{ $filters.formatPriceCurrency(totalOrder, 'ETB') }}</p>
+                    <p>{{ cartInfo.totalQuantity }} items</p>
+                    <p class="font-medium">--- {{ $filters.formatPriceCurrency(cartInfo.totalPrice, 'ETB') }}</p>
                 </div>
                 <div class="flex space-x-2">
                     <button v-if="!expand" @click="$emit('submitOrder')" class="rounded py-1 px-3 bg-primary text-white">
@@ -39,7 +39,7 @@
                         />
                     </TransitionGroup>
                     
-                    <p class="my-auto text-center text-black/50">No Items Yet</p>
+                    <p v-if="!cart.length" class="my-auto text-center text-black/50">No Items Yet</p>
                 </div>
             </transition>
     </div>
@@ -55,15 +55,15 @@ export default {
     data () {
         return {
             expand: false,
-            totalOrder: 270,
         }
     },
     computed: {
         ...mapGetters({
             cart: 'Order/getCart',
+            cartInfo: 'Order/getCartMetaData',
         }),
         orderedProducts() {
-            return this.$store.getters['Order/getCart'].length
+            return this.cart.length
         },
     },
 }
