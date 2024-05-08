@@ -9,8 +9,9 @@ export class PaymentMethodService {
         private readonly paginationService: PaginationService<PaymentMethodModel>) {
         this.paginationService = new PaginationService<PaymentMethodModel>(this.paymentMethodRepository)
     }
-    async getAllPaymentMethods(page, pageSize): Promise<PaymentMethodModel[]> {
-        return await this.paginationService.findAll(page, pageSize);
+    async getAllPaymentMethods(page, pageSize): Promise<any[]> {
+        const data = await this.paginationService.findAll(page, pageSize)
+        return data.map(paymentMethod => ({"id":paymentMethod.id, name:paymentMethod.name}))
     }
     async createPaymentMethod(companyId, createPaymentMethodModelDto): Promise<any> {
         createPaymentMethodModelDto.companyId = companyId;

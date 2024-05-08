@@ -1,6 +1,6 @@
 export class OrderDto{
     id? : number;
-    name: string;
+    name?: string;
     totalPrice: number;
     totalTax: number;
     uniqueCode: string;

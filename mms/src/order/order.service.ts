@@ -26,6 +26,8 @@ export class OrderService {
   }
   async createOrder(createOrderDto: any): Promise<Order> {
     // createOrderDto.companyId = 3;
+    const count = this.orderRepository.count({ where: { companyId: createOrderDto.companyId } });
+    createOrderDto.name = `Order/${count}`;
     createOrderDto.customerId = await this.customerService.getOrCreateCustomerByPhone(createOrderDto.customerPhone);
     let newOrder: Order = await this.orderRepository.create<Order>(createOrderDto, {
       include: [OrderLine]
