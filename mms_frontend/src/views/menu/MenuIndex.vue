@@ -33,8 +33,10 @@ export default {
         const companyId = this.$route.params.companyId
         const tableId = this.$route.params.tableId
         console.log(`${companyId} , ${tableId}`)
-        // localStorage.setItem('tableId', tableId)
-        // const status = await this.$store.dispatch('Company/fetchCompanyInfo', companyId)
+        localStorage.setItem('tableId', tableId)
+        localStorage.setItem('companyId', companyId);
+        const status = await this.$store.dispatch('Company/fetchCompanyInfo', companyId)
+        console.log(status);
         // if(status.success) {
         //     this.loading = false
         // document.documentElement.style.setProperty('--color-primary', this.$store.getters['Company/getCompanyInfo'].primaryColor || '255 69 61' )

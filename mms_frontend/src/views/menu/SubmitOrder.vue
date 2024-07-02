@@ -12,7 +12,7 @@
             </div>
             
             <p class="px-4 mt-3 text-right">
-                Grand Total: <span class="font-semibold">{{ $filters.formatPriceCurrency(cartMetaData.totalPrice, 'ETB') }}</span>
+                Grand Total: <span class="font-semibold">{{ $filters.formatPriceCurrency(cartMetaData.grandTotal, 'ETB') }}</span>
             </p>
             <hr class="my-5 border-2 w-full"/>
             <p class="px-4 text-black/60">Please enter your phone number below</p>
@@ -31,7 +31,7 @@
 </template>
 <script>
 import ModalLayoutVue from '@/layout/ModalLayout.vue'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 export default {
     components: {
         ModalLayoutVue,
@@ -49,23 +49,38 @@ export default {
         })
     },
     methods: {
+        ...mapActions({
+            getPaymentMethods: 'Order/fetchPaymentMethods',
+            createOrder: 'Order/createOrder',
+        }),
+        validatePhoneNumber() {
+            return this.customerPhonenumber.match('^(9|7)[0-9]{8}$');
+        },
         async submitOrder() {
-            // validation for customer phone number needed
-            this.loading = true
-            const productlines = this.cart.map((product)=>{
-                return {
-                    'productId': product.id,
-                    'quantity': product.quantity,
-                    'currency': 'ETB',
-                    'singlePrice': product.price,
+            // validate customer phone number
+            if(this.validatePhoneNumber()) {
+                console.log('Validation passed');
+                this.loading = true
+                const productlines = this.cart.map((product)=>{
+                    return {
+                        'productId': product.id,
+                        'quantity': product.quantity,
+                        'currency': 'ETB',
+                        'singlePrice': product.price,
+                    }
+                })
+                const status = await this.createOrder(this.customerPhonenumber, productlines)
+                if(status.success) {
+                    await this.getPaymentMethods();
+                    this.$emit('orderSubmitted')
+                }else{
+                    // failure mekanism 
                 }
-            })
-            const status = await this.$store.dispatch('Order/createOrder', this.customerPhonenumber, productlines)
-            if(status.success) {
-                this.$emit('orderSubmitted')
-            }else{
-                // failure mekanism 
+            }else {
+                // post incorrect phonenumber
+                console.log('Phone number not correct');
             }
+            
         }
     }
 }
