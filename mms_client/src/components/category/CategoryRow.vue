@@ -13,11 +13,11 @@
         ? 'shadow-md bg-primary text-white'
         : 'bg-white text-black shadow-none hover:bg-slate-50/60'
     "
-    class="grid grid-cols-3 lg:gap-4 gap-2 auto-cols-min justify-between border-b lg:text-base text-xs transition-colors"
+    class="grid grid-cols-3 lg:gap-4 gap-2 auto-cols-min justify-between border-b lg:text-base text-sm transition-colors"
   >
     <td class="lg:pl-4 pl-2 py-3 flex items-center font-light">
       <svg
-        class="mr-3"
+        class="lg:mr-3 mr-2"
         @click="openProducts = !openProducts"
         :class="[openProducts ? 'rotate-180' : 'rotate-0']"
         xmlns="http://www.w3.org/2000/svg"
@@ -33,7 +33,7 @@
       <p v-if="!editSection">{{ category.name }}</p>
       <input
         v-else
-        class="py-1 px-2 rounded border"
+        class="py-1 lg:px-2 px-1 rounded border"
         v-model="sectionInfo.name"
       />
     </td>
@@ -83,7 +83,7 @@
     </td>
     <td
       v-else
-      class="pl-1 py-2 flex lg:flex-row flex-col lg:justify-center justify-start lg:items-center items-start"
+      class="pl-1 py-2 flex lg:flex-row flex-col justify-center lg:items-center items-start"
     >
       <button
         @click="editSection = false"
@@ -113,7 +113,7 @@
       >
         <p class="mb-1">Products:</p>
         <VueMultiselect
-          placeholder="Select Products to add"
+          placeholder="Select products to add to this section"
           tag-placeholder="Add new product"
           :taggable="true"
           track-by="name"
@@ -124,7 +124,7 @@
           :multiple="false"
           @select="addProduct"
         />
-        <div class="pb-5 bg-white text-black rounded-lg">
+        <div class="xl:mt-4 mt-2 pb-5 bg-white text-black rounded-lg">
           <div v-if="newProducts.length > 0">
             <ProductRowVue
               v-for="product in newProducts"
@@ -238,7 +238,6 @@ export default {
       }, 1000);
     },
     async addProduct(productName) {
-      console.log("in tafdsasd");
       console.log(this.newProducts, productName);
       const productInfo = {
         name: productName.name,
