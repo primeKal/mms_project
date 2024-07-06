@@ -1,7 +1,7 @@
 <template>
     <MainRendererVue :loading="loading">
         <div class="h-full bg-slate-100 xl:p-10 p-2">
-            <div class="xl:flex flex-col xl:justify-between justify-auto">
+            <div class="flex xl:flex-row flex-col xl:justify-between justify-auto">
                 <div class="xl:w-1/2 w-full bg-white rounded-xl p-6 shadow-lg">
                     <p>Today</p>
                     <div class="xl:mt-4 mt-2 flex space-x-8">
