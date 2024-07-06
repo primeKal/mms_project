@@ -80,7 +80,7 @@ export default {
           link: "dashboard",
           icon: "ic:round-space-dashboard",
         },
-        { id: 2, name: "Profile", link: "profile", icon: "mdi:chart-pie" },
+        { id: 2, name: "Profile", link: "basic_information", icon: "mdi:chart-pie" },
         {
           id: 3,
           name: "Menu Management",
