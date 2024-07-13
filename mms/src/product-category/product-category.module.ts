@@ -8,6 +8,7 @@ import { PaginationService } from 'src/utils/services/pagination.service';
 @Module({
   providers: [...productCategoryProvider, ProductCategoryService, PaginationService],
   controllers: [ProductCategoryController],
-  imports: [ProductModule]
+  // imports: [ProductModule]
+  exports: [ProductCategoryService]
 })
-export class ProductCategoryModule {}
+export class ProductCategoryModule { }

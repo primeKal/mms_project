@@ -37,10 +37,11 @@ export class ProductController {
   }
 
   @Post()
-  @UseInterceptors(
-    FileInterceptor('img', multerOptionsProductImg))
+  // @UseInterceptors(
+  //   FileInterceptor('img', multerOptionsProductImg))
   public async createProduct(@UploadedFile() img, @Req() req: any, @Body() body: ProductDto): Promise<any> {
-    body.img = img.path;
+    // body.img = img.path;
+    console.log("body", body);  
     return this.productService.createProduct(req.user.id, body);
   }
 

@@ -10,7 +10,7 @@ import { addProductsToCategoryDto } from './dtos/add.products.category.dto';
 @Injectable()
 export class ProductCategoryService {
     constructor(@Inject(PRODUCT_CATEGORY_REPOSITORY) private readonly productCategoryRepository: typeof ProductCategory,
-                private readonly productService: ProductService,
+                // private readonly productService: ProductService,
                 private readonly paginationService: PaginationService<ProductCategory>){
                     this.paginationService = new PaginationService<ProductCategory>(this.productCategoryRepository)
     }
