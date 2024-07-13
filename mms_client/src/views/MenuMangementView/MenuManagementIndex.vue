@@ -176,6 +176,7 @@ export default {
     }),
     async initialization() {
       await this.fetchMenus(this.basicInfo.id);
+      this.loading = false;
     },
     searchCategories(searchString) {
       console.log(searchString);
@@ -231,6 +232,7 @@ export default {
     },
   },
   async mounted() {
+    this.loading = true;
     this.$emit("selectedNav", 3);
     this.loading = false;
     this.initialization();

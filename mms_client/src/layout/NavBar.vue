@@ -17,7 +17,7 @@
       </div>
     </div>
     <div
-      class="lg:mt-8 mt-2 lg:w-auto w-full flex lg:flex-col flex-row  lg:snap-none snap-x snap-proximity touch-pan-x text-gray-800">
+      class="lg:mt-8 mt-2 lg:w-auto w-full flex lg:flex-col flex-row  lg:snap-none snap-x snap-proximity touch-pan-x text-gray-800 overflow-scroll md:overflow-auto">
       <router-link v-for="nav in navItems" :key="nav.name" :to="{ name: nav.link }"
         class="lg:pl-4 pl-0 lg:py-3 py-2 w-full flex items-center lg:border-l-4 border-b-4 hover:bg-blue-200 text-nowrap snap-center"
         :class="[
