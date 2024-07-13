@@ -20,9 +20,11 @@ export class ProductService {
         return await this.paginationService.findAll(page, pageSize)
     }
     async createProduct(companyId, createProductDto): Promise<any> {
-        createProductDto.companyId = companyId
+        console.log(createProductDto)
+        console.log(companyId)
+        createProductDto.companyId = companyId as number;
         const product = await this.productRepository.create<Product>(createProductDto);
-        if (product) {
+        if (product && createProductDto.productCategoryId) {
             await this.productCategoryService.addProducts({ productCategoryId: createProductDto.productCategoryId, productIds: [product.id] })
         }
         return product;

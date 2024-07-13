@@ -41,7 +41,8 @@ export class ProductController {
   //   FileInterceptor('img', multerOptionsProductImg))
   public async createProduct(@UploadedFile() img, @Req() req: any, @Body() body: ProductDto): Promise<any> {
     // body.img = img.path;
-    console.log("body", body);  
+    console.log("body", body);
+    console.log("user", req.user);
     return this.productService.createProduct(req.user.id, body);
   }
 
