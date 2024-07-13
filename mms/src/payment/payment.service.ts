@@ -24,7 +24,8 @@ export class PaymentService {
 
     }
     async getAllPayments(page, pageSize): Promise<PaymentModel[]> {
-        return await this.paginationService.findAll(page, pageSize)
+        let toInclude = [PaymentMethodModel]
+        return await this.paginationService.findAll(page, pageSize, toInclude )
     }
     async createPayment(createPaymentDto): Promise<any> {
         let payment = await this.paymentRepository.create<PaymentModel>(createPaymentDto);

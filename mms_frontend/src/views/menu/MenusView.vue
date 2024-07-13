@@ -2,9 +2,10 @@
     <div class="relative">
         <SubmitOrderVue 
             v-if="submitOrder"
-            @orderSubmitted="submitOrder = false, orderComplete=true"
+            @orderSubmitted="orderSubmitted()"
             @closeModal="submitOrder = false"
         />
+        <PaymentConfirmationVue v-if="orderComplete" />
         
         <p class="text-2xl font-medium">Menu</p>
         <div class="mt-2 flex items-stretch overflow-x-scroll qr-scrollbar py-1">
@@ -30,7 +31,12 @@
                 />
             </transition-group>
         </div>
-        <OrderSummaryVue @submitOrder="submitOrder = true" class="z-10 fixed bottom-0 inset-b-0 inset-x-0 shadow-lg" />
+        <OrderSummaryVue 
+            :key="orderSummaryKey" 
+            @updateOrderSummary="orderSummaryKey = +1" 
+            @submitOrder="submitOrder = true" 
+            class="z-10 fixed bottom-0 inset-b-0 inset-x-0 shadow-lg" 
+        />
     </div>
 </template>
 <script>
@@ -39,23 +45,33 @@ import { mapGetters } from 'vuex'
 import MenuItemVue from '@/components/menu/MenuItem.vue'
 import OrderSummaryVue from './OrderSummary.vue'
 import SubmitOrderVue from './SubmitOrder.vue'
+import PaymentConfirmationVue from './PaymentConfirmation.vue'
 export default {
     components: {
         MenuItemVue,
         OrderSummaryVue,
         SubmitOrderVue,
+        PaymentConfirmationVue,
     },
     data () {
         return {
             selectedSection: {},
             submitOrder: false,
             orderComplete: false,
+            orderSummaryKey: 1,
         }
     },
     computed: {
         ...mapGetters({
             menu: 'Company/getMenuInfo',
         })
+    },
+    methods: {
+        orderSubmitted() {
+            this.submitOrder = false;
+            this.orderComplete=true;
+            console.log('Order Submitted');
+        }
     },
     async mounted () {
         this.$emit('loading', true)

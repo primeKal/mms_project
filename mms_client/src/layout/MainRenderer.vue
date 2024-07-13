@@ -8,7 +8,7 @@
             leave-to-class="opacity-0"
             leave-active-class="transition-opacity"
         >
-            <div v-if="loading" class="absolute inset-0 h-screen z-30 flex flex-col justify-center items-center bg-slate-100 shadow-inner">
+            <div v-if="loading" class="fixed inset-0 h-screen z-30 flex flex-col justify-center items-center bg-slate-100 shadow-inner">
                 <transition
                     enter-from-class="scale-0"
                     enter-to-class="scale-100"

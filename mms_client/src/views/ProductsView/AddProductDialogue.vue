@@ -2,7 +2,7 @@
   <ModalLayoutVue>
     <div class="w-1/2 p-8 bg-white rounded-xl">
       <div class="w-full flex justify-between">
-        <h2>Add Table</h2>
+        <h2>Add Product</h2>
         <div @click="$emit('closeModal')">CLOSE X</div>
       </div>
       <form
@@ -13,11 +13,45 @@
           class="w-full border rounded"
         >
           <legend class="ml-3 text-xs px-1">Product name</legend>
-          <input
-            @input="setTouched('name')"
-            type="text"
-            class="w-full pt-1 pb-1 px-2 outline-none"
-          />
+          <div class="m-4 flex flex-col gap-4">
+            <div class="flex flex-col gap-2">
+              <label>Product Name</label>
+              <input
+                v-model="name"
+                type="text" 
+                placeholder="Product Name"
+                aria-label="Product Name"
+                class="w-full pt-1 pb-1 px-2 text-black transition duration-100 ease-in-out bg-white border border-gray-300 rounded shadow-sm focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed"
+              />
+            </div>
+            <div class="flex flex-col gap-2">
+              <label>Product Description</label>
+              <textarea
+                v-model="description"
+                type="text"
+                rows="3"
+                placeholder="Product Description"
+                class="w-full pt-1 pb-1 px-2 text-black transition duration-100 ease-in-out bg-white border border-gray-300 rounded shadow-sm focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed"
+              />
+            </div>
+            <div class="flex flex-col gap-2">
+              <label>Price</label>
+              <input
+              v-model="price"
+              type="number"
+              placeholder="Product Price"
+              class="w-full pt-1 pb-1 px-2 text-black transition duration-100 ease-in-out bg-white border border-gray-300 rounded shadow-sm focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed"
+            />
+            </div>
+            <div class="flex flex-col gap-2">
+              <label>Product Image</label>
+              <input
+                type="file"
+                @change="onFileUpload"
+                class="w-full pt-1 pb-1 px-2 text-black transition duration-100 ease-in-out bg-white border border-gray-300 rounded shadow-sm focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed"
+              />
+            </div>
+          </div>
         </fieldset>
         <button
           type="submit"
@@ -57,97 +91,63 @@
   </ModalLayoutVue>
 </template>
 <script>
-import { mapActions } from "vuex";
 import useVuelidate from "@vuelidate/core";
 
 import ModalLayoutVue from "@/layout/ModalLayout.vue";
+import baseAPI from "@/services/base";
 export default {
   setup() {
     return {
       v$: useVuelidate(),
     };
   },
-  props: {
-    isNew: Boolean,
-    editTable: Object,
-  },
   components: {
     ModalLayoutVue,
   },
   data() {
     return {
-      paymentMethodInfo: {
-        name: "",
-        isActive: "",
-      },
+      name: "",
+      description: "",
+      img: null,
+      price: 0,
       loading: false,
     };
   },
-  // validations() {
-  //   return {
-  //     paymentMethodInfo: {
-  //       name: {
-  //         required,
-  //       },
-  //       type: {
-  //         required,
-  //       },
-  //       isActive: {
-  //         required,
-  //       },
-  //     },
-  //   };
-  // },
+  validations() {
+    return {
+      // name: {
+      //   required
+      // },
+      // description: {
+      //   required
+      // },
+      // picture: {
+      //   required
+      // },
+      // price: {
+      //   required
+      // },
+    };
+  },
   methods: {
-    setTouched(theModel) {
-      if (theModel == "name" || theModel == "all") {
-        this.v$.paymentMethodInfo.name.$touch();
-      }
-      if (theModel == "type" || theModel == "all") {
-        this.v$.paymentMethodInfo.type.$touch();
-      }
+    onFileUpload (event) {
+          this.img = event.target.files[0]
     },
-    ...mapActions({
-      addTable: "Method/addNewMethod",
-      updateTable: "METHOD/updateMethod",
-    }),
     async createProduct() {
-      // validation required
-      this.setTouched("all");
-      // if (!this.v$.$invalid) {
-      //   this.loading = true;
-      //   if (this.isNew) {
-      //     console.log(this.paymentMethodInfo);
-      //     let companyId = this.$store.state.Company.companyInfo.id;
-      //     this.paymentMethodInfo.companyId = companyId;
-      //     const status = await this.addTable(this.paymentMethodInfo);
-      //     if (status.success) {
-      //       this.$toast.success("Payment Method created successfully");
-      //       setTimeout(() => {
-      //         this.$emit("closeModal");
-      //       }, 1000);
-      //     } else {
-      //       this.$toast.error("Payment Method creation failed");
-      //     }
-      //   } else {
-      //     const status = await this.updateTable(this.paymentMethodInfo);
-      //     if (status.success) {
-      //       this.$toast.success("Table updated successfully");
-      //       setTimeout(() => {
-      //         this.$emit("closeModal");
-      //       }, 1000);
-      //     } else {
-      //       this.$toast.error("Table update failed");
-      //     }
-      //   }
-      //   this.loading = false;
-      // }
+      this.loading = true
+      const formData = new FormData()
+      formData.append("name", this.name)
+      formData.append("description", this.description)
+      formData.append("img", this.img, this.img.name)
+      formData.append("price", this.price)
+      baseAPI.post("product", formData).then(() => {
+        alert("Product Added Successfully")
+        this.loading = false
+      }).catch((err) => {
+        alert(err.response.data.message ?? err.message)
+        this.loading = false
+      })
     },
-  },
-  mounted() {
-    if (!this.isNew) {
-      this.paymentMethodInfo = this.editTable;
-    }
-  },
+  }
 };
 </script>

@@ -21,7 +21,7 @@
       </div>
       <PaymentList
         class="mt-5"
-        :Payments="[]"
+        :payments="Payments"
         @editPayment="
           (Payment) => {
             editPayment = Payment;
@@ -51,7 +51,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      Payments: "Payment/getPayments",
+      Payments: "Payments/getAllPayments",
     }),
   },
   methods: {
@@ -65,6 +65,7 @@ export default {
     let companyId = this.$store.state.Company.companyInfo.id;
     await this.$store.dispatch("Payments/fetchAllPayments", companyId);
     this.loading = false;
+    console.log("kdkdkdkd", this.Payments)
   },
 };
 </script>

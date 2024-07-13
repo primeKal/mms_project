@@ -14,6 +14,17 @@ const state = {
 };
 const getters = {
   getCompanyInfo: (state) => {
+    const companyInfo = localStorage.getItem('company');
+    if(!companyInfo) {
+      window.location = "/";
+    } else {
+      let unfilteredCompanyInfo = JSON.parse(companyInfo);
+      if (!('id' in unfilteredCompanyInfo)) {
+        window.location = "/";
+        localStorage.removeItem('company');
+        localStorage.removeItem('access_token');
+      }
+    }
     return state.companyInfo;
   },
   getCompanyLogo: (state) => {
@@ -22,6 +33,7 @@ const getters = {
 };
 const mutations = {
   setCompanyInfo: (state, companyInfo) => {
+    localStorage.setItem('company', JSON.stringify(companyInfo));
     state.companyInfo = companyInfo;
   },
   setAuth: (state, credentials) => {

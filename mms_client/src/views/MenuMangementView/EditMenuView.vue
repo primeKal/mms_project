@@ -18,23 +18,13 @@
                         </svg>
                         SAVE CHANGES
                     </button>
-                    <button
-                        class="px-3 flex items-center bg-transparent hover:bg-primary text-primary hover:text-white border-primary  rounded border active:scale-95 transition-all">
-                        <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                            <path fill="currentColor"
-                                d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2V5a2 2 0 0 0-2-2zm0 16H5V7h14v12zm-7-8.5c1.84 0 3.48.96 4.34 2.5c-.86 1.54-2.5 2.5-4.34 2.5s-3.48-.96-4.34-2.5c.86-1.54 2.5-2.5 4.34-2.5M12 9c-2.73 0-5.06 1.66-6 4c.94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4zm0 5.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5s1.5.67 1.5 1.5s-.67 1.5-1.5 1.5z" />
-                        </svg>
+                    <button class="xl:px-3 px-2 flex items-center bg-transparent hover:bg-primary text-primary hover:text-white border-primary  rounded border active:scale-95 transition-all">
+                        <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2V5a2 2 0 0 0-2-2zm0 16H5V7h14v12zm-7-8.5c1.84 0 3.48.96 4.34 2.5c-.86 1.54-2.5 2.5-4.34 2.5s-3.48-.96-4.34-2.5c.86-1.54 2.5-2.5 4.34-2.5M12 9c-2.73 0-5.06 1.66-6 4c.94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4zm0 5.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5s1.5.67 1.5 1.5s-.67 1.5-1.5 1.5z"/></svg>
                         PREVIEW
                     </button>
-                    <button @click="togglePublish" :disable="menuInformation.isActive"
-                        :class="[menuInformation.isActive ? 'text-gray-400 hover:bg-gray-400 border-gray-400 cursor-not-allowed' : 'text-primary hover:bg-primary border-primary']"
-                        class="px-3 py-1 flex items-center bg-transparent hover:text-white  rounded border active:scale-95 transition-all">
-                        <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                            <path fill="currentColor"
-                                d="M5 4h14v2H5zm0 10h4v6h6v-6h4l-7-7l-7 7zm8-2v6h-2v-6H9.83L12 9.83L14.17 12H13z" />
-                        </svg>
-                        <p v-if="!menuInformation.isActive">PUBLISH</p>
-                        <p v-else>PUBLISHED</p>
+                    <button @click="togglePublish" :disable="menuInformation.isActive" :class="[menuInformation.isActive ? 'text-gray-400 hover:bg-gray-400 border-gray-400 cursor-not-allowed' : 'text-primary hover:bg-primary border-primary']" class="xl:px-3 px-2 py-1 flex items-center bg-transparent hover:text-white  rounded border active:scale-95 transition-all">
+                        <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M5 4h14v2H5zm0 10h4v6h6v-6h4l-7-7l-7 7zm8-2v6h-2v-6H9.83L12 9.83L14.17 12H13z"/></svg>
+                        <p>{{ menuInformation.isActive ? 'PUBLISHED': 'PUBLISH' }}</p>
                     </button>
                 </div>
             </div>
@@ -86,7 +76,7 @@
             <MenuListTableVue class="mt-5" /> -->
         </div>
     </MainRendererVue>
-
+    
 </template>
 <script>
 import { mapGetters, mapActions } from 'vuex'
@@ -102,7 +92,7 @@ export default {
         CategoriesTableVue,
         // MenuListTableVue,
     },
-    data() {
+    data () {
         return {
             loading: true,
             openNewCategory: false,
@@ -115,10 +105,10 @@ export default {
             menu: 'Menu/getMenu',
         }),
     },
-    watch: {
-        menu: {
+    watch:{
+        menu:{
             deep: true,
-            handler(value) {
+            handler(value){
                 this.menuInformation = value
             }
         }
@@ -133,34 +123,34 @@ export default {
             console.log(searchString)
             // do the search
         },
-        searchMenuItem(searchString) {
+        searchMenuItem (searchString) {
             console.log(searchString)
         },
         async saveChanges() {
-            if (this.menuInformation.name.length > 0) {
+            if(this.menuInformation.name.length > 0){
                 this.loading = true
                 const status = await this.updateMenu(this.menuInformation)
-                if (status.success) {
+                if(status.success) {
                     this.$toast.success('Changes saved successfully')
-                } else {
+                }else{
                     this.$toast.error('Error saving changes')
                 }
                 this.loading = false
-            }
+            }            
         },
         async togglePublish() {
             this.loading = true
             const status = await this.activateMenu(this.menuInformation.id)
-            if (status.success) {
+            if(status.success) {
                 this.$toast.success(`Menu ${this.menuInformation.name} is now active`)
-            } else {
+            }else{
                 this.$toast.error('Error publishing menu')
             }
             this.loading = false
         }
     },
     async mounted() {
-        if (!this.menuId) {
+        if(!this.menuId){
             this.$router.go(-1)
         }
         await this.getMenu(this.menuId)

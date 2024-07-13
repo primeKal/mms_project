@@ -68,9 +68,11 @@ export default {
                 const order = {...this.menuItem}
                 order['quantity'] = this.quantity
                 this.addCart(order)
+                this.$emit('updateOrderSummary')
             }else {
                 // remove from the cart
                 this.removeFromCart(this.menuItem.id)
+                this.$emit('updateOrderSummary')
             }
             // change the button animation
             this.addedToCart = direction

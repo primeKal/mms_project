@@ -19,6 +19,7 @@ const getters = {
 const mutations = {
     setAllPayments: (state, Payments) => {
         state.Payments = Payments
+        console.log("paymrtndsf", state.Payments)
     },
     setPayment: (state, Payment) => {
         state.Payment = Payment

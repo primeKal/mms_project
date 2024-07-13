@@ -13,7 +13,7 @@
         class="hover:bg-slate-50/60 border-b transition-colors"
       >
         <td class="pl-4 py-3 font-light">{{ payment.id }}</td>
-        <td class="pl-4 py-3 font-light">{{ payment.amount }}</td>
+        <td class="pl-4 py-3 font-light">{{ payment.total }}</td>
         <td class="pl-4 py-3 font-light">
           {{ payment.method?.name }}
         </td>

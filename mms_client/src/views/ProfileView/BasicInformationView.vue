@@ -1,14 +1,22 @@
 <template>
     <div class="p-6 pr-12 w-full">
-        <div class="flex justify-between">
+        <div class="flex justify-between m-2">
             <h3 class="text-primary font-medium text-xl">Our Story</h3>
-            <button v-on:click="switchEditState()"
+            <button v-if="editStatus" v-on:click="switchEditState()"
                 class="py-2 px-5 flex items-center bg-transparent hover:bg-primary text-primary hover:text-white border-primary  rounded border active:scale-95 transition-all">
                 <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
                     <path fill="currentColor"
                         d="m14.06 9l.94.94L5.92 19H5v-.92L14.06 9m3.6-6c-.25 0-.51.1-.7.29l-1.83 1.83l3.75 3.75l1.83-1.83c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.2-.2-.45-.29-.71-.29m-3.6 3.19L3 17.25V21h3.75L17.81 9.94l-3.75-3.75Z" />
                 </svg>
                 Edit
+            </button>
+            <button v-if="!editStatus" :disabled="editStatus === true ? true : false" :onClick="handleUpdateCompany"
+                class="py-2 px-5 flex items-center bg-transparent hover:bg-primary text-primary hover:text-white border-primary  rounded border active:scale-95 transition-all">
+                <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
+                    <path fill="currentColor"
+                        d="m14.06 9l.94.94L5.92 19H5v-.92L14.06 9m3.6-6c-.25 0-.51.1-.7.29l-1.83 1.83l3.75 3.75l1.83-1.83c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.2-.2-.45-.29-.71-.29m-3.6 3.19L3 17.25V21h3.75L17.81 9.94l-3.75-3.75Z" />
+                </svg>
+                Submit Change
             </button>
         </div>
         <textarea :disabled="editStatus === true ? true : false" class="py-2 pl-2 rounded border w-full bg-white0"
@@ -55,7 +63,7 @@
             </div>
             <div class="w-1/3 flex flex-col">
                 <label class="text-sm text-gray-700">Email Address</label>
-                <input :disabled="editStatus === true ? true : false"
+                <input :disabled="true"
                     class="py-2 pl-2 font-medium rounded border bg-white0" placeholder="Email" type="text"
                     v-model.trim="company.email" />
             </div>
@@ -70,14 +78,6 @@
         <hr class="my-7 border w-full" />
         <div class="mt-7 flex justify-between">
             <h3 class="text-primary font-medium text-xl">Other Information</h3>
-            <button :disabled="editStatus === true ? true : false" :onClick="handleUpdateCompany"
-                class="py-2 px-5 flex items-center bg-transparent hover:bg-primary text-primary hover:text-white border-primary  rounded border active:scale-95 transition-all">
-                <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
-                    <path fill="currentColor"
-                        d="m14.06 9l.94.94L5.92 19H5v-.92L14.06 9m3.6-6c-.25 0-.51.1-.7.29l-1.83 1.83l3.75 3.75l1.83-1.83c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.2-.2-.45-.29-.71-.29m-3.6 3.19L3 17.25V21h3.75L17.81 9.94l-3.75-3.75Z" />
-                </svg>
-                Submit Change
-            </button>
         </div>
         <div class="w-full mt-5 flex gap-3">
             <div class="w-1/3 flex flex-col">
@@ -108,7 +108,7 @@ export default {
                 id: '',
                 name: '',
                 username: '',
-                story: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum varius mauris id sem pretium, id pellentesque risus facilisis. Sed mattis mattis commodo. Aliquam sagittis tempor massa sit amet venenatis. Sed convallis dictum mauris. Morbi tempor elementum erat, sit amet dapibus felis lacinia in. Aliquam imperdiet iaculis dolor non dignissim. Fusce lobortis justo scelerisque augue tempus, vitae dapibus risus consequat. In nec urna nibh. Maecenas efficitur neque massa, vitae aliquam nisi malesuada blandit. Etiam placerat pretium commodo.',
+                story: 'Replace me with a story about your company.',
                 moto: '',
                 email: '',
                 address: '',
@@ -121,6 +121,7 @@ export default {
     },
     methods: {
         initialization() {
+            console.log(this.basicInfo)
             this.company.id = this.basicInfo.id
             this.company.name = this.basicInfo.name
             this.company.username = this.basicInfo.username
@@ -129,6 +130,8 @@ export default {
             this.company.address = this.basicInfo.address
             this.company.moto = this.basicInfo.moto
             this.company.contact_information = this.basicInfo.contact_information
+            this.company.website = this.basicInfo.website
+            this.company.story = this.basicInfo.story == ""? "Replace me with a story about your company." : this.basicInfo.story
         },
 
         switchEditState() {
