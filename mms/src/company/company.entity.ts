@@ -37,6 +37,16 @@ export class Company extends Model<Company> {
   })
   name: string;
 
+  @Column({
+    allowNull: true,
+  })
+  website: string;
+
+  @Column({
+    allowNull: true,
+  })
+  story: string;
+
 
   @Column({
     allowNull: false,

@@ -15,12 +15,12 @@ const getters = {
     },
     getTotalSalesPerMonth: (state) => {
         return {
-            labels: state.reports.getTotalSalesPerMonth.map((data)=> {
+            labels: state.reports.getTotalSalesPerMonth?.map((data)=> {
                 return new Date(data.month).getMonth()
             }),
             datasets: [{
                 label: 'Sales data on every month',
-                data: state.reports.getTotalSalesPerMonth.map((data)=> {
+                data: state.reports.getTotalSalesPerMonth?.map((data)=> {
                     return parseInt(data.totalSales)
                 }),
                 fill: false,
@@ -31,12 +31,12 @@ const getters = {
     },
     getTotalSales30Days: (state) => {
         return {
-            labels: state.reports.getTotalSalesForPast30Days.map((data)=>{
+            labels: state.reports.getTotalSalesForPast30Days?.map((data)=>{
                 return new Date(data.date).getDate()
             }),
             datasets: [{
                 label: 'Sales in the past 30 days',
-                data: state.reports.getTotalSalesForPast30Days.map((data)=> {
+                data: state.reports.getTotalSalesForPast30Days?.map((data)=> {
                     return parseInt(data.totalSales)
                 }),
                 borderWidth: 1,

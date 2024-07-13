@@ -1,8 +1,8 @@
 <template>
   <div
-    class="h-screen w-full flex flex-col justify-center items-center bg-white border-dark"
+    class="h-screen w-full flex flex-col justify-center items-center bg-white border-dark p-5"
   >
-    <div class="w-1/3 p-5 flex flex-col bg-slate-100 rounded-lg shadow-lg">
+    <div class="w-full md:w-2/3 lg:w-1/3 p-5 flex flex-col bg-slate-100 rounded-lg shadow-lg">
       <div class="flex flex-col justify-center items-center">
         <img src="/zeus.png" alt="Logo" class="w-[230px] h-[230px]" />
       </div>
