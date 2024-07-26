@@ -144,6 +144,7 @@ export default {
             const status = await this.$store.dispatch('Company/updateCompany', this.company)
             if (status) {
                 this.$toast.success('Company information updated')
+                this.editStatus = true
             } else {
                 this.$toast.error('Error occured!')
             }
