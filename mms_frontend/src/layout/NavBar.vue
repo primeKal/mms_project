@@ -31,9 +31,8 @@
 
         </div> -->
         <div class="flex items-center m-2">
-            <a href="https://mms-restaurant.onrender.com/" target="_blank"><button
-                    class="outline-none py-2 font-semibold">Login</button></a>
-            <a href="https://mms-restaurant.onrender.com/registration" target="_blank"><button
+            <a :href="menusUrlLogin" target="_blank"><button class="outline-none py-2 font-semibold">Login</button></a>
+            <a :href="menusUrlRegistration" target="_blank"><button
                     class="ml-5 py-2 px-5 bg-secondary rounded-3xl text-white font-semibold">Sign up</button></a>
         </div>
 
@@ -43,7 +42,19 @@
 <script>
 export default {
     props: {
-        selectedSection: Number,
+        selectedSection: {
+            type: Number,
+            required: true
+        },
+        menusUrlLogin: {
+            type: String,
+            default: process.env.VUE_APP_ZUES_MENUS_CLIENT_URL
+        },
+        menusUrlRegistration: {
+            type: String,
+            default: process.env.VUE_APP_ZUES_MENUS_CLIENT_URL + "/registration"
+        }
+
     },
     data() {
         return {

@@ -129,10 +129,11 @@ const actions = {
         }
         state.orderInfo = order
     },
-    makePayment: async ({state}, orderId, paymentMethod) => {
+    makePayment: async ({state}, {orderId, paymentMethodId}) => {
         var status = null;
         console.log(state.orderInfo)
-        await OrderAPI.makePayment(orderId, paymentMethod)
+        console.log(orderId, paymentMethodId)
+        await OrderAPI.makePayment(orderId, paymentMethodId)
             .then((result) => {
                 if(result.status === CREATE_SUCCESS_CODE) {
                     status = {'success': true, payload: result.data}
@@ -148,10 +149,10 @@ const actions = {
     fetchPaymentMethods: async ({commit}) => {
         await OrderAPI.getPaymentMethods()
             .then((result)=> {
-                let activePaymentMethods = result.map((method) => {
-                    return method.isActive == true;
-                })
-                commit('setPaymentMethods', activePaymentMethods);
+                // let activePaymentMethods = result.map((method) => {
+                //     return method.isActive == true;
+                // })
+                commit('setPaymentMethods', result);
             })
             .catch((error) => {
                 console.log(error);

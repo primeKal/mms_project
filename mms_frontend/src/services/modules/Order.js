@@ -24,6 +24,7 @@ class OrderAPI {
     static makePayment(orderId, paymentMethodId) {
         return new Promise(async(resolve, reject)=>{
             try {
+                console.log("in last step", orderId, paymentMethodId)
                 const response = await baseAPI.post('payment/generatePayment', {
                     orderId,
                     paymentMethodId,
@@ -38,7 +39,7 @@ class OrderAPI {
         return new Promise(async(resolve, reject)=> {
             try {
                 const companyId = window.localStorage.getItem('companyId')
-                const response = await baseAPI.get(`paymentMethod/ByCompany/${companyId}`)
+                const response = await baseAPI.get(`paymentMethod/ByCompanyActive/${companyId}`)
                 resolve(response.data);
             } catch (error) {
                 reject(error);

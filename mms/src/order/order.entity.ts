@@ -46,11 +46,13 @@ export class Order extends Model<Order> {
 
   @Column({
     allowNull: false,
+    type: DataType.DECIMAL,
   })
   totalPrice: number;
 
   @Column({
     allowNull: false,
+    type: DataType.DECIMAL,
   })
   totalTax: number;
 

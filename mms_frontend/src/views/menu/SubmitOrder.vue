@@ -24,7 +24,7 @@
             </div>
             <div class="mt-5 bg-gray-100 px-4 py-7 flex justify-end">
                 <button @click="$emit('closeModal')" class="outline-none text-gray-500 hover:text-gray-600">Cancel</button>
-                <button @click="submitOrder" class="ml-3 px-3 py-1 bg-menu-primary text-white active:scale-95 rounded font-semibold">Confirm</button>
+                <button @click="submitOrder" class="ml-3 px-3 py-1 bg-primary text-white active:scale-95 rounded font-semibold">Confirm</button>
             </div>
         </div>
     </ModalLayoutVue>

@@ -1,5 +1,5 @@
 <template>
-    <div class="relative">
+    <div class="relative w-full">
         <SubmitOrderVue 
             v-if="submitOrder"
             @orderSubmitted="orderSubmitted()"

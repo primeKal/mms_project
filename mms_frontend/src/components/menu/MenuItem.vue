@@ -1,6 +1,7 @@
 <template>
     <div class="h-28 w-full flex bg-[#F8F8FC] rounded-lg border overflow-hidden">
-        <img :src="menuItem.image" class="w-1/3 object-cover object-center" />
+        <!-- <img :src="menuItem.image" class="w-1/3 object-cover object-center" /> -->
+        <img src="/images/mms_logo.png" alt="Company Logo" class="w-1/3 object-cover object-center">
         <div class="w-full py-1 px-3 flex flex-col">
             <div class="w-full flex justify-between">
                 <p class="text-lg">{{ menuItem.name }}</p>

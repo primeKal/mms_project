@@ -59,6 +59,7 @@ export class PaymentController {
   @Post('/generatePayment')
   @ApiBody({ type: PaymentDto })
   public async generatePayment(@Body() body: GeneratePaymentDto): Promise<any> {
+    console.log("in generate payment",body);
     return this.paymentService.generatePayment(body);
   }
 }

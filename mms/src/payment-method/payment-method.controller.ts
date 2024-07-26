@@ -30,6 +30,11 @@ export class PaymentMethodController {
     return this.paymentMethodService.getPaymentMethodsByCompany(id);
   }
 
+  @Get('ByCompanyActive/:id')
+  public async getPaymentMethodsByCompanyActive(@Param('id') id: number): Promise<[any]> {
+    return this.paymentMethodService.getPaymentMethodsByCompanyActive(id);
+  }
+
   @UseGuards(JwtAuthGuard)
   @Post()
   public async createPaymentMethod(@Req() req: any, @Body() body: PaymentMethodDto): Promise<any> {
