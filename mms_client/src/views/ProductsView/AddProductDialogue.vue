@@ -102,11 +102,11 @@ export default {
     },
     async createProduct() {
       this.loading = true
-      const formData = new FormData()
-      formData.append("name", this.name)
-      formData.append("description", this.description)      
-      formData.append("price", this.price)
-
+      let payload = {
+        name: this.name,
+        description: this.description,
+        price: this.price
+      };
       await new Compressor(this.img, {
         quality: 0.6, // Set the desired quality level (0 to 1)
         maxWidth: 800, // Set the maximum width (optional)
@@ -116,10 +116,11 @@ export default {
           const storageRef = ref(storage, 'product-images/' + compressedFile.name);
           uploadBytes(storageRef, compressedFile).then(async (snapshot)=>{
             console.log("Image upload successfull", snapshot);
-            formData.append("image", `https://firebasestorage.googleapis.com/v0/b/mms-image-storage.appspot.com/o/product-images%2F${compressedFile.name}?alt=media`);
+            payload["image"] =  `https://firebasestorage.googleapis.com/v0/b/mms-image-storage.appspot.com/o/product-images%2F${compressedFile.name}?alt=media`;
             
-            baseAPI.post("product", formData).then(() => {
+            baseAPI.post("product", payload).then(() => {
               alert("Product Added Successfully")
+              this.onClose();
               this.loading = false
             }).catch((err) => {
               alert(err.response.data.message ?? err.message)
