@@ -72,42 +72,39 @@
   </div>
 </template>
 <script>
-import CategoryRowVue from "@/components/category/CategoryRow.vue";
+import CategoryRowVue from '@/components/category/CategoryRow.vue'
 export default {
   props: {
-    categories: Array,
-    openNewCategory: Boolean,
+      categories: Array,
+      openNewCategory: Boolean,
   },
   components: {
-    CategoryRowVue,
+      CategoryRowVue,
   },
   data() {
-    return {
-      newCategory: {
-        name: "",
-        description: "",
-      },
-    };
+      return {
+          newCategory: {
+              name: '',
+              description: ''
+          },
+      }
   },
   methods: {
-    async createSection() {
-      if (this.newCategory.name.length > 0) {
-        this.$emit("loading", true);
-        const status = await this.$store.dispatch(
-          "Menu/createNewSection",
-          this.newCategory
-        );
-        if (status) {
-          this.$toast.success("Section created successfully");
-          this.$emit("closeNewCategory");
-          this.newCategory.name = "";
-          this.newCategory.description = "";
-        } else {
-          this.$toast.error("Error creating section");
-        }
-        this.$emit("loading", false);
-      }
-    },
-  },
-};
+      async createSection() {
+          if (this.newCategory.name.length > 0) {
+              this.$emit('loading', true)
+              const status = await this.$store.dispatch('Menu/createNewSection', this.newCategory)
+              if (status) {
+                  this.$toast.success('Section created successfully')
+                  this.$emit('closeNewCategory')
+                  this.newCategory.name = ''
+                  this.newCategory.description = ''
+              } else {
+                  this.$toast.error('Error creating section')
+              }
+              this.$emit('loading', false)
+          }
+      },
+  }
+}
 </script>

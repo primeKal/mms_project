@@ -4,22 +4,29 @@ import { PRODUCT_REPOSITORY } from 'src/utils/constants';
 import { Op } from 'sequelize';
 import { PaginationService } from 'src/utils/services/pagination.service';
 import { ProductDto } from './dtos/product.dto';
+import { ProductCategoryService } from 'src/product-category/product-category.service';
 
 @Injectable()
 export class ProductService {
     constructor(
         @Inject(PRODUCT_REPOSITORY) private readonly productRepository: typeof Product,
+        private readonly productCategoryService: ProductCategoryService,
         private readonly paginationService: PaginationService<Product>
     ) {
         this.paginationService = new PaginationService<Product>(this.productRepository)
 
     }
     async getAllProducts(page, pageSize): Promise<Product[]> {
-        return await  this.paginationService.findAll(page,pageSize)
+        return await this.paginationService.findAll(page, pageSize)
     }
-    async createProduct(companyId,createProductDto): Promise<any> {
-        createProductDto.companyId = companyId
-        let product = await this.productRepository.create<Product>(createProductDto);
+    async createProduct(companyId, createProductDto): Promise<any> {
+        console.log(createProductDto)
+        console.log(companyId)
+        createProductDto.companyId = companyId as number;
+        const product = await this.productRepository.create<Product>(createProductDto);
+        if (product && createProductDto.productCategoryId) {
+            await this.productCategoryService.addProducts({ productCategoryId: createProductDto.productCategoryId, productIds: [product.id] })
+        }
         return product;
     }
     async getOneProductById(id: number): Promise<Product> {
@@ -53,22 +60,22 @@ export class ProductService {
             where: { companyId: companyId },
         })
     }
-    async getProductsByIds(ids:Array<number>) {
-        return await this.productRepository.findAll({ where: { id: { [Op.in]: ids } }});
+    async getProductsByIds(ids: Array<number>) {
+        return await this.productRepository.findAll({ where: { id: { [Op.in]: ids } } });
     }
-    async saveProductPic(fileUrl: string, productDto: ProductDto, companyId : Number): Promise<Product> {
+    async saveProductPic(fileUrl: string, productDto: ProductDto, companyId: Number): Promise<Product> {
         //check if product dto has id,
         console.log(fileUrl)
         console.log(productDto)
         let product = null
-        if ((productDto.id)){
+        if ((productDto.id)) {
             product = await this.productRepository.findByPk(productDto.id)
-        }else {
+        } else {
             product = await this.createProduct(companyId, productDto)
         }
         let result = await product.update({
-          imgUrl : fileUrl
+            imgUrl: fileUrl
         });
         return result;
-      }
+    }
 }

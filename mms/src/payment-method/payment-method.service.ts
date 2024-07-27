@@ -11,7 +11,7 @@ export class PaymentMethodService {
     }
     async getAllPaymentMethods(page, pageSize): Promise<any[]> {
         const data = await this.paginationService.findAll(page, pageSize)
-        return data.map(paymentMethod => ({"id":paymentMethod.id, name:paymentMethod.name}))
+        return data.map(paymentMethod => ({ "id": paymentMethod.id, name: paymentMethod.name }))
     }
     async createPaymentMethod(companyId, createPaymentMethodModelDto): Promise<any> {
         createPaymentMethodModelDto.companyId = companyId;
@@ -44,6 +44,12 @@ export class PaymentMethodService {
     async getPaymentMethodsByCompany(companyId: any): Promise<any> {
         return this.paymentMethodRepository.findAll({
             where: { companyId: companyId },
+        })
+    }
+    async getPaymentMethodsByCompanyActive(companyId: any): Promise<any> {
+        return this.paymentMethodRepository.findAll({
+            where: { companyId: companyId, isActive: true },
+            attributes: ['id', 'name']
         })
     }
     async updateOrderStatus(updateStatusDto: any): Promise<PaymentMethodModel> {

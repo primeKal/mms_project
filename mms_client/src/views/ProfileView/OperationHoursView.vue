@@ -1,6 +1,7 @@
 <template>
     <div class="p-6 pr-12 w-full h-screen">
-        <div class="flex justify-between">
+        <div>Coming Soon on Zues Menu's</div>
+        <!-- <div class="flex justify-between">
             <h3 class="text-primary font-medium text-xl">Operation Hours</h3>
             <button class="py-2 px-5 flex items-center bg-transparent hover:bg-primary text-primary hover:text-white border-primary  rounded border active:scale-95 transition-all">
                 + Add
@@ -26,7 +27,7 @@
                     </td>
                 </tr>
             </tbody>
-        </table>
+        </table> -->
     </div>
 </template>
 <script>

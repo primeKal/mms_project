@@ -47,6 +47,7 @@ export default {
             profileTabs: [
                 {'name': 'BASIC INFORMATION', 'link': 'basic_information', 'icon': 'mdi:information-slab-circle-outline'},
                 {'name': 'VISUAL BRANDING', 'link': 'visual_branding', 'icon': 'mdi:palette-outline'},
+                {'name': 'BILLING INFORMATION', 'link': 'billing_information', 'icon': 'mdi:credit-card-outline'},
                 {'name': 'OPERATION HOURS', 'link': 'operation_hours', 'icon': 'mdi:clock-time-four-outline'},
                 {'name': 'CUSINE & SPECIALTY', 'link': 'cusine_speciality', 'icon': 'material-symbols:ramen-dining-outline-rounded'},
                 {'name': 'IMAGE GALLERY', 'link': 'image_gallery', 'icon': 'mdi:image-outline'},

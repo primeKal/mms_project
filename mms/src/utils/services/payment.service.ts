@@ -17,6 +17,7 @@ export class PaymentAgregatorService {
     async beginTransaction(chapaPaymentDto: ChapaPaymentDto): Promise<string> {
         const requestUrl = 'https://api.chapa.co/v1/transaction/initialize';
         const baseUrl = process.env.BASE_URL || "localhost:8008"; // Assuming you have BASE_URL in your .env file
+        console.log("in begin transaction")
 
         const { private_key, app_order_id, first_name, last_name, email, totalAmount, products, transaction_id } = chapaPaymentDto;
 
@@ -39,6 +40,7 @@ export class PaymentAgregatorService {
             "customization[description]": "I love online payments."
         };
 
+        console.log("reqData", reqData);
         let response: AxiosResponse;
         try {
             response = await axios.post(requestUrl, reqData, { headers: requestHeaders });

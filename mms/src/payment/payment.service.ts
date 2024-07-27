@@ -76,7 +76,9 @@ export class PaymentService {
             paymentDto.email = `Walking Customer For Order ${order.id}`;
             paymentDto.paymentMethodId = generatePaymentDto.paymentMethodId;
             let success_data = await this.paymentRepository.create<PaymentModel>(paymentDto as any);
+            console.log("success_data", success_data)
             let paymentMethod = await this.paymentMethodService.getOnePaymentMethodById(success_data.paymentMethodId);
+            console.log("paymentMethod in switcher", paymentMethod)
             const redirect = await this.paymentSwitcher(success_data, order, paymentMethod);
             let returned_data = new SuccessPaymentDto();
             returned_data.data = success_data;
@@ -94,9 +96,9 @@ export class PaymentService {
     }
     async paymentSwitcher(payment: PaymentModel, order: Order, paymentMethod: PaymentMethodModel) {
         console.log("In payment switcher")
-        console.log("payment", payment)
-        console.log("order", order)
-        console.log("paymentMethod", paymentMethod)
+        // console.log("payment", payment)
+        // console.log("order", order)
+        // console.log("paymentMethod", paymentMethod)
         switch (paymentMethod?.type) {
             case "Chapa":
                 const payload = this.paymentAgregatorService.createChapaPaymentDto(payment, order, paymentMethod);
