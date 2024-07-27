@@ -12,25 +12,25 @@
       >
         <tr
           v-if="openNewCategory"
-          class="grid grid-cols-3 bg-slate-100 lg:px-4 px-2 py-2 lg:text-base text-xs"
+          class="grid grid-cols-3 bg-slate-100 lg:px-4 px-2 py-2"
         >
-          <p class="mb-1">Create new section:</p>
+          <p class="mb-1 col-span-full">Create new section:</p>
           <div
-            class="col-span-full w-full grid grid-cols-3 lg:gap-4 gap-2 bg-white p-3 rounded"
+            class="col-span-full w-full grid lg:grid-cols-3 grid-cols-2 lg:gap-4 gap-2 bg-white lg:p-3 p-2 rounded"
           >
             <input
-              class="h-min w-full border rounded py-1 pl-2"
+              class="h-min w-full border rounded py-1 pl-2 lg:text-base text-sm"
               placeholder="Section name"
               v-model="newCategory.name"
             />
             <textarea
               style="resize: none"
-              class="h-20 rounded p-1 border"
-              placeholder="Descripiton"
+              class="lg:h-20 h-14 rounded p-1 border lg:text-base text-sm"
+              placeholder="Description"
               v-model="newCategory.description"
             ></textarea>
             <div
-              class="flex lg:flex-row flex-col-reverse lg:justify-center justify-start lg:items-center lg:space-x-3 space-x-0 lg:space-y-0 space-y-2 lg:pl-4 pl-2 py-1"
+              class="flex lg:col-span-auto col-span-full lg:justify-center justify-end items-center space-x-3 lg:pl-4 pl-2 py-1"
             >
               <button
                 @click="createSection"
@@ -40,7 +40,7 @@
               </button>
               <button
                 @click="$emit('closeNewCategory')"
-                class="lg:mt-0 mt-2 py-1 px-4 text-white bg-gray-400 hover:bg-gray-500 active:scale-95 transition-all font-semibold rounded"
+                class="py-1 px-4 text-white bg-gray-400 hover:bg-gray-500 active:scale-95 transition-all font-semibold rounded"
               >
                 cancel
               </button>
