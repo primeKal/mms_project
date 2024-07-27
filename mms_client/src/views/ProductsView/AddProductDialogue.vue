@@ -95,6 +95,10 @@ import useVuelidate from "@vuelidate/core";
 
 import ModalLayoutVue from "@/layout/ModalLayout.vue";
 import baseAPI from "@/services/base";
+import storage from "@/services/Firebase.js";
+import { ref, uploadBytes } from "firebase/storage";
+
+import Compressor from "compressorjs";
 export default {
   setup() {
     return {
@@ -131,22 +135,58 @@ export default {
   },
   methods: {
     onFileUpload (event) {
-          this.img = event.target.files[0]
+      this.img = event.target.files[0];
     },
+    compressImage() {
+    let compressedImage
+    new Compressor(this.img, {
+      quality: 0.6, // Set the desired quality level (0 to 1)
+      maxWidth: 800, // Set the maximum width (optional)
+      maxHeight: 600, // Set the maximum height (optional)
+      success: (compressedFile) => {
+        // Handle the compressed file, e.g., upload it to a server
+        compressedImage = compressedFile;
+      },
+      error: (error) => {
+        console.log(error.message)
+      }
+    })
+    return compressedImage;
+  },
     async createProduct() {
       this.loading = true
       const formData = new FormData()
       formData.append("name", this.name)
-      formData.append("description", this.description)
-      formData.append("img", this.img, this.img.name)
+      formData.append("description", this.description)      
       formData.append("price", this.price)
-      baseAPI.post("product", formData).then(() => {
-        alert("Product Added Successfully")
-        this.loading = false
-      }).catch((err) => {
-        alert(err.response.data.message ?? err.message)
-        this.loading = false
+
+      await new Compressor(this.img, {
+        quality: 0.6, // Set the desired quality level (0 to 1)
+        maxWidth: 800, // Set the maximum width (optional)
+        maxHeight: 600, // Set the maximum height (optional)
+        success: (compressedFile) => {
+          // Handle the compressed file, e.g., upload it to a server
+          const storageRef = ref(storage, 'product-images/' + compressedFile.name);
+          uploadBytes(storageRef, compressedFile).then(async (snapshot)=>{
+            console.log("Image upload successfull", snapshot);
+            formData.append("image", `https://firebasestorage.googleapis.com/v0/b/mms-image-storage.appspot.com/o/product-images%2F${compressedFile.name}?alt=media`);
+            
+            baseAPI.post("product", formData).then(() => {
+              alert("Product Added Successfully")
+              this.loading = false
+            }).catch((err) => {
+              alert(err.response.data.message ?? err.message)
+              this.loading = false
+            })
+          })
+        },
+        error: (error) => {
+          console.log(error.message)
+          this.$toast.error("Error occured creating product");
+          this.loading = false
+        }
       })
+      
     },
   }
 };
