@@ -10,6 +10,7 @@ export const CUSTOMER_REPOSITORY = "customer_repo";
 export const ROLE_REPOSITORY = "role_repo";
 export const PAYMENT_METHOD_REPOSITORY = "payment_method_repo"
 export const PAYMENT_REPOSITORY = "payment_repo"
+export const BILLING_REPOSITORY = "billing_repo"
 
 
 // file constants

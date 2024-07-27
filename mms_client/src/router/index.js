@@ -42,6 +42,12 @@ const routes = [
               import("../views/ProfileView/VisualBrandingView.vue"),
           },
           {
+            path: "billing_information",
+            name: "billing_information",
+            component: () =>
+              import("../views/ProfileView/BillingInformationView.vue"),
+          },
+          {
             path: "operation-hours",
             name: "operation_hours",
             component: () =>

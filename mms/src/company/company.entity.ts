@@ -11,6 +11,7 @@ import {
   BelongsToMany,
 } from 'sequelize-typescript';
 import { Col } from 'sequelize/types/utils';
+import { Billing } from 'src/billing/entities/billing.entity';
 import { Menu } from 'src/menu/menu.entity';
 import { ProductCategory } from 'src/product-category/product.category.entity';
 import { Product } from 'src/product/product.entity';
@@ -167,4 +168,7 @@ export class Company extends Model<Company> {
   @BelongsToMany(() => Role, () => CompanyRole)
   @ApiProperty({ type: () => [Role] })
   roles: Role[];
+
+  @HasMany(() => Billing)
+  bills: Billing[]
 }

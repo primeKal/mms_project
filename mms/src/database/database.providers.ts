@@ -1,4 +1,5 @@
 import { Sequelize } from 'sequelize-typescript';
+import { Billing } from 'src/billing/entities/billing.entity';
 import { Company } from 'src/company/company.entity';
 import { Customer } from 'src/customer/customer.entity';
 import { Menu } from 'src/menu/menu.entity';
@@ -41,7 +42,8 @@ export const databaseProviders = [
         CompanyRole,
         ProductCategoryProduct,
         PaymentMethodModel,
-        PaymentModel]);
+        PaymentModel,
+        Billing]);
       await sequelize.sync();
       // await sequelize.sync({ alter: true });
 
