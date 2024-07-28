@@ -1,6 +1,6 @@
 <template>
-    <div class="lg:px-24 py-12 bg-primary">
-        <div class="flex justify-between gap-4">
+    <div class="lg:px-24 px-2 py-12 bg-primary">
+        <div class="flex lg:flex-row flex-col justify-between gap-4">
             <div >
                 <button class="text-2xl text-white font-semibold font-poppins flex outline-none items-center justify-between gap-4">
                     <img src="@/assets/mms_logo_white.png" width="50" height="50"/>
@@ -43,7 +43,7 @@
             </div>
         </div>
         <hr class="w-full my-6 border border-white/70" />
-        <div class="flex justify-between text-sm text-white">
+        <div class="flex lg:flex-row flex-col lg:gap-0 gap-4 lg:px-0 px-2 justify-between text-sm text-white">
             <p>2023 ZEUS MENU'S. Copyright and rights reserved</p>
             <div class="w-1/4 flex justify-between">
                 <p>Terms and Conditions</p>

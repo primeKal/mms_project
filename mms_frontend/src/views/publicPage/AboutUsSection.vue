@@ -1,8 +1,8 @@
 <template>
-    <section class="py-10 bg-primary text-white flex justify-around">
+    <section class="py-10 lg:px-0 px-2 bg-primary text-white flex lg:flex-row flex-col justify-around lg:gap-0 gap-10">
         <div class="basis-2/5 flex flex-col gap-8">
             <p class="text-4xl font-poppins font-semibold leading-normal">How We Support Restaurants with Our QR Code Ordering System</p>
-            <p class="text-lg font-poppins pr-8 leading-relaxed">
+            <p class="text-lg font-poppins pr-8 leading-relaxed lg:block hidden">
                 Experience comprehensive support for your restaurant globally. Our QR Code Ordering
                 System revolutionizes efficiency, safety, and growth for dining establishments worldwide.
             </p>
