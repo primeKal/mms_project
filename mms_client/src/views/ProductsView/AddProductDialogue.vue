@@ -55,6 +55,10 @@ import { required } from '@vuelidate/validators'
 
 import ModalLayoutVue from "@/layout/ModalLayout.vue";
 import baseAPI from "@/services/base";
+import storage from "@/services/Firebase.js";
+import { ref, uploadBytes } from "firebase/storage";
+
+import Compressor from "compressorjs";
 export default {
   setup() {
     return {
@@ -98,20 +102,39 @@ export default {
     },
     async createProduct() {
       this.loading = true
-      const payload = {
+      let payload = {
         name: this.name,
         description: this.description,
         price: this.price
-      }
-
-      baseAPI.post("product", payload).then(() => {
-        this.$toast.success("Product created successfully");
-        this.loading = false
-        this.onClose()
-      }).catch((err) => {
-        alert(err.response.data.message ?? err.message)
-        this.loading = false
+      };
+      await new Compressor(this.img, {
+        quality: 0.6, // Set the desired quality level (0 to 1)
+        maxWidth: 800, // Set the maximum width (optional)
+        maxHeight: 600, // Set the maximum height (optional)
+        success: (compressedFile) => {
+          // Handle the compressed file, e.g., upload it to a server
+          const storageRef = ref(storage, 'product-images/' + compressedFile.name);
+          uploadBytes(storageRef, compressedFile).then(async (snapshot)=>{
+            console.log("Image upload successfull", snapshot);
+            payload["image"] =  `https://firebasestorage.googleapis.com/v0/b/mms-image-storage.appspot.com/o/product-images%2F${compressedFile.name}?alt=media`;
+            
+            baseAPI.post("product", payload).then(() => {
+              alert("Product Added Successfully")
+              this.onClose();
+              this.loading = false
+            }).catch((err) => {
+              alert(err.response.data.message ?? err.message)
+              this.loading = false
+            })
+          })
+        },
+        error: (error) => {
+          console.log(error.message)
+          this.$toast.error("Error occured creating product");
+          this.loading = false
+        }
       })
+      
     },
   }
 };

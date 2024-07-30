@@ -1,9 +1,9 @@
 <template>
-    <section class="h-screen lg:pl-24 flex flex-col md:flex-row justify-between items-center gap-8 mt-3"  style="background-image: linear-gradient(180deg, #FFFFFF, #FBEECA);">
-        <div class="flex flex-col gap-8">
-            <p class="text-6xl font-semibold font-poppins">Revolutionize your Restaurant's Ordering System</p>
+    <section class="lg:h-screen h-auto lg:pl-24 flex flex-col-reverse md:flex-row justify-between items-center gap-8 mt-3"  style="background-image: linear-gradient(180deg, #FFFFFF, #FBEECA);">
+        <div class="lg:px-0 px-2 lg:pb-0 pb-20 flex flex-col lg:gap-8 gap-4">
+            <p class="lg:text-6xl text-3xl font-semibold font-poppins">Revolutionize your Restaurant's Ordering System</p>
             <!-- <img class="my-14" src="@/assets/images/line.png" width="500"/> -->
-            <p class="text-lg font-poppins">
+            <p class="lg:text-lg text-base font-poppins">
                 Revolutionize your restaurant's operations with our QR code ordering system, simplifying orders, payments, and customer engagement—all in one solution!
             </p>
             <button class="py-3 px-5 rounded-3xl bg-primary text-white flex items-center self-start mb-3" >
@@ -11,6 +11,6 @@
                 View Demo
             </button>
         </div>
-        <img src="@/assets/images/landing_image.png" width="350" class="hidden md:block"/>
+        <img src="@/assets/images/landing_image.png" width="350" class="lg:w-auto w-2/3"/>
     </section>
 </template>

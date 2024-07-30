@@ -108,6 +108,10 @@
   </transition>
 </template>
 <script>
+import Compressor from "compressorjs";
+import storage from "@/services/Firebase.js";
+import { ref, uploadBytes } from "firebase/storage";
+
 export default {
   props: {
     categoryId: Number,
@@ -142,27 +146,62 @@ export default {
       this.imagePath = URL.createObjectURL(this.file);
       this.newProduct.image = this.file;
     },
+    async compressImage() {
+      let compressedImage
+      await new Compressor(this.file, {
+        quality: 0.6, // Set the desired quality level (0 to 1)
+        maxWidth: 800, // Set the maximum width (optional)
+        maxHeight: 600, // Set the maximum height (optional)
+        success: (compressedFile) => {
+          // Handle the compressed file, e.g., upload it to a server
+          compressedImage = compressedFile;
+          console.log(compressedFile);
+        },
+        error: (error) => {
+          console.log(error.message)
+        }
+      })
+      return compressedImage;
+  },
     removeImage() {},
     async createProduct(categoryId) {
       // insert validation
       //    this.$emit('loading', true)
       this.newProduct.productCategoryId = categoryId;
-      console.log(this.newProduct);
-      const status = await this.$store.dispatch(
-        "Menu/createProduct",
-        this.newProduct
-      );
-      console.log(status);
-      if (status.success) {
-        this.$toast.success("Product created successfully");
-        this.openNewProduct = false;
-        this.newProduct.name = "";
-        this.newProduct.price = "";
-        this.newProduct.description = "";
-        this.newProduct.image = null;
-      } else {
-        this.$toast.error("Error occured creating product");
-      }
+      let status
+      await new Compressor(this.file, {
+        quality: 0.6, // Set the desired quality level (0 to 1)
+        maxWidth: 800, // Set the maximum width (optional)
+        maxHeight: 600, // Set the maximum height (optional)
+        success: (compressedFile) => {
+          // Handle the compressed file, e.g., upload it to a server
+          const storageRef = ref(storage, 'product-images/' + compressedFile.name);
+          uploadBytes(storageRef, compressedFile).then(async (snapshot)=>{
+            console.log("Image upload successfull", snapshot);
+            this.newProduct.image = `https://firebasestorage.googleapis.com/v0/b/mms-image-storage.appspot.com/o/product-images%2F${compressedFile.name}?alt=media`;
+            status = await this.$store.dispatch(
+              "Menu/createProduct",
+              this.newProduct
+            );
+          console.log(status);
+            if (status.success) {
+              this.$toast.success("Product created successfully");
+              this.openNewProduct = false;
+              this.newProduct.name = "";
+              this.newProduct.price = "";
+              this.newProduct.description = "";
+              this.newProduct.image = null;
+            } else {
+              this.$toast.error("Error occured creating product");
+            }
+          })
+        },
+        error: (error) => {
+          console.log(error.message)
+          this.$toast.error("Error occured creating product");
+        }
+      })
+      
       //    this.$emit('loading', false)
     },
   },

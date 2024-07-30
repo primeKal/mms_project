@@ -1,7 +1,16 @@
 <template>
-    <div class="py-20 px-24">
+    <div class="py-20 lg:px-24 px-2">
         <p class="text-center text-4xl font-medium">Restaurants working with us</p>
-        <carousel class="w-full mt-16" :items-to-show="4.95" :wrapAround="true" :autoplay="3000" :transition="800" :pauseAutoplayOnHover="true" >
+        <carousel class="w-full mt-16 lg:block hidden" :items-to-show="4.95" :wrapAround="true" :autoplay="3000" :transition="800" :pauseAutoplayOnHover="true" >
+          <slide v-for="brand in brands" :key="brand">
+            <img class="bg-transparent hover:scale-110" :src="brand" >
+          </slide>
+
+          <template #addons>
+            <navigation />
+          </template>
+        </carousel>
+        <carousel class="w-full mt-16 lg:hidden block" :items-to-show="2" :wrapAround="true" :autoplay="3000" :transition="800" :pauseAutoplayOnHover="true" >
           <slide v-for="brand in brands" :key="brand">
             <img class="bg-transparent hover:scale-110" :src="brand" >
           </slide>

@@ -1,5 +1,5 @@
 <template>
-    <section class="py-16">
+    <section class="py-16 lg:px-0 px-2">
         <p class="text-center font-medium text-4xl">Choose A Plan<br /> That’s Right For You</p>
         <p class="mt-8 text-center text-black/60">Choose a plan that works best for you, feel free to contact us</p>
         <div class="mt-8  flex justify-center items-center ">

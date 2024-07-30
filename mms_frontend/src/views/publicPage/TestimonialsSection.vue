@@ -1,8 +1,27 @@
 <template>
-    <section class="pt-10 px-24 bg-slate-50 flex flex-col gap-2">
+    <section class="pt-10 lg:px-24 px-2 bg-slate-50 flex flex-col gap-2">
         <!-- <p class="text-center">2,157 people have said how good QR Menu </p> -->
         <p class="text-center font-semobold font-semibold text-4xl">Our happy clients said this about us</p>
-        <carousel class="w-full mb-10" :items-to-show="3" :wrapAround="true" :autoplay="3000" :transition="800" :pauseAutoplayOnHover="true" >
+        <carousel class="w-full mb-10 lg:block hidden" :items-to-show="3" :wrapAround="true" :autoplay="3000" :transition="800" :pauseAutoplayOnHover="true" >
+          <slide v-for="testimonial in testimonials" :key="testimonial.id" slideWidth="100px" >
+            <div class="bg-white p-10">
+                <div class="flex space-x-1 text-amber-400">
+                    <svg v-for="n in 4" :key="n" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.62L12 2L9.19 8.62L2 9.24l5.45 4.73L5.82 21L12 17.27Z"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2L9.19 8.62L2 9.24l5.45 4.73L5.82 21L12 17.27V2Z"/></svg>
+                </div>
+                <p class="my-10 text-left">
+                    "{{ testimonial.testimonial }}"
+                </p>
+                <p class="font-medium text-sm text-left">{{ testimonial.name }}</p>
+                <p class="mt-2 text-sm text-black/70 text-left">{{ testimonial.position }}</p>
+            </div>
+          </slide>
+
+          <template #addons>
+            <navigation />
+          </template>
+        </carousel>
+        <carousel class="w-full mb-10 lg:hidden block" :items-to-show="1" :wrapAround="true" :autoplay="3000" :transition="800" :pauseAutoplayOnHover="true" >
           <slide v-for="testimonial in testimonials" :key="testimonial.id" slideWidth="100px" >
             <div class="bg-white p-10">
                 <div class="flex space-x-1 text-amber-400">
