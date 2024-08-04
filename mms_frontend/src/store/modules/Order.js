@@ -12,28 +12,28 @@ const getters = {
         return state.orderInfo
     },
     getCart: (state) => {
-        const cs = localStorage.getItem('cart')
-        if(!cs) {
-            state.cart = []
-        }
-        else{
-            state.cart = JSON.parse(cs)
-        }
-        return state.cart
+        console.log("getting cart");
+        return state.cart;
     },
+    // getCart: (state) => {
+    //     console.log("getting cart")
+    //     const cs = localStorage.getItem('cart')
+    //     if(!cs) {
+    //         state.cart = []
+    //     }
+    //     else{
+    //         state.cart = JSON.parse(cs)
+    //     }
+    //     return state.cart
+    // },
     getCartMetaData: (state) => {
-        const cs = localStorage.getItem('cart');
-        if(!cs) {
-            state.cart = []
-        } else {
-            state.cart = JSON.parse(cs);
-        }
-        var totalPrice = 0
-        var totalQuantity = 0
-        state.cart.forEach((item)=>{
-            totalPrice += (item.quantity * item.price)
-            totalQuantity += item.quantity
-        })
+        console.log("getting cart info");
+        let totalPrice = 0;
+        let totalQuantity = 0;
+        state.cart.forEach((item) => {
+            totalPrice += (item.quantity * item.price);
+            totalQuantity += item.quantity;
+        });
         const totalTax = totalPrice * 0.15;
         const grandTotal = totalPrice + totalTax;
         return {
@@ -41,8 +41,31 @@ const getters = {
             totalQuantity,
             grandTotal,
             totalTax,
-        }
+        };
     },
+    // getCartMetaData: (state) => {
+    //     console.log("getting cart info")
+    //     const cs = localStorage.getItem('cart');
+    //     if(!cs) {
+    //         state.cart = []
+    //     } else {
+    //         state.cart = JSON.parse(cs);
+    //     }
+    //     var totalPrice = 0
+    //     var totalQuantity = 0
+    //     state.cart.forEach((item)=>{
+    //         totalPrice += (item.quantity * item.price)
+    //         totalQuantity += item.quantity
+    //     })
+    //     const totalTax = totalPrice * 0.15;
+    //     const grandTotal = totalPrice + totalTax;
+    //     return {
+    //         totalPrice,
+    //         totalQuantity,
+    //         grandTotal,
+    //         totalTax,
+    //     }
+    // },
     getPaymentMethods: (state) => {
         return state.paymentMethods;
     },
@@ -55,6 +78,9 @@ const getters = {
     }
 }
 const mutations = {
+    setCart(state, cart) {
+        state.cart = cart;
+    },
     addCartItem: (state, item) => {
         const cs = localStorage.getItem('cart')
         if(!cs) {
@@ -97,6 +123,14 @@ const mutations = {
     },
 }
 const actions = {
+    loadCart({ commit }) {
+        const cs = localStorage.getItem('cart');
+        if (cs) {
+            commit('setCart', JSON.parse(cs));
+        } else {
+            commit('setCart', []);
+        }
+    },
     createOrder: async({state, commit, dispatch},phoneNumber, productlines) =>{
         var status = null
         dispatch('setOrderInfo', phoneNumber, productlines)

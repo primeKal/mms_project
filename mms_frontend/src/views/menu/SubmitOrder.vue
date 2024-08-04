@@ -57,6 +57,7 @@ export default {
             return this.customerPhonenumber.match('^(9|7)[0-9]{8}$');
         },
         async submitOrder() {
+            console.log("submitting this cart", this.cart)
             // validate customer phone number
             if(this.validatePhoneNumber()) {
                 console.log('Validation passed');
