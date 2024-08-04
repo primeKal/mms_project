@@ -7,7 +7,7 @@
         />
         <PaymentConfirmationVue v-if="orderComplete" />
         
-        <p class="text-2xl font-medium">Menu</p>
+        <!-- <p class="text-2xl font-medium">Menu</p> -->
         <div class="mt-2 flex items-stretch overflow-x-scroll qr-scrollbar py-1">
             <button
                 v-for="section in menu.productCategories"
