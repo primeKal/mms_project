@@ -15,17 +15,6 @@ const getters = {
         console.log("getting cart");
         return state.cart;
     },
-    // getCart: (state) => {
-    //     console.log("getting cart")
-    //     const cs = localStorage.getItem('cart')
-    //     if(!cs) {
-    //         state.cart = []
-    //     }
-    //     else{
-    //         state.cart = JSON.parse(cs)
-    //     }
-    //     return state.cart
-    // },
     getCartMetaData: (state) => {
         console.log("getting cart info");
         let totalPrice = 0;
@@ -43,29 +32,6 @@ const getters = {
             totalTax,
         };
     },
-    // getCartMetaData: (state) => {
-    //     console.log("getting cart info")
-    //     const cs = localStorage.getItem('cart');
-    //     if(!cs) {
-    //         state.cart = []
-    //     } else {
-    //         state.cart = JSON.parse(cs);
-    //     }
-    //     var totalPrice = 0
-    //     var totalQuantity = 0
-    //     state.cart.forEach((item)=>{
-    //         totalPrice += (item.quantity * item.price)
-    //         totalQuantity += item.quantity
-    //     })
-    //     const totalTax = totalPrice * 0.15;
-    //     const grandTotal = totalPrice + totalTax;
-    //     return {
-    //         totalPrice,
-    //         totalQuantity,
-    //         grandTotal,
-    //         totalTax,
-    //     }
-    // },
     getPaymentMethods: (state) => {
         return state.paymentMethods;
     },
@@ -82,34 +48,22 @@ const mutations = {
         state.cart = cart;
     },
     addCartItem: (state, item) => {
-        const cs = localStorage.getItem('cart')
-        if(!cs) {
-            state.cart.push(item)
-        }else {
-            const cart = JSON.parse(cs)
-            const index = cart.findIndex(x => x.id === item.id)
-            if(index > -1) {
-                cart[index].quantity = item.quantity
-            }else{
-                cart.push(item)
-            }
-            state.cart = cart
+        const cart = state.cart
+        const index = cart.findIndex(x => x.id === item.id)
+        if(index > -1) {
+            cart[index].quantity = item.quantity
+        }else{
+            cart.push(item)
         }
-        localStorage.setItem('cart', JSON.stringify(state.cart))
+        state.cart = cart
     },
     removeItemFromCart: (state, itemId) =>{
-        const cs = localStorage.getItem('cart')
-        if(!cs) {
-            state.cart = []
-        }else{
-            const cart = JSON.parse(cs)
-            const index = cart.findIndex(x => x.id === itemId)
-            if(index > -1){
-                cart.splice(index,1)
-            }
-            state.cart = cart
+        const cart = state.cart
+        const index = cart.findIndex(x => x.id === itemId)
+        if(index > -1){
+            cart.splice(index,1)
         }
-        localStorage.setItem('cart', JSON.stringify(state.cart))
+        state.cart = cart
     },
     setOrderSuccess: (state, orderInfo) => {
         state.orderSuccessInfo = orderInfo
@@ -125,15 +79,17 @@ const mutations = {
 const actions = {
     loadCart({ commit }) {
         const cs = localStorage.getItem('cart');
+        console.log("loading cart", cs)
         if (cs) {
             commit('setCart', JSON.parse(cs));
         } else {
             commit('setCart', []);
         }
     },
-    createOrder: async({state, commit, dispatch},phoneNumber, productlines) =>{
+    createOrder: async({state, commit, dispatch},{phoneNumber, productlines}) =>{
         var status = null
-        dispatch('setOrderInfo', phoneNumber, productlines)
+        console.log("creating order with the follwing data", phoneNumber, productlines) 
+        dispatch('setOrderInfo', {phoneNumber, productlines})
         await OrderAPI.createOrder(state.orderInfo)
             .then((response)=>{
                 if(response.status === CREATE_SUCCESS_CODE) {
@@ -148,16 +104,17 @@ const actions = {
             })
         return status
     },
-    setOrderInfo: ({state,getters}, phoneNumber, productlines) => {
+    setOrderInfo: ({state,getters}, {phoneNumber, productlines}) => {
+        console.log("setting order info", phoneNumber, productlines)
         let editedPhonenumber = '251'+phoneNumber;
         let orderMetaData = getters.getCartMetaData
         const order = {
-            'name': 'test1',
+            'name': editedPhonenumber,
             'companyId': parseInt(localStorage.getItem('companyId')),
             'tableId': parseInt(localStorage.getItem('tableId')),
             'customerPhone': editedPhonenumber,
             'orderlines': productlines,
-            'totalPrice': orderMetaData.totalPrice,
+            'totalPrice': orderMetaData.grandTotal,
             'totalTax': orderMetaData.totalTax,
 
         }

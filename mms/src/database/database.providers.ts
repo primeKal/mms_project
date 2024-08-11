@@ -44,8 +44,8 @@ export const databaseProviders = [
         PaymentMethodModel,
         PaymentModel,
         Billing]);
-      await sequelize.sync();
-      // await sequelize.sync({ alter: true });
+      // await sequelize.sync();
+      await sequelize.sync({ alter: true });
 
       return sequelize;
     },

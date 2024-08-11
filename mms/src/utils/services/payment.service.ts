@@ -68,7 +68,7 @@ export class PaymentAgregatorService {
         chapaPaymentDto.email = `${order.customer.phoneNumber}@gmail.com`
         chapaPaymentDto.totalAmount = payment.total;
         chapaPaymentDto.products = order.orderlines.toString();
-        chapaPaymentDto.transaction_id = payment.id.toString() + "_" + uuidv4();
+        chapaPaymentDto.transaction_id = order.uniqueCode.toString() ;
 
         return chapaPaymentDto;
     }

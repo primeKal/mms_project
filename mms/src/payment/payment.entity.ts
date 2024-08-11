@@ -37,7 +37,13 @@ export class PaymentModel extends Model<PaymentModel> {
     name: string;
 
     @Column({
+        allowNull: true,
+    })
+    uniqueCode: string;
+
+    @Column({
         allowNull: false,
+        type: DataType.FLOAT,
     })
     total: number;
 

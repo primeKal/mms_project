@@ -18,7 +18,7 @@ export class OrderController {
 
   @UseGuards(JwtAuthGuard)
   @Get()
-  public async getOrders(@Query('page') page: number = 1, @Query('pageSize') pageSize: number = 10): Promise<Order[]> {
+  public async getOrders(@Query('page') page: number = 1, @Query('pageSize') pageSize: number = 3000): Promise<Order[]> {
     return this.orderService.getAllOrders(page, pageSize);
   }
 
@@ -30,7 +30,8 @@ export class OrderController {
   }
 
   @Post()
-  public async createOrder(@Req() req: any, @Body() body: OrderDto): Promise<Order> {
+  public async createOrder( @Body() body: OrderDto): Promise<Order> {
+    console.log("creating order", body);
     return this.orderService.createOrder(body);
   }
 

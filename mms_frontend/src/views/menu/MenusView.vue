@@ -40,7 +40,7 @@
     </div>
 </template>
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions  } from 'vuex'
 
 import MenuItemVue from '@/components/menu/MenuItem.vue'
 import OrderSummaryVue from './OrderSummary.vue'
@@ -64,7 +64,10 @@ export default {
     computed: {
         ...mapGetters({
             menu: 'Company/getMenuInfo',
-        })
+        }),
+        ...mapActions({
+            loadCart: 'Order/loadCart',
+        }),
     },
     methods: {
         orderSubmitted() {
@@ -77,6 +80,7 @@ export default {
         this.$emit('loading', true)
         const companyId = this.$route.params.companyId
         const status = await this.$store.dispatch('Company/fetchMenu', companyId)
+        // this.loadCart()
         if(status.success) {
             this.selectedSection = this.menu.productCategories[0]
             this.$emit('loading', false)

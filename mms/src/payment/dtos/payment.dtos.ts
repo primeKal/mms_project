@@ -9,6 +9,7 @@ export class PaymentDto {
     phone: string;
     companyId: string;
     email: string;
+    uniqueCode: string;
 }
 export class GeneratePaymentDto {
     paymentMethodId: number;

@@ -32,7 +32,7 @@ export class CompanyService {
     //   }
     // });
 
-    
+
   }
 
   async getAllCompanies(page, pageSize): Promise<Company[]> {
@@ -43,7 +43,7 @@ export class CompanyService {
   async createCompany(createCompanyDto): Promise<any> {
     createCompanyDto.password = await bcrypt.hash(createCompanyDto.password, 12);
     let company = await this.companyRepository.create<Company>(createCompanyDto);
-    company.$add("Role",  2)
+    company.$add("Role", 2)
     let data = this.authService.generateToken(company.dataValues)
     return data;
   }
@@ -53,7 +53,8 @@ export class CompanyService {
   async getOneCompanyById(id: number): Promise<Company> {
     let company = await this.companyRepository.findOne({
       where: {
-        id: id
+        id: id,
+        isActive: true
       },
       include: [Role],
       attributes: { exclude: ['password'] },
@@ -83,7 +84,7 @@ export class CompanyService {
   async saveCompanyPic(fileUrl: string, companyId: string): Promise<Company> {
     let company = await this.companyRepository.findByPk(companyId)
     let result = await company.update({
-      imgUrl : fileUrl
+      imgUrl: fileUrl
     });
     return result;
   }
@@ -94,7 +95,7 @@ export class CompanyService {
   }
   async updateCompanyWithTelegramChatId(telegramChatId: any, company: Company): Promise<Company> {
     let result = await company.update({
-       telegramChatId: telegramChatId
+      telegramChatId: telegramChatId
     })
     return company;
   }

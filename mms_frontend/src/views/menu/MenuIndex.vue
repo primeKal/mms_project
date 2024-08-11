@@ -1,5 +1,5 @@
 <template>
-    <MainRendererVue :loading="loading">
+    <MainRendererVue :loading="loading" class="mt-1 mb-10">
         <div class="flex flex-col items-center p-6 bg-gray-50 rounded-lg shadow-md max-w-md mx-auto">
         <div class="flex flex-col items-center justify-center mb-6">
             <!-- <img :src="companyInfo.logo" alt="Company Logo" class="w-24 h-24 rounded-full shadow-lg mb-4"> -->

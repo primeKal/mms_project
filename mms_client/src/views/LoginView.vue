@@ -46,6 +46,7 @@ export default {
                 if(status) {
                     this.$router.replace({name: 'dashboard'})
                 }else {
+                    console.log(status)
                     this.$toast.error('Invalid email or password')
                 }
             }else {

@@ -20,7 +20,7 @@ const actions = {
                 commit('setOrders', result)
             })
     },
-    setOrderStatus: async({dispatch}, orderStatus, orderId)=>{
+    setOrderStatus: async({dispatch}, {orderStatus, orderId})=>{
         var status = null
         await OrderAPI.editOrderStatus(orderStatus, orderId)
             .then(async (result)=>{

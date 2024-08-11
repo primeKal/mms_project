@@ -16,7 +16,7 @@ class OrderAPI {
     static editOrderStatus(status, orderId)  {
         return new Promise(async(resolve, reject)=>{
             try {
-                const response = await baseAPI.put('order/UpdateStatus',{
+                const response = await baseAPI.post('order/UpdateStatus',{
                     id: orderId,
                     status: status
                 })

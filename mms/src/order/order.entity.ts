@@ -17,6 +17,7 @@ import { OrderLine } from './order.line.entity';
 import { TableModel } from 'src/table/table.entity';
 import { Customer } from 'src/customer/customer.entity';
 import { ORDER_STATUS_VALUES } from 'src/utils/constants';
+// import { v4 as uuidv4 } from 'uuid'; 
 
 
 const tableOptions = {
@@ -46,13 +47,13 @@ export class Order extends Model<Order> {
 
   @Column({
     allowNull: false,
-    type: DataType.DECIMAL,
+    type: DataType.FLOAT,
   })
   totalPrice: number;
 
   @Column({
     allowNull: false,
-    type: DataType.DECIMAL,
+    type: DataType.FLOAT,
   })
   totalTax: number;
 
@@ -61,6 +62,13 @@ export class Order extends Model<Order> {
   })
   currency: string;
 
+
+  // @Column({
+  //   type: DataType.UUID,
+  //   defaultValue: () => uuidv4(),
+  //   allowNull: true,
+  // })
+  // uniqueCode: string;
 
   @Column({
     allowNull: true,
@@ -72,6 +80,12 @@ export class Order extends Model<Order> {
     defaultValue: true
   })
   isActive: boolean;
+
+  @Column({
+    allowNull: false,
+    defaultValue: false
+  })
+  isPaid: boolean;
 
   @Column({
     allowNull: false,

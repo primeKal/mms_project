@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { Op } from 'sequelize';
+import { Op, UUIDV4 } from 'sequelize';
 import { ORDER_REPOSITORY, ORDER_LINE_REPOSITORY } from 'src/utils/constants';
 import { Order } from './order.entity';
 import { OrderLine } from './order.line.entity';
@@ -9,6 +9,10 @@ import { InjectBot } from 'nestjs-telegraf';
 // import { Context, Telegraf } from 'telegraf';
 import { Product } from 'src/product/product.entity';
 import { Customer } from 'src/customer/customer.entity';
+import { v4 as uuidv4 } from 'uuid';
+import { Table } from 'sequelize-typescript';
+import { TableModel } from 'src/table/table.entity';
+
 
 @Injectable()
 export class OrderService {
@@ -21,13 +25,18 @@ export class OrderService {
     this.paginationService = new PaginationService<Order>(this.orderRepository);
   }
   async getAllOrders(page, pageSize): Promise<Order[]> {
-    let toInclude = [OrderLine]
-    return await this.paginationService.findAll(page, pageSize, toInclude)
+    let toInclude = [{
+      model: OrderLine,
+      include: [Product] // Include Products within OrderLine
+    },
+      TableModel]
+    return await this.paginationService.findAll(page, pageSize, toInclude, 'DESC');
   }
   async createOrder(createOrderDto: any): Promise<Order> {
     // createOrderDto.companyId = 3;
     const count = await this.orderRepository.count({ where: { companyId: createOrderDto.companyId } });
-    createOrderDto.name = `Order/${count}`;
+    createOrderDto.name = `Order/${count + 1}`;
+    createOrderDto.uniqueCode = uuidv4();
     createOrderDto.customerId = await this.customerService.getOrCreateCustomerByPhone(createOrderDto.customerPhone);
     let newOrder: Order = await this.orderRepository.create<Order>(createOrderDto, {
       include: [OrderLine]
@@ -79,8 +88,10 @@ export class OrderService {
   }
   async updateOrderStatus(updateStatusDto: any): Promise<Order> {
     let order = await this.orderRepository.findByPk(updateStatusDto.id)
+    const isPaid = updateStatusDto.status === 'Close'?  true : false;
     const result = await order.update({
-      status: updateStatusDto.status
+      status: updateStatusDto.status,
+      isPaid: isPaid
     });
     return result;
   }

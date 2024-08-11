@@ -36,6 +36,7 @@
                             :key="index"
                             :menuItem="item"
                             showCloseIcon
+                            save-on-click="true"
                         />
                     </TransitionGroup>
                     

@@ -7,7 +7,7 @@ class OrderAPI {
             try {
                 const response = await baseAPI.post('order', {
                     name: orderInfo.name,
-                    userId: 1,
+                    // userId: 1,
                     companyId: orderInfo.companyId,
                     totalPrice: orderInfo.totalPrice,
                     totalTax: orderInfo.totalTax,

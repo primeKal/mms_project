@@ -5,9 +5,15 @@
             <p class="px-4 mt-4 text-black/60">Products:</p>
             <div class="px-6 flex flex-col space-y-2 divide-y">
                 <div v-for="product in cart" :key="product.id" class="pt-2 grid grid-cols-3">
-                    <p class="font-light">{{ product.name }}</p>
+                    <p class="font-light">{{ product.name + " (" + product.price + ")"}}</p>
                     <p class="font-light">x{{ product.quantity }}</p>
                     <p class="font-light">{{ $filters.formatPriceCurrency(product.quantity * product.price, 'ETB') }}</p>
+                    <br>
+                </div>
+                <div class="pt-2 grid grid-cols-3">
+                    <p class="font-light">Tax</p>
+                    <p class="font-light">15%</p>
+                    <p class="font-light">{{ $filters.formatPriceCurrency(cartMetaData.totalTax, 'ETB') }}</p>
                 </div>
             </div>
             
@@ -20,8 +26,9 @@
                 <div class="bg-menu-primary rounded-l-3xl px-3 py-2 text-white font-medium">
                     +251
                 </div>
-                <input class="py-1 pl-1 border rounded-r-3xl" placeholder="(7) 9-1111111" v-model="customerPhonenumber" />
+                <input class="py-1 pl-1 border rounded-r-3xl" placeholder="9-1111111" v-model="customerPhonenumber" />
             </div>
+            <p v-if="errorMessage" class="p-3 m-3 text-xs text-red-600">{{ errorMessage }}</p>
             <div class="mt-5 bg-gray-100 px-4 py-7 flex justify-end">
                 <button @click="$emit('closeModal')" class="outline-none text-gray-500 hover:text-gray-600">Cancel</button>
                 <button @click="submitOrder" class="ml-3 px-3 py-1 bg-primary text-white active:scale-95 rounded font-semibold">Confirm</button>
@@ -39,7 +46,8 @@ export default {
     data () {
         return {
             loading: false,
-            customerPhonenumber: ''
+            customerPhonenumber: '',
+            errorMessage: null
         }
     },
     computed: {
@@ -59,6 +67,13 @@ export default {
         async submitOrder() {
             console.log("submitting this cart", this.cart)
             // validate customer phone number
+            if (this.customerPhonenumber === '') {
+                this.errorMessage = 'phone number is required';
+                setTimeout(() => {
+                    this.errorMessage = null;
+                }, 5000);
+                return;
+            }
             if(this.validatePhoneNumber()) {
                 console.log('Validation passed');
                 this.loading = true
@@ -70,7 +85,7 @@ export default {
                         'singlePrice': product.price,
                     }
                 })
-                const status = await this.createOrder(this.customerPhonenumber, productlines)
+                const status = await this.createOrder({phoneNumber:this.customerPhonenumber, productlines: productlines})
                 if(status.success) {
                     await this.getPaymentMethods();
                     this.$emit('orderSubmitted')
@@ -79,7 +94,10 @@ export default {
                 }
             }else {
                 // post incorrect phonenumber
-                console.log('Phone number not correct');
+                this.errorMessage = 'Please enter a valid phone number, eg. 9-25499376';
+                setTimeout(() => {
+                    this.errorMessage = null;
+                }, 5000);
             }
             
         }

@@ -87,7 +87,7 @@ export class Company extends Model<Company> {
 
   @Column({
     allowNull: false,
-    defaultValue: false
+    defaultValue: true
   })
   isActive: boolean;
 

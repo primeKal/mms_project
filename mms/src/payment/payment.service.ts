@@ -73,8 +73,9 @@ export class PaymentService {
             paymentDto.total = String(order.totalPrice);
             paymentDto.phone = order.customerPhone;
             paymentDto.companyId = String(order.companyId);
-            paymentDto.email = `Walking Customer For Order ${order.id}`;
+            paymentDto.email = `Walking Customer For  ${order.name}`;
             paymentDto.paymentMethodId = generatePaymentDto.paymentMethodId;
+            paymentDto.uniqueCode = order.uniqueCode;
             let success_data = await this.paymentRepository.create<PaymentModel>(paymentDto as any);
             console.log("success_data", success_data)
             let paymentMethod = await this.paymentMethodService.getOnePaymentMethodById(success_data.paymentMethodId);
