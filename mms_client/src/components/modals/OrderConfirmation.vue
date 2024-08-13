@@ -1,6 +1,6 @@
 <template>
     <ModalLayoutVue>
-        <div class="w-1/2 p-12 bg-white rounded-lg shadow shadow-white">
+        <div class="w-[98%] md:w-1/2 p-12 bg-white rounded-lg shadow shadow-white">
             <p class="text-xl font-medium">{{ getModalTitle() }}</p>
             <div class="w-full mt-5 flex justify-between">
                 <div class="w-1/2 flex flex-col space-y-2">
