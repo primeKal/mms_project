@@ -1,5 +1,5 @@
 <template>
-    <table class="w-full border-collapse">
+    <table class="w-full border-collapse overflow-scroll">
         <tr class="grid grid-cols-8 bg-slate-50 border-y shadow-sm lg:text-base text-sm">
             <th class="py-2 pl-7 text-left text-sm text-black/60 font-nomral">Order No.</th>
             <th class="py-2 pl-4 text-left text-sm text-black/60 font-nomral">Table No.</th>

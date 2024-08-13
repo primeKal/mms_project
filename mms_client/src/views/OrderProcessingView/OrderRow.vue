@@ -6,16 +6,16 @@
             :order="order"
             @closeModal="orderStatus=null"
         />
-        <td class="py-3 font-light flex items-center lg:text-base text-xs">
+        <td class="py-3 font-light flex items-center lg:text-base  text-xs">
             <svg @click="openDetail = !openDetail" :class="[openDetail ? 'rotate-180': 'rotate-0']" class="cursor-pointer mr-3 transition-transform duration-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M7.41 8.58L12 13.17l4.59-4.59L18 10l-6 6l-6-6l1.41-1.42Z"/></svg>
             {{ order.id }}
         </td>
-        <td class="lg:pl-4 pl-2 py-3 font-light">{{ order?.table?.name }}</td>
-        <td class="lg:pl-4 pl-2 font-light">{{ order.name }}</td>
-        <td class="lg:pl-4 pl-2 font-light">{{ $filter.timeOnly(order.createdAt) }}</td>
-        <td class="lg:pl-4 pl-2 font-light">{{ $filter.dateOnly(order.createdAt) }}</td>
-        <td class="lg:pl-4 pl-2 font-light">{{ order.totalPrice }}</td>
-        <td class="lg:pl-4 pl-2 font-light">{{ order.status }}</td>
+        <td class="lg:pl-4 pl-2 py-3 font-light text-[12px] md:text-xs">{{ order?.table?.name }}</td>
+        <td class="lg:pl-4 pl-2 font-light text-[12px] md:text-xs">{{ order.name }}</td>
+        <td class="lg:pl-4 pl-2 font-light text-[12px] md:text-xs">{{ $filter.timeOnly(order.createdAt) }}</td>
+        <td class="lg:pl-4 pl-2 font-light text-[12px] md:text-xs">{{ $filter.dateOnly(order.createdAt) }}</td>
+        <td class="lg:pl-4 pl-2 font-light text-[12px] md:text-xs">{{ order.totalPrice }}</td>
+        <td class="lg:pl-4 pl-2 font-light text-[12px] md:text-xs">{{ order.status }}</td>
         <td class="relative py-3 flex justify-center items-center">
             <svg @click="openActions = true" class="cursor-pointer" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0-4 0zm0-6a2 2 0 1 0 4 0a2 2 0 0 0-4 0zm0 12a2 2 0 1 0 4 0a2 2 0 0 0-4 0z"/></svg>
             <div v-if="openActions" v-click-outside="clickAway" class="absolute top-5 right-0 z-10 bg-white shadow-lg rounded-md flex flex-col space-y-1 divide-y text-sm">

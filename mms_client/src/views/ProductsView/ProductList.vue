@@ -41,12 +41,14 @@ export default {
   },
   components: {},
   data() {
-    return {};
+    return {
+      isEdit: false
+    };
   },
   methods: {
     editProduct(product) {
       console.log("emitttt", product)
-      this.$emit('edit', product);
+      this.$emit('editProduct', product);
     },
     deleteProduct(product) {
       console.log("emitttt", product)
