@@ -18,8 +18,8 @@ export class OrderController {
 
   @UseGuards(JwtAuthGuard)
   @Get()
-  public async getOrders(@Query('page') page: number = 1, @Query('pageSize') pageSize: number = 3000): Promise<Order[]> {
-    return this.orderService.getAllOrders(page, pageSize);
+  public async getOrders(@Req() req: any,@Query('page') page: number = 1, @Query('pageSize') pageSize: number = 3000): Promise<Order[]> {
+    return this.orderService.getAllOrders(page, pageSize, req.user.id);
   }
 
 

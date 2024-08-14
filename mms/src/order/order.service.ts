@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { Op, UUIDV4 } from 'sequelize';
+import { Op, UUIDV4, where } from 'sequelize';
 import { ORDER_REPOSITORY, ORDER_LINE_REPOSITORY } from 'src/utils/constants';
 import { Order } from './order.entity';
 import { OrderLine } from './order.line.entity';
@@ -24,13 +24,15 @@ export class OrderService {
   ) {
     this.paginationService = new PaginationService<Order>(this.orderRepository);
   }
-  async getAllOrders(page, pageSize): Promise<Order[]> {
+  async getAllOrders(page, pageSize, companyId): Promise<Order[]> {
     let toInclude = [{
       model: OrderLine,
       include: [Product] // Include Products within OrderLine
     },
       TableModel]
-    return await this.paginationService.findAll(page, pageSize, toInclude, 'DESC');
+    const whereClause = { companyId: companyId as number}
+    console.log(whereClause)
+    return await this.paginationService.findAll(page, pageSize, toInclude, 'DESC', whereClause);
   }
   async createOrder(createOrderDto: any): Promise<Order> {
     // createOrderDto.companyId = 3;

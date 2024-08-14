@@ -21,31 +21,46 @@ import { join } from 'path';
 import { PaymentMethodModule } from './payment-method/payment-method.module';
 import { PaymentModule } from './payment/payment.module';
 import { BillingModule } from './billing/billing.module';
+import { MailerModule } from '@nestjs-modules/mailer';
 
 @Module({
-  imports: [DatabaseModule,
-    CompanyModule,
-    AuthModule,
+  imports: [
+    // configuration imports
+    DatabaseModule,
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    ProductModule,
-    MenuModule,
-    ProductCategoryModule,
-    TableModule,
-    OrderModule,
-    CustomerModule,
-    // TelegrafModule.forRoot({
-    //   token: process.env.TELEGRAM_BOT_TOKEN,
-    // }),
-    RoleModule,
-    ReportsModule,
     ServeStaticModule.forRoot(
       {
         rootPath: join(__dirname, '..', '..', 'uploads'),
         serveRoot: '/uploads',
       }
     ),
+    MailerModule.forRoot({
+      transport: {
+        host: process.env.EMAIL_HOST,
+        port: process.env.EMAIL_PORT as any,
+        auth: {
+          user: process.env.EMAIL_USERNAME,
+          pass: process.env.EMAIL_PASSWORD,
+        },
+      },
+    }),
+    // TelegrafModule.forRoot({
+    //   token: process.env.TELEGRAM_BOT_TOKEN,
+    // }),
+
+    // feature imports
+    CompanyModule,
+    AuthModule,
+    ProductModule,
+    MenuModule,
+    ProductCategoryModule,
+    TableModule,
+    OrderModule,
+    CustomerModule,
+    RoleModule,
+    ReportsModule,
     PaymentMethodModule,
     PaymentModule,
     BillingModule

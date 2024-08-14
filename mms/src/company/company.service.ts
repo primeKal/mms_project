@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, UnprocessableEntityException } from '@nestjs/common';
 import { COMPANY_REPOSITORY } from 'src/utils/constants';
 import { Company } from './company.entity';
 import * as bcrypt from "bcrypt";
@@ -7,6 +7,7 @@ import { PaginationService } from 'src/utils/services/pagination.service';
 import { Role } from 'src/role/role.entity';
 import { InjectBot } from 'nestjs-telegraf';
 import { Context, Telegraf } from 'telegraf';
+import { MailerService } from '@nestjs-modules/mailer';
 
 @Injectable()
 export class CompanyService {
@@ -14,6 +15,7 @@ export class CompanyService {
     @Inject(COMPANY_REPOSITORY) private readonly companyRepository: typeof Company,
     private authService: AuthService,
     private readonly paginationService: PaginationService<Company>,
+    private readonly mailService: MailerService
     // @InjectBot() private bot: Telegraf
   ) {
     this.paginationService = new PaginationService<Company>(this.companyRepository);
@@ -41,10 +43,15 @@ export class CompanyService {
   }
 
   async createCompany(createCompanyDto): Promise<any> {
+    if (await this.checkCompanyExist(createCompanyDto.email)) {
+      throw new UnprocessableEntityException("Company already exists");
+    }
     createCompanyDto.password = await bcrypt.hash(createCompanyDto.password, 12);
     let company = await this.companyRepository.create<Company>(createCompanyDto);
     company.$add("Role", 2)
     let data = this.authService.generateToken(company.dataValues)
+    const result = await this.sendWelcomeMessage(company.email);
+    console.log(result);
     return data;
   }
   async createCompanyWithOutPW(createCompanyDto): Promise<Company> {
@@ -98,6 +105,31 @@ export class CompanyService {
       telegramChatId: telegramChatId
     })
     return company;
+  }
+
+
+  async checkCompanyExist(email: string): Promise<boolean> {
+    const company = await this.companyRepository.findOne({
+      where: { email: email },
+    })
+    console.log("this is cmpany", company)  
+    if (company) {
+      return true
+    } else {
+      return false
+    }
+  }
+  async sendWelcomeMessage(email: string): Promise<void> {
+    const message = `Thank you for registering with us. We are continuously trying to provide a more seemingness experience
+    for you. If you have any questions or concerns, please feel free to reach out to us at with this email address.
+    More updates are coming soon and we will get in touch with you.`;
+
+    return this.mailService.sendMail({
+      from: 'Kaleb Teshale <kalebteshale72@gmail.com',
+      to: email,
+      subject: `Welocme to Zues' Menues`,
+      text: message,
+    });
   }
 
 }
