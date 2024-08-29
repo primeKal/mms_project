@@ -1,0 +1,30 @@
+.app {
+    display: flex;
+  }
+  
+  .sidebar {
+    width: 200px;
+    background-color: #333;
+    color: #fff;
+    height: 100vh;
+  }
+  
+  .sidebar ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .sidebar ul li {
+    padding: 15px;
+  }
+  
+  .sidebar ul li a {
+    color: #0fe81c;
+    text-decoration: none;
+  }
+  
+  .content {
+    padding: 20px;
+    flex-grow: 1;
+  }
+  
