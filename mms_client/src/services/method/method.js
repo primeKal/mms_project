@@ -20,6 +20,7 @@ class MethodAPI {
                     name: MethodInfo.name,
                     type: MethodInfo.type,
                     status: MethodInfo.status == "ON"? true: false,
+                    isActive: MethodInfo.isActive == "ON"? true: false,
                     // parameters: MethodInfo.parameters,
                     parameters: "[]",
                     companyId: MethodInfo.companyId,

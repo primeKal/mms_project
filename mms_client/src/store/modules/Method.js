@@ -51,7 +51,6 @@ const actions = {
     },
     addNewMethod: async({dispatch}, MethodInfo) =>{
         var status = null
-        console.log("hiiikalellele")
         await MethodAPI.createMethod(MethodInfo)
             .then(async (response)=>{
                 if(response.status === CREATE_SUCCESS) {
