@@ -12,6 +12,7 @@ import {
 } from 'sequelize-typescript';
 import { Company } from 'src/company/company.entity';
 import { ProductCategory } from 'src/product-category/product.category.entity';
+import { User } from 'src/user/entities/user.entity';
 
 const tableOptions = {
     tableName: 'role',
@@ -53,20 +54,20 @@ export class Role extends Model<Role> {
 
     // forign keys
 
-    @BelongsToMany(() => Company, () => CompanyRole)
-    @ApiProperty({ type: () => [Company] })
-    companies: Company[];
+    @BelongsToMany(() => User, () => UserRole)
+    @ApiProperty({ type: () => [User] })
+    users: User[];
 }
 
 @Table
-export class CompanyRole extends Model<CompanyRole> {
-    @ForeignKey(() => Company)
+export class UserRole extends Model<UserRole> {
+    @ForeignKey(() => User)
     @Column({
         type: DataType.BIGINT,
         allowNull: false,
     })
 
-    companyId: number;
+    userId: number;
 
     @ForeignKey(() => Role)
     @Column({
@@ -75,5 +76,4 @@ export class CompanyRole extends Model<CompanyRole> {
     })
 
     roleId: number;
-
 }

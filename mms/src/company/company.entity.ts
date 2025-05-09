@@ -15,8 +15,8 @@ import { Billing } from 'src/billing/entities/billing.entity';
 import { Menu } from 'src/menu/menu.entity';
 import { ProductCategory } from 'src/product-category/product.category.entity';
 import { Product } from 'src/product/product.entity';
-import { CompanyRole, Role } from 'src/role/role.entity';
 import { TableModel } from 'src/table/table.entity';
+import { User } from 'src/user/entities/user.entity';
 
 const tableOptions = {
   tableName: 'company',
@@ -58,27 +58,6 @@ export class Company extends Model<Company> {
   })
   email: string;
 
-  @Column({
-    allowNull: false,
-    unique: true
-  })
-  username: string;
-
-  @Column({
-    allowNull: true,
-  })
-  password: string;
-
-  @Column({
-    allowNull: false,
-    defaultValue: true
-  })
-  hasPassword: boolean;
-
-  @Column({
-    allowNull: true,
-  })
-  authType: string;
 
   @Column({
     defaultValue: 0
@@ -165,10 +144,9 @@ export class Company extends Model<Company> {
   tables: TableModel[]
 
 
-  @BelongsToMany(() => Role, () => CompanyRole)
-  @ApiProperty({ type: () => [Role] })
-  roles: Role[];
-
   @HasMany(() => Billing)
   bills: Billing[]
+
+  @HasMany(() => User)
+  users: User[]
 }

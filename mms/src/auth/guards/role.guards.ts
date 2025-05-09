@@ -1,5 +1,5 @@
 import { Injectable, CanActivate, ExecutionContext, ForbiddenException } from '@nestjs/common';
-import { Company } from 'src/company/company.entity';
+import { User } from 'src/user/entities/user.entity';
 
 @Injectable()
 export class RoleGuard implements CanActivate {
@@ -7,7 +7,7 @@ export class RoleGuard implements CanActivate {
 
   canActivate(context: ExecutionContext): boolean {
     const request = context.switchToHttp().getRequest();
-    const user : Company = request.user;
+    const user : User = request.user;
 
     // Check if the user has the required role
     const hasRole = user.roles?.some( role => role.id == this.requiredRole);

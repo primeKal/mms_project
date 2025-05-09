@@ -3,13 +3,43 @@ import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
-    constructor(private jwtService : JwtService ){}
+    constructor(private jwtService: JwtService) {}
 
-    async generateToken(payload: any): Promise<any>{
-        let data = await this.jwtService.signAsync(payload)
-        let toReturnCompany: any = { ...payload };
-        toReturnCompany.token = data
-        var {password, ...newToReturnCompany} = toReturnCompany
-        return newToReturnCompany
-      }
+    async generateToken(user: any) {
+        const payload = {
+            sub: user.id,
+            id: user.id,
+            email: user.email,
+            username: user.username,
+            roles: user.roles?.map(role => role.name) || [],
+            company: user.company ? {
+                id: user.company.id,
+                name: user.company.name,
+                email: user.company.email
+            } : null
+        };
+
+        return {
+            access_token: this.jwtService.sign(payload),
+            user: {
+                id: user.id,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
+                username: user.username,
+                authType: user.authType,
+                phoneNumber: user.phoneNumber,
+                profileImage: user.profileImage,
+                roles: user.roles?.map(role => ({
+                    id: role.id,
+                    name: role.name
+                })) || [],
+                company: user.company ? {
+                    id: user.company.id,
+                    name: user.company.name,
+                    email: user.company.email
+                } : null
+            }
+        };
+    }
 }

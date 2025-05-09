@@ -8,6 +8,9 @@ import { Role } from 'src/role/role.entity';
 import { InjectBot } from 'nestjs-telegraf';
 import { Context, Telegraf } from 'telegraf';
 import { MailerService } from '@nestjs-modules/mailer';
+import { UserService } from 'src/user/user.service';
+import { CreateUserDto } from 'src/user/dto/create-user.dto';
+import { User } from 'src/user/entities/user.entity';
 
 @Injectable()
 export class CompanyService {
@@ -15,7 +18,8 @@ export class CompanyService {
     @Inject(COMPANY_REPOSITORY) private readonly companyRepository: typeof Company,
     private authService: AuthService,
     private readonly paginationService: PaginationService<Company>,
-    private readonly mailService: MailerService
+    private readonly mailService: MailerService,
+    private readonly userService: UserService
     // @InjectBot() private bot: Telegraf
   ) {
     this.paginationService = new PaginationService<Company>(this.companyRepository);
@@ -46,14 +50,33 @@ export class CompanyService {
     if (await this.checkCompanyExist(createCompanyDto.email)) {
       throw new UnprocessableEntityException("Company already exists");
     }
-    createCompanyDto.password = await bcrypt.hash(createCompanyDto.password, 12);
-    let company = await this.companyRepository.create<Company>(createCompanyDto);
-    company.$add("Role", 2)
-    let data = this.authService.generateToken(company.dataValues)
-    const result = await this.sendWelcomeMessage(company.email);
-    console.log(result);
-    return data;
+
+    // Create company first
+    const company = await this.companyRepository.create<Company>(createCompanyDto);
+
+    // Create admin user for the company
+    const user = await this.userService.createUser({
+      firstName: createCompanyDto.name.split(' ')[0] || createCompanyDto.name,
+      lastName: createCompanyDto.name.split(' ').slice(1).join(' ') || '',
+      email: createCompanyDto.email,
+      username: createCompanyDto.username,
+      password: createCompanyDto.password,
+      companyId: company.id,
+      roleIds: [2], // Admin role
+      authType: 'LOCAL',
+      phoneNumber: createCompanyDto.contact_information
+    }, 0); // 0 as creatorId since this is initial setup
+
+    // Generate token for the user
+    const userWithCompany = await this.userService.findOne(user.id);
+    const token = await this.authService.generateToken(userWithCompany);
+
+    // Send welcome message
+    await this.sendWelcomeMessage(company.email);
+
+    return token;
   }
+
   async createCompanyWithOutPW(createCompanyDto): Promise<Company> {
     return await this.companyRepository.create<Company>(createCompanyDto);
   }
@@ -63,7 +86,7 @@ export class CompanyService {
         id: id,
         isActive: true
       },
-      include: [Role],
+      include: [User],
       attributes: { exclude: ['password'] },
     })
     return company

@@ -11,6 +11,7 @@ export const ROLE_REPOSITORY = "role_repo";
 export const PAYMENT_METHOD_REPOSITORY = "payment_method_repo"
 export const PAYMENT_REPOSITORY = "payment_repo"
 export const BILLING_REPOSITORY = "billing_repo"
+export const USER_REPOSITORY = "user_repo"
 
 
 // file constants

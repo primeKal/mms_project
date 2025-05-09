@@ -37,9 +37,9 @@ export class RoleService {
         var toDeleteRole = await this.roleRepository.findByPk(id);
         return await toDeleteRole.destroy();
     }
-    async getRolesByCompany(companyId: any): Promise<Role[]> {
+    async getRolesByUser(userId: any): Promise<Role[]> {
         return this.roleRepository.findAll({
-            where: { companies: { [Op.in]: companyId } },
+            where: { users: { [Op.in]: userId } },
         })
     }
 
