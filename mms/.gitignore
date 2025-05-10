@@ -2,6 +2,9 @@
 /dist
 /node_modules
 
+#uploaded images
+/uploads
+
 #local env files
 /.env
 

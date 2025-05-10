@@ -70,10 +70,10 @@ const actions = {
       await CompanyAPI.createAccount(account)
         .then((response) => {
           if (response) {
-            const { token, ...companyInfo } = response;
+            const { access_token, companyInfo } = response;
             commit("setAccount", response.data);
             commit("setCompanyInfo", companyInfo);
-            commit("setAuth", token);
+            commit("setAuth", access_token);
             status = true;
           }
         })

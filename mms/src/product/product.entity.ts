@@ -13,7 +13,7 @@ import {
 } from 'sequelize-typescript';
 import { Company } from 'src/company/company.entity';
 import { ProductCategory } from 'src/product-category/product.category.entity';
-
+import { User } from 'src/user/entities/user.entity';
 
 const tableOptions = {
     tableName: 'product',
@@ -84,6 +84,12 @@ export class Product extends Model<Product> {
 
     @BelongsTo(() => Company)
     company: Company
+
+    @ForeignKey(() => User)
+    userId: number
+
+    @BelongsTo(() => User)
+    user: User
 
 
     @BelongsToMany(() => ProductCategory, () => ProductCategoryProduct)

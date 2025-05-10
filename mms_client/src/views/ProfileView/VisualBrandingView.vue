@@ -57,24 +57,19 @@ export default {
         return {
             openColorSelector: 0,
             editStatus: false,
-            initialLoad: true 
+            initialLoad: true
         }
     },
     methods: {
         async handleUpdateCompany() {
-            console.log(this.company)
-            const payload = {
-                ...this.basicInfo,
-            }
-            payload.primaryColor = this.primaryColor
-            payload.secondaryColor = this.secondaryColor
-            console.log(payload)
-            const status = await this.$store.dispatch('Company/updateCompany', payload)
+            if (!this.user) return;
+            const payload = { ...this.user, company: { ...this.basicInfo, primaryColor: this.primaryColor, secondaryColor: this.secondaryColor } };
+            const status = await this.$store.dispatch('User/setUser', payload);
             if (status) {
-                this.$toast.success('Company information updated')
-                this.editStatus = false
+                this.$toast.success('Company information updated');
+                this.editStatus = false;
             } else {
-                this.$toast.error('Error occured!')
+                this.$toast.error('Error occured!');
             }
         },
         switchEditState() {
@@ -85,14 +80,17 @@ export default {
     },
     computed: {
         ...mapGetters({
-            basicInfo: 'Company/getCompanyInfo',
-        })
+            user: 'User/getUser',
+        }),
+        basicInfo() {
+            return (this.user && this.user.company) ? this.user.company : {};
+        }
     },
     watch: {
         primaryColor(newValue) {
             console.log(newValue);
             if (this.initialLoad) {
-                this.initialLoad = false; 
+                this.initialLoad = false;
             } else {
                 this.editStatus = true;
             }
@@ -105,9 +103,11 @@ export default {
         }
     },
     mounted() {
-        console.log(this.basicInfo)
-        this.primaryColor = this.basicInfo.primaryColor
-        this.secondaryColor = this.basicInfo.secondaryColor
+        if (this.basicInfo) {
+            this.primaryColor = this.basicInfo.primaryColor;
+            this.secondaryColor = this.basicInfo.secondaryColor;
+        }
+        console.log(this.basicInfo);
     }
 }
 </script>

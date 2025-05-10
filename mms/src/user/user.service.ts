@@ -149,4 +149,38 @@ export class UserService {
     }
     return null;
   }
+
+  async getUsersByCompany(companyId: number): Promise<User[]> {
+    console.log(companyId)
+    console.log("this is the user repository", companyId)
+    return await this.userRepository.findAll({
+      where: { "companyId": companyId },
+      include: ['roles'],
+    });
+  }
+
+  async updateUserByCompanyOrSelf(id: number, updateUserDto: UpdateUserDto, currentUser: any): Promise<User> {
+    const user = await this.findOne(id);
+    // Only allow if same company
+    if (user.companyId !== currentUser.company.id) {
+      throw new Error('Cannot update user from another company');
+    }
+    // Only allow if self or has Company role
+    const isSelf = currentUser.id === user.id;
+    const isCompanyAdmin = currentUser.roles.some(role => role.name === 'Company');
+    if (!isSelf && !isCompanyAdmin) {
+      throw new Error('Insufficient permissions to update user');
+    }
+    if (updateUserDto.password) {
+      updateUserDto.password = await bcrypt.hash(updateUserDto.password, 10);
+    }
+    console.log("this is the updateUserDto", updateUserDto)
+    updateUserDto.companyId = user.company.id 
+    console.log("this is the currentUser", currentUser)
+    await user.update(updateUserDto);
+    if (updateUserDto.roleIds && isCompanyAdmin) {
+      await user.$set('roles', updateUserDto.roleIds);
+    }
+    return this.findOne(id);
+  }
 }

@@ -37,7 +37,15 @@ export class AuthService {
                 company: user.company ? {
                     id: user.company.id,
                     name: user.company.name,
-                    email: user.company.email
+                    email: user.company.email,
+                    address: user.company.address,
+                    contact_information: user.company.contact_information,
+                    primaryColor: user.company.primaryColor,
+                    secondaryColor: user.company.secondaryColor,
+                    specialFeatures: user.company.specialFeatures,
+                    imgUrl: user.company.imgUrl,
+                    moto: user.company.moto,
+                    
                 } : null
             }
         };

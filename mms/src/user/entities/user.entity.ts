@@ -10,8 +10,11 @@ import {
   BelongsTo,
   BelongsToMany,
   ForeignKey,
+  HasMany,
 } from 'sequelize-typescript';
 import { Company } from 'src/company/company.entity';
+import { Menu } from 'src/menu/menu.entity';
+import { Product } from 'src/product/product.entity';
 import { Role, UserRole } from 'src/role/role.entity';
 
 const tableOptions = {
@@ -106,4 +109,10 @@ export class User extends Model<User> {
   @BelongsToMany(() => Role, () => UserRole)
   @ApiProperty({ type: () => [Role] })
   roles: Role[];
+
+  @HasMany(() => Menu)
+  menus: Menu[]
+
+  @HasMany(() => Product)
+  products: Product[]
 }

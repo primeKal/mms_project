@@ -30,10 +30,15 @@ const routes = [
         component: () => import("../views/ProfileView/ProfileIndex.vue"),
         children: [
           {
-            path: "basic-information",
-            name: "basic_information",
+            path: "company-information",
+            name: "company_information",
             component: () =>
               import("../views/ProfileView/BasicInformationView.vue"),
+          },
+          {
+            path: "users",
+            name: "users",
+            component: () => import("../views/ProfileView/UsersView.vue"),
           },
           {
             path: "visual-branding",
