@@ -43,7 +43,7 @@ export class ProductController {
     // body.img = img.path;
     console.log("body", body);
     console.log("user", req.user);
-    return this.productService.createProduct(req.user.id, body);
+    return this.productService.createProduct(req.user?.company?.id, body);
   }
 
   @Put()

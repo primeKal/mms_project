@@ -65,7 +65,8 @@ export default {
     async closeModal() {
       this.loading = true;
       this.addProduct = false;
-      let companyId = this.$store.state.Company.companyInfo.id;
+      console.log("close modal");
+      let companyId = this.$store.state.User?.user?.company?.id;
       await this.$store.dispatch("Product/fetchAllProducts", companyId);
       this.loading = false;
     },
@@ -77,8 +78,8 @@ export default {
   },
   async mounted() {
     this.$emit("selectedNav", 8);
-    // console.log(this.$store.state)
-    let companyId = this.$store.state.Company.companyInfo.id;
+    console.log(this.$store.state)
+    let companyId = this.$store.state.User?.user?.company?.id;
     await this.$store.dispatch("Product/fetchAllProducts", companyId);
     this.loading = false;
   },

@@ -68,11 +68,12 @@ const actions = {
   },
   addNewMenu: async ({ dispatch }, menuInfo) => {
     var status = null;
+    console.log(dispatch, menuInfo);
     await MenuAPI.createMenu(menuInfo)
       .then(async (response) => {
         if (response.status === CREATE_SUCCESS) {
           status = { success: true };
-          await dispatch("fetchAllMenus", 1);
+          // await dispatch("fetchAllMenus", 1);
         } else {
           status = { success: false };
         }
