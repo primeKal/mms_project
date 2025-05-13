@@ -38,7 +38,7 @@ export class PaymentMethodController {
   @UseGuards(JwtAuthGuard)
   @Post()
   public async createPaymentMethod(@Req() req: any, @Body() body: PaymentMethodDto): Promise<any> {
-    return this.paymentMethodService.createPaymentMethod(req.user.id, body);
+    return this.paymentMethodService.createPaymentMethod(req.user?.company?.id, body);
   }
 
   @UseGuards(JwtAuthGuard)

@@ -228,7 +228,7 @@ export default {
         this.loading = true;
         if (this.isNew) {
           console.log(this.paymentMethodInfo);
-          let companyId = this.$store.state.Company.companyInfo.id;
+          let companyId = this.$store.state.User?.user?.company?.id;
           this.paymentMethodInfo.companyId = companyId;
           const status = await this.addTable(this.paymentMethodInfo);
           if (status.success) {

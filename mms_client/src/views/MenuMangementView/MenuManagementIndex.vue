@@ -166,7 +166,7 @@ export default {
   computed: {
     ...mapGetters({
       menus: "Menu/getAllMenus",
-      basicInfo: "Company/getCompanyInfo",
+      basicInfo: "User/getUser",
     }),
   },
   methods: {
@@ -175,7 +175,8 @@ export default {
       removeMenu: "Menu/removeMenu",
     }),
     async initialization() {
-      await this.fetchMenus(this.basicInfo.id);
+      console.log(this.basicInfo);
+      await this.fetchMenus(this.basicInfo.company.id);
       this.loading = false;
     },
     searchCategories(searchString) {
@@ -209,6 +210,7 @@ export default {
           this.$toast.success("New Menu created");
           this.openNewMenu = false;
           this.newMenu.name = "";
+          await this.fetchMenus(this.basicInfo.company.id);
         } else {
           this.$toast.error("Error creating menu");
         }

@@ -31,7 +31,7 @@ export class TableController {
 
     @Post()
     public async createTable(@Req() req: any, @Body() body: TableDto): Promise<any> {
-      return this.tableService.createTable(req.user.id,body);
+      return this.tableService.createTable(req.user?.company?.id,body);
     }
 
     @Put()

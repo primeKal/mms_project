@@ -32,7 +32,7 @@ export class MenuController {
   @UseGuards(JwtAuthGuard)
   @Post()
   public async createMenu(@Req() req: any, @Body() body: MenuDto): Promise<any> {
-    return this.menuService.createMenu(body, req.user.id);
+    return this.menuService.createMenu(body, req.user?.company?.id);
   }
 
   @UseGuards(JwtAuthGuard)

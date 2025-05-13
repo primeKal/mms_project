@@ -60,7 +60,7 @@ export default {
 
         ...mapGetters({
             tables: 'Table/getTables',
-            basicInfo: 'Company/getCompanyInfo',
+            basicInfo: 'User/getUser',
 
         }),
     },
@@ -70,7 +70,7 @@ export default {
         }),
 
         async initialization() {
-            await this.fetchTables(this.basicInfo.id)
+            await this.fetchTables(this.basicInfo?.company?.id)
         },
 
         searchTables(searchString) {
