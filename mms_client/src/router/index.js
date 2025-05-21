@@ -30,10 +30,15 @@ const routes = [
         component: () => import("../views/ProfileView/ProfileIndex.vue"),
         children: [
           {
-            path: "basic-information",
-            name: "basic_information",
+            path: "company-information",
+            name: "company_information",
             component: () =>
               import("../views/ProfileView/BasicInformationView.vue"),
+          },
+          {
+            path: "users",
+            name: "users",
+            component: () => import("../views/ProfileView/UsersView.vue"),
           },
           {
             path: "visual-branding",
@@ -107,6 +112,33 @@ const routes = [
         name: "methods",
         component: () =>
           import("../views/MethodView/MethodView.vue"),
+      },
+      {
+        path: '/items',
+        name: 'items',
+        component: () => import('@/views/ItemsView/ItemsView.vue'),
+        meta: {
+          requiresAuth: true,
+          title: 'Items Management'
+        }
+      },
+      {
+        path: '/procurement',
+        name: 'procurement',
+        component: () => import('@/views/ProcurementView/ProcurementView.vue'),
+        meta: {
+          requiresAuth: true,
+          title: 'Procurement Management'
+        }
+      },
+      {
+        path: '/inventory',
+        name: 'inventory',
+        component: () => import('@/views/InventoryView/InventoryView.vue'),
+        meta: {
+          requiresAuth: true,
+          title: 'Inventory Management'
+        }
       },
     ],
   },

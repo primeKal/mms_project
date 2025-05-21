@@ -42,8 +42,9 @@ export default {
             // validate entry
             if(this.credentials.email.length && this.credentials.password.length) {
                 // send entry
-                const status = await this.$store.dispatch('Company/login', this.credentials)
+                const status = await this.$store.dispatch('User/login', this.credentials)
                 if(status) {
+                    console.log(status)
                     this.$router.replace({name: 'dashboard'})
                 }else {
                     console.log(status)

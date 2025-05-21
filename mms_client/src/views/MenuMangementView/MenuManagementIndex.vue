@@ -3,7 +3,7 @@
     <QRCodeModalVue
       v-if="openQRView"
       :companyInfo="openQRView"
-      :qrValue="`https://mms-project.onrender.com/menu/${this.$store.state.Company.companyInfo.id}/table/2`"
+      :qrValue="`https://mms-project.onrender.com/menu/${this.$store.state.User?.user?.company?.id}/table/2`"
       @closeModal="() => (openQRView = null)"
     />
 
@@ -166,7 +166,7 @@ export default {
   computed: {
     ...mapGetters({
       menus: "Menu/getAllMenus",
-      basicInfo: "Company/getCompanyInfo",
+      basicInfo: "User/getUser",
     }),
   },
   methods: {
@@ -175,7 +175,8 @@ export default {
       removeMenu: "Menu/removeMenu",
     }),
     async initialization() {
-      await this.fetchMenus(this.basicInfo.id);
+      console.log(this.basicInfo);
+      await this.fetchMenus(this.basicInfo.company.id);
       this.loading = false;
     },
     searchCategories(searchString) {
@@ -209,6 +210,7 @@ export default {
           this.$toast.success("New Menu created");
           this.openNewMenu = false;
           this.newMenu.name = "";
+          await this.fetchMenus(this.basicInfo.company.id);
         } else {
           this.$toast.error("Error creating menu");
         }

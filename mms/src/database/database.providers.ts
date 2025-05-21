@@ -2,17 +2,19 @@ import { Sequelize } from 'sequelize-typescript';
 import { Billing } from 'src/billing/entities/billing.entity';
 import { Company } from 'src/company/company.entity';
 import { Customer } from 'src/customer/customer.entity';
+import { Inventory } from 'src/inventory/inventory.entity';
+import { Item } from 'src/item/item.entity';
 import { Menu } from 'src/menu/menu.entity';
 import { Order } from 'src/order/order.entity';
 import { OrderLine } from 'src/order/order.line.entity';
 import { PaymentMethodModel } from 'src/payment-method/method.entity';
 import { PaymentModel } from 'src/payment/payment.entity';
+import { Procurement } from 'src/procurement/procurement.entity';
 import { ProductCategory } from 'src/product-category/product.category.entity';
 import { Product, ProductCategoryProduct } from 'src/product/product.entity';
-import { CompanyRole, Role } from 'src/role/role.entity';
+import { Role, UserRole } from 'src/role/role.entity';
 import { TableModel } from 'src/table/table.entity';
-
-
+import { User } from 'src/user/entities/user.entity';
 
 export const databaseProviders = [
   {
@@ -27,10 +29,11 @@ export const databaseProviders = [
         database: 'mms',
         ssl: true,
         dialectOptions: {
-          ssl: true
-        }
+          ssl: true,
+        },
       });
-      sequelize.addModels([Company,
+      sequelize.addModels([
+        Company,
         Product,
         Menu,
         ProductCategory,
@@ -39,11 +42,16 @@ export const databaseProviders = [
         OrderLine,
         Customer,
         Role,
-        CompanyRole,
+        User,
+        UserRole,
         ProductCategoryProduct,
         PaymentMethodModel,
         PaymentModel,
-        Billing]);
+        Billing,
+        Item,
+        Procurement,
+        Inventory
+        ]);
       await sequelize.sync();
       // await sequelize.sync({ alter: true });
 

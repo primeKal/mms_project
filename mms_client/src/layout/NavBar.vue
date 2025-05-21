@@ -51,7 +51,7 @@ export default {
           link: "dashboard",
           icon: "ic:round-space-dashboard",
         },
-        { id: 2, name: "Profile", link: "basic_information", icon: "mdi:chart-pie" },
+        { id: 2, name: "Profile", link: "company_information", icon: "mdi:chart-pie" },
         {
           id: 3,
           name: "Menu Management",
@@ -68,6 +68,24 @@ export default {
           id: 4,
           name: "Table Management",
           link: "table_management",
+          icon: "ic:baseline-table-restaurant",
+        },
+        {
+          id: 9,
+          name: "Items",
+          link: "items",
+          icon: "ic:baseline-table-restaurant",
+        },
+        {
+          id: 10,
+          name: "Procurement",
+          link: "procurement",
+          icon: "ic:baseline-table-restaurant",
+        },
+        {
+          id: 11,
+          name: "Inventory",
+          link: "inventory",
           icon: "ic:baseline-table-restaurant",
         },
         {

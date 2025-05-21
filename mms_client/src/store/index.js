@@ -9,11 +9,15 @@ import Table from './modules/Table'
 import Payments from './modules/Payments';
 import Method from './modules/Method';
 import Product from './modules/Product';
+import User from './modules/User';
+import Item from './modules/Item';
+import Procurement from './modules/Procurement';
+import Inventory from './modules/Inventory';
 export default createStore({
   plugins: [
     createPersistedState({ 
       storage: Window.sessionStorage,
-      paths: ['Company']
+      paths: ['User']
     })
   ],
   state: {
@@ -25,6 +29,7 @@ export default createStore({
   actions: {
   },
   modules: {
+    User,
     Company,
     Table,
     Order,
@@ -32,6 +37,9 @@ export default createStore({
     Menu,
     Payments,
     Method,
-    Product
+    Product,
+    Item,
+    Procurement,
+    Inventory
   }
 })

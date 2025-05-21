@@ -22,6 +22,10 @@ import { PaymentMethodModule } from './payment-method/payment-method.module';
 import { PaymentModule } from './payment/payment.module';
 import { BillingModule } from './billing/billing.module';
 import { MailerModule } from '@nestjs-modules/mailer';
+import { UserModule } from './user/user.module';
+import { ItemModule } from './item/item.module';
+import { ProcurementModule } from './procurement/procurement.module';
+import { InventoryModule } from './inventory/inventory.module';
 
 @Module({
   imports: [
@@ -63,7 +67,12 @@ import { MailerModule } from '@nestjs-modules/mailer';
     ReportsModule,
     PaymentMethodModule,
     PaymentModule,
-    BillingModule
+    BillingModule,
+    UserModule,
+    ItemModule,
+    ProcurementModule,
+    InventoryModule
+    
   ],
   controllers: [AppController],
   providers: [AppService, {

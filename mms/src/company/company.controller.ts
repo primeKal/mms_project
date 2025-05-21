@@ -13,6 +13,7 @@ import { multerOptionsCompanyImg } from 'multer.config';
 @Controller('Company')
 export class CompanyController {
   constructor(private readonly companyService: CompanyService) {
+    
   }
   @UseGuards(JwtAuthGuard)
   @Get()

@@ -27,10 +27,11 @@ const actions = {
   },
   addTable: async ({ dispatch }, tableInfo) => {
     var status = null;
+    console.log(dispatch)
     await TableAPI.createTable(tableInfo)
       .then(async (result) => {
         if (result.status === CREATE_SUCCESS) {
-          await dispatch("fetchTables");
+          // await dispatch("fetchTables");
           status = { success: true };
         } else {
           status = { success: false };

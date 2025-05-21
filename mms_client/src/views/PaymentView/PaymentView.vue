@@ -62,7 +62,7 @@ export default {
   async mounted() {
     this.$emit("selectedNav", 6);
     // console.log(this.$store.state)
-    let companyId = this.$store.state.Company.companyInfo.id;
+    let companyId = this.$store.state.User?.user?.company?.id;
     await this.$store.dispatch("Payments/fetchAllPayments", companyId);
     this.loading = false;
     console.log("kdkdkdkd", this.Payments)

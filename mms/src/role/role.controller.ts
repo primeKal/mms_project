@@ -24,7 +24,7 @@ export class RoleController {
 
     @Get('ByCompany/:id')
     public async getRoleByCompany(@Param('id') id: number): Promise<Role[]>{
-      return this.roleService.getRolesByCompany(id);
+      return this.roleService.getRolesByUser(id);
     }
 
     @Post()

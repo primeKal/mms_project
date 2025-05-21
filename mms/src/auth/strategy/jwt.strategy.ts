@@ -1,25 +1,24 @@
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { CompanyService } from 'src/company/company.service';
-
-
+import { UserService } from 'src/user/user.service';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
-    constructor(private readonly companyService: CompanyService) {
+    constructor(private readonly userService: UserService) {
         super({
-             jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-             ignoreExpiration: false,
-             secretOrKey: "dmad,samda.,smda.,smda.,sdm.,samda.,sdm.,sa",
+            jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+            ignoreExpiration: false,
+            secretOrKey: "dmad,samda.,smda.,smda.,sdm.,samda.,sdm.,sa",
         });  
     }
-    async validate(payload: any){
-      let user = await this.companyService.getOneCompanyById(payload.id)
-      console.log(user)
-      if (!user){
-        throw new UnauthorizedException();
-      }
-      return user.dataValues
+
+    async validate(payload: any) {
+        try {
+            const user = await this.userService.findOne(payload.id);
+            return user;
+        } catch (error) {
+            throw new UnauthorizedException();
+        }
     }
 }

@@ -36,7 +36,7 @@
     </ModalLayoutVue>
 </template>
 <script>
-import { mapActions } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import useVuelidate from '@vuelidate/core'
 import { required, minValue} from '@vuelidate/validators'
 
@@ -77,6 +77,14 @@ export default {
             }
         }
     },
+    computed: {
+
+        ...mapGetters({
+            tables: 'Table/getTables',
+            basicInfo: 'User/getUser',
+
+        }),
+    },
     methods: {
         setTouched(theModel) {
             if(theModel == 'name' || theModel == 'all') {this.v$.tableInfo.name.$touch()}
@@ -85,6 +93,7 @@ export default {
         ...mapActions({
             addTable: 'Table/addTable',
             updateTable: 'Table/updateTable',
+            fetchTables: 'Table/fetchTables',
         }),
         async createTable () {
             // validation required
@@ -95,8 +104,10 @@ export default {
                     const status = await this.addTable(this.tableInfo)
                     if(status.success) {
                         this.$toast.success('Table created successfully')
-                        setTimeout(()=>{
+                        setTimeout(async ()=>{
                             this.$emit('closeModal')
+                            await this.fetchTables(this.basicInfo?.company?.id)
+
                         }, 1000)
                     }else {
                         this.$toast.error('Table creation failed')

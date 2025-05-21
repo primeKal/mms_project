@@ -71,7 +71,7 @@ import AddMethodView from "./AddMethodView.vue";
     },
     async mounted() {
       this.$emit("selectedNav", 7);
-      let companyId = this.$store.state.Company.companyInfo.id;
+      let companyId = this.$store.state.User?.user?.company?.id;
       await this.$store.dispatch("Method/fetchAllMethods", companyId);
       this.loading = false;
     },

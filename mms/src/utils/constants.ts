@@ -11,6 +11,7 @@ export const ROLE_REPOSITORY = "role_repo";
 export const PAYMENT_METHOD_REPOSITORY = "payment_method_repo"
 export const PAYMENT_REPOSITORY = "payment_repo"
 export const BILLING_REPOSITORY = "billing_repo"
+export const USER_REPOSITORY = "user_repo"
 
 
 // file constants
@@ -27,4 +28,13 @@ export const COMPANY_ROLE_ID = 2;
 
 export const PAYMENT_METHOD_TYPES = ['Chapa', 'SantimPay', 'Telebirr']
 export const PAYMENT_STATUS = ["Draft", "Pending", "Confirmed"]
+
+export const MEASUREMENT_UNITS = [
+  'KG',      // Kilogram
+  'G',       // Gram
+  'L',       // Liter
+  'ML',      // Milliliter
+  'MG',      // Milligram
+  'TON'      // Ton
+] as const;
 
