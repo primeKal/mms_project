@@ -2,6 +2,7 @@ import MenuAPI from "@/services/menu/menu";
 import SectionAPI from "@/services/menu/section";
 import ProductAPI from "@/services/menu/product";
 import { CREATE_SUCCESS, FETCH_SUCCESS } from "@/utils/Variables";
+import store from "@/store";
 const state = {
   menus: [],
   menu: {},
@@ -57,8 +58,9 @@ const actions = {
         console.log(error);
       });
   },
-  fetchAllProducts: async ({ commit }, companyId) => {
-    await ProductAPI.getProductsByCompanyId(companyId)
+  fetchAllProducts: async ({ commit }) => {
+    const companyIdFromUser = store.state.User.user?.company?.id;
+    await ProductAPI.getProductsByCompanyId(companyIdFromUser)
       .then((result) => {
         commit("setAllProducts", result);
       })

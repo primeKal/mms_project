@@ -14,11 +14,11 @@ const state = {
 };
 const getters = {
   getCompanyInfo: (state) => {
-    const companyInfo = localStorage.getItem('company');
+    const companyInfo = localStorage.getItem('user');
     if(!companyInfo) {
       window.location = "/";
     } else {
-      let unfilteredCompanyInfo = JSON.parse(companyInfo);
+      let unfilteredCompanyInfo = JSON.parse(companyInfo).company;
       if (!('id' in unfilteredCompanyInfo)) {
         window.location = "/";
         localStorage.removeItem('company');

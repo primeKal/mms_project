@@ -3,7 +3,7 @@
     <QRCodeModalVue
       v-if="openTableQR"
       :companyInfo="openTableQR"
-      :qrValue="`https://mms-project.onrender.com/menu/${this.$store.state.Company.companyInfo.id}/table/${openTableQR.id}`"
+      :qrValue="`https://mms-project.onrender.com/menu/${this.$store.state.User.user.company.id}/table/${openTableQR.id}`"
       @closeModal="() => (openTableQR = null)"
     />
 

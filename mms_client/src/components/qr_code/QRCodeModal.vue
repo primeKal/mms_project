@@ -164,6 +164,7 @@ export default {
     },
   },
   beforeMount() {
+    console.log(this.companyProfile);
     this.qrData.primaryColor = this.companyProfile.primaryColor
       ? this.companyProfile.primaryColor
       : "#28ff00";
