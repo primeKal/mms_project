@@ -10,6 +10,9 @@ import Payments from './modules/Payments';
 import Method from './modules/Method';
 import Product from './modules/Product';
 import User from './modules/User';
+import Item from './modules/Item';
+import Procurement from './modules/Procurement';
+import Inventory from './modules/Inventory';
 export default createStore({
   plugins: [
     createPersistedState({ 
@@ -34,6 +37,9 @@ export default createStore({
     Menu,
     Payments,
     Method,
-    Product
+    Product,
+    Item,
+    Procurement,
+    Inventory
   }
 })

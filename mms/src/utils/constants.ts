@@ -29,3 +29,12 @@ export const COMPANY_ROLE_ID = 2;
 export const PAYMENT_METHOD_TYPES = ['Chapa', 'SantimPay', 'Telebirr']
 export const PAYMENT_STATUS = ["Draft", "Pending", "Confirmed"]
 
+export const MEASUREMENT_UNITS = [
+  'KG',      // Kilogram
+  'G',       // Gram
+  'L',       // Liter
+  'ML',      // Milliliter
+  'MG',      // Milligram
+  'TON'      // Ton
+] as const;
+

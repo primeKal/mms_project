@@ -71,6 +71,24 @@ export default {
           icon: "ic:baseline-table-restaurant",
         },
         {
+          id: 9,
+          name: "Items",
+          link: "items",
+          icon: "ic:baseline-table-restaurant",
+        },
+        {
+          id: 10,
+          name: "Procurement",
+          link: "procurement",
+          icon: "ic:baseline-table-restaurant",
+        },
+        {
+          id: 11,
+          name: "Inventory",
+          link: "inventory",
+          icon: "ic:baseline-table-restaurant",
+        },
+        {
           id: 5,
           name: "Order Processing",
           link: "order_processing",

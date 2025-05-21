@@ -5,6 +5,8 @@
 #uploaded images
 /uploads
 
+package-lock.json
+
 #local env files
 /.env
 
