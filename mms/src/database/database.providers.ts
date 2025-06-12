@@ -4,6 +4,9 @@ import { Company } from 'src/company/company.entity';
 import { Customer } from 'src/customer/customer.entity';
 import { Inventory } from 'src/inventory/inventory.entity';
 import { Item } from 'src/item/item.entity';
+import { ItemCount } from 'src/kitchen/entities/item-count.entity';
+import { KitchenPayload } from 'src/kitchen/entities/kitchen-payload.entity';
+import { Kitchen } from 'src/kitchen/entities/kitchen.entity';
 import { Menu } from 'src/menu/menu.entity';
 import { Order } from 'src/order/order.entity';
 import { OrderLine } from 'src/order/order.line.entity';
@@ -50,7 +53,10 @@ export const databaseProviders = [
         Billing,
         Item,
         Procurement,
-        Inventory
+        Inventory,
+        Kitchen,
+        ItemCount,
+        KitchenPayload
         ]);
       await sequelize.sync();
       // await sequelize.sync({ alter: true });

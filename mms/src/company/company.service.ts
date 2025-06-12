@@ -91,9 +91,10 @@ export class CompanyService {
     })
     return company
   }
-  async editCompany(editCompany: any): Promise<Company> {
-    var toEditCompany = await this.companyRepository.findByPk(editCompany.id);
+  async editCompany(editCompany: any, id: any): Promise<Company> {
+    var toEditCompany = await this.companyRepository.findByPk(id);
     try {
+      console.log("this is the company", toEditCompany)
       return await toEditCompany.update({ ...editCompany })
     }
     catch (error) {

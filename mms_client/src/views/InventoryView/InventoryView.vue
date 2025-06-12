@@ -1,7 +1,7 @@
 <template>
   <div class="container mx-auto px-4 py-8">
     <div class="flex justify-between items-center mb-6">
-      <h1 class="text-2xl font-bold">Inventory Management</h1>
+      <h1 class="text-3xl font-bold text-primary">Inventory Management</h1>
     </div>
 
     <!-- Inventory Table -->
@@ -12,7 +12,8 @@
             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Item</th>
             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Quantity</th>
             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Procurement ID</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Procurement ID
+            </th>
             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
           </tr>
         </thead>
@@ -30,10 +31,8 @@
             </td>
             <td class="px-6 py-4 whitespace-nowrap">{{ inv.procurementId }}</td>
             <td class="px-6 py-4 whitespace-nowrap">
-              <button
-                @click="openUpdateStatusModal(inv)"
-                class="text-indigo-600 hover:text-indigo-900 mr-2"
-              >
+              <button @click="openUpdateStatusModal(inv)"
+                class="bg-primary hover:bg-primary-dark text-white px-4 py-2 rounded font-medium shadow transition mr-2">
                 Update Status
               </button>
             </td>
@@ -52,29 +51,21 @@
           <form @submit.prevent="updateStatus">
             <div class="mb-4">
               <label class="block text-gray-700 text-sm font-bold mb-2">Status</label>
-              <select
-                v-model="selectedStatus"
+              <select v-model="selectedStatus"
                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                required
-              >
+                required>
                 <option value="AVAILABLE">Available</option>
                 <option value="LOW_STOCK">Low Stock</option>
                 <option value="OUT_OF_STOCK">Out of Stock</option>
               </select>
             </div>
             <div class="flex justify-end">
-              <button
-                type="button"
-                @click="closeModal"
-                class="bg-gray-500 text-white px-4 py-2 rounded mr-2 hover:bg-gray-600"
-              >
+              <button type="button" @click="closeModal"
+                class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded font-medium transition mr-2">
                 Cancel
               </button>
-              <button
-                type="submit"
-                :disabled="loading"
-                class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 disabled:bg-blue-300"
-              >
+              <button type="submit" :disabled="loading"
+                class="bg-primary hover:bg-primary-dark text-white px-4 py-2 rounded font-medium shadow transition disabled:bg-primary/50">
                 {{ loading ? 'Processing...' : 'Update' }}
               </button>
             </div>
@@ -106,7 +97,7 @@ export default {
   },
   methods: {
     ...mapActions('Inventory', ['fetchAllInventories', 'updateInventoryStatus']),
-    
+
     async loadInventory() {
       try {
         await this.fetchAllInventories();
@@ -132,7 +123,7 @@ export default {
           id: this.selectedInventory.id,
           status: this.selectedStatus
         });
-        
+
         if (status.success) {
           this.$toast.success('Inventory status updated successfully');
           this.closeModal();
@@ -156,4 +147,4 @@ export default {
     }
   }
 };
-</script> 
+</script>

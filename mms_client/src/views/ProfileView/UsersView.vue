@@ -320,9 +320,10 @@ export default {
         if (this.canEditUsers) {
             await this.fetchCompanyUsers();
         }
-        if (!this.roles || this.roles.length === 0) {
+        console.log(this.roles, 'roles');
+        // if (!this.roles || this.roles.length === 0) {
             await this.fetchRoles();
-        }
+        // }
         this.currentUser = { ...this.user };
     },
 };

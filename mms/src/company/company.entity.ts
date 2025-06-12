@@ -54,7 +54,6 @@ export class Company extends Model<Company> {
     validate: {
       isEmail: true,
     },
-    unique: true,
   })
   email: string;
 

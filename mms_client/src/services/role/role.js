@@ -1,6 +1,6 @@
 import baseAPI from '../base';
 
-class RoleAPI {
+class   RoleAPI {
   static getRoles() {
     return baseAPI.get('role');
   }

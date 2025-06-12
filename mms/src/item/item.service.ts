@@ -1,11 +1,12 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { Item } from './item.entity';
 import { CreateItemDto } from './dtos/create-item.dto';
+import { ITEM_REPOSITORY } from 'src/utils/constants';
 
 @Injectable()
 export class ItemService {
   constructor(
-    @Inject('ITEM_REPOSITORY')
+    @Inject(ITEM_REPOSITORY)
     private itemRepository: typeof Item,
   ) {}
 

@@ -18,7 +18,7 @@
     </div>
     <div
       class="lg:mt-8 mt-2 lg:w-auto w-full flex lg:flex-col flex-row  lg:snap-none snap-x snap-proximity touch-pan-x text-gray-800 overflow-scroll md:overflow-auto">
-      <router-link v-for="nav in navItems" :key="nav.name" :to="{ name: nav.link }"
+      <router-link v-for="nav in filteredNavItems" :key="nav.name" :to="{ name: nav.link }"
         class="lg:pl-4 pl-0 lg:py-3 py-2 w-full flex items-center lg:border-l-4 border-b-4 hover:bg-blue-200 text-nowrap snap-center"
         :class="[
           nav.id === navValue
@@ -34,6 +34,8 @@
 </template>
 <script>
 import { Icon } from "@iconify/vue";
+import { mapGetters } from "vuex";
+
 export default {
   props: {
     navValue: Number,
@@ -41,9 +43,33 @@ export default {
   components: {
     Icon,
   },
+  computed: {
+    ...mapGetters({
+      menus: "Menu/getAllMenus",
+      basicInfo: "User/getUser",
+    }),
+    filteredNavItems() {
+      const userRoles = this.basicInfo?.roles || ['STAFF'];
+      // Get all allowed menu IDs from all user roles
+      const allowedMenuIds = userRoles.reduce((acc, role) => {
+        const roleMenus = this.menuRoles[role?.name] || [];
+        return [...new Set([...acc, ...roleMenus])]; // Remove duplicates
+      }, []);
+      return this.navItems.filter(item => allowedMenuIds.includes(item.id));
+    }
+  },
   data() {
     return {
       collapse: false,
+      menuRoles: {
+        Admin: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], // All menus
+        Company: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], // All menus
+        Kitchen: [3, 4, 5, 8, 9, 10, 11], // All except menu management
+        Inventory: [9, 10, 11], // Basic operational menus
+        Waiter: [ 5], // Inventory related menus
+        Cashier: [4, 5, 6, 7], // Procurement related menus
+        Finance: [4, 5, 6, 7, 8, 9 , 10 , 11], // Procurement related menus
+      },
       navItems: [
         {
           id: 1,
@@ -109,10 +135,20 @@ export default {
       ],
     };
   },
+  methods: {
+    async initialization() {
+      console.log(this.basicInfo, 'in nav');
+      await this.fetchMenus(this.basicInfo.company.id);
+      this.loading = false;
+    },
+  },
   watch: {
     collapse(value) {
       this.$emit("collapse", value);
     },
+  },
+  async mounted() {
+    this.initialization();
   },
 };
 </script>

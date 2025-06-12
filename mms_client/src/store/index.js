@@ -13,6 +13,8 @@ import User from './modules/User';
 import Item from './modules/Item';
 import Procurement from './modules/Procurement';
 import Inventory from './modules/Inventory';
+import Kitchen from './modules/kitchen';
+
 export default createStore({
   plugins: [
     createPersistedState({ 
@@ -40,6 +42,7 @@ export default createStore({
     Product,
     Item,
     Procurement,
-    Inventory
+    Inventory,
+    Kitchen
   }
 })
