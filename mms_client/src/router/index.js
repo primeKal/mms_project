@@ -134,7 +134,7 @@ const routes = [
       {
         path: '/inventory',
         name: 'inventory',
-        component: () => import('@/views/InventoryView/InventoryView.vue'),
+        component: () => import('@/views/InventoryView/index.vue'),
         meta: {
           requiresAuth: true,
           title: 'Inventory Management'

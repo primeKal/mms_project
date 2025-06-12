@@ -16,7 +16,7 @@ class CompanyAPI {
   static updateCompanyInfo(companyInfo) {
     return new Promise(async (resolve, reject) => {
       try {
-        const response = await baseAPI.put("company", companyInfo);
+        const response = await baseAPI.put("company/" + companyInfo.id, companyInfo);
         const result = response.data;
         resolve(result);
       } catch (error) {

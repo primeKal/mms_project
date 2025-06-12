@@ -26,6 +26,7 @@ import { UserModule } from './user/user.module';
 import { ItemModule } from './item/item.module';
 import { ProcurementModule } from './procurement/procurement.module';
 import { InventoryModule } from './inventory/inventory.module';
+import { KitchenModule } from './kitchen/kitchen.module';
 
 @Module({
   imports: [
@@ -71,7 +72,8 @@ import { InventoryModule } from './inventory/inventory.module';
     UserModule,
     ItemModule,
     ProcurementModule,
-    InventoryModule
+    InventoryModule,
+    KitchenModule
     
   ],
   controllers: [AppController],

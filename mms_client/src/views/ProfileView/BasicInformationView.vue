@@ -83,10 +83,10 @@
                 <div v-else class="py-2 pl-2">{{ company.address }}</div>
             </div>
             <div class="w-1/3 flex flex-col">
-                <label class="text-sm text-gray-700">Moto</label>
-                <input v-if="!editStatus" class="py-2 pl-2 font-medium rounded border bg-white0" placeholder="Moto"
-                    type="text" v-model.trim="company.moto" />
-                <div v-else class="py-2 pl-2">{{ company.moto }}</div>
+                <label class="text-sm text-gray-700">Motto</label>
+                <input v-if="!editStatus" class="py-2 pl-2 font-medium rounded border bg-white0" placeholder="Motto"
+                    type="text" v-model.trim="company.motto" />
+                <div v-else class="py-2 pl-2">{{ company.motto }}</div>
             </div>
         </div>
     </div>
@@ -102,7 +102,7 @@ export default {
                 name: '',
                 username: '',
                 story: 'Replace me with a story about your company.',
-                moto: '',
+                motto: '',
                 email: '',
                 address: '',
                 website: '',
@@ -122,7 +122,7 @@ export default {
             this.company.email = company.email;
             this.company.specialFeatures = company.specialFeatures;
             this.company.address = company.address;
-            this.company.moto = company.moto;
+            this.company.motto = company.motto;
             this.company.contact_information = company.contact_information;
             this.company.website = company.website;
             this.company.story = company.story === "" ? "Replace me with a story about your company." : company.story;
@@ -135,12 +135,12 @@ export default {
 
         async handleUpdateCompany() {
             const updatedUser = { ...this.user, company: { ...this.company } };
-            const status = await this.$store.dispatch('User/setUser', updatedUser);
+            const status = await this.$store.dispatch('Company/updateCompany', updatedUser);
             if (status) {
                 this.$toast.success('Company information updated');
                 this.editStatus = true;
             } else {
-                this.$toast.error('Error occured!');
+                this.$toast.error('Error occurred!');
             }
         }
     },

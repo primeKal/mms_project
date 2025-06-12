@@ -12,7 +12,10 @@ export const PAYMENT_METHOD_REPOSITORY = "payment_method_repo"
 export const PAYMENT_REPOSITORY = "payment_repo"
 export const BILLING_REPOSITORY = "billing_repo"
 export const USER_REPOSITORY = "user_repo"
-
+export const KITCHEN_REPOSITORY = "kitchen_repo"
+export const KITCHEN_PAYLOAD_REPOSITORY = "kitchen_payload_repo"
+export const ITEM_COUNT_REPOSITORY = "item_count_repo"
+export const ITEM_REPOSITORY = "item_repo"
 
 // file constants
 export const MAX_PROFILE_PICTURE_SIZE_IN_BYTES = 2 * 1024 * 1024;
