@@ -1,8 +1,17 @@
-﻿# mms_project
- Welcome to jam rock.
- This project involves a complete solution to the ordering and menu managment system
- that exists in Ethiopia and quite possibly for more African countries too.
+MMS
+Menu & Ordering Management Platform
 
- It possess company, product, table registration. Order management and menu design
- and management. A dashboard analysis and other tools. 
- Digin in to the project to know more.
+A full-stack business management system for restaurants and
+food-service businesses.
+
+Architecture:
+Frontend → NestJS API → PostgreSQL
+
+Features:
+• Menu management
+• Recursive menu structures
+• Product management
+• Table management
+• Ordering
+• Dashboard / analytics
+• Admin portal
